@@ -17,7 +17,7 @@ export default function AuthorLine({ name, avatar, timeAgo }: Props) {
         className="rounded-full object-cover"
       />
       <span className="text-white text-sm font-medium">{name}</span>
-      <span className="text-muted text-sm">· {timeAgo}</span>
+      <span className="text-muted text-sm"><span aria-hidden="true">· </span>{timeAgo}</span>
     </div>
   )
 }
