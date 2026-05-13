@@ -5,13 +5,22 @@ import type { ContentItem } from '@/types/content'
 
 function readDir(dir: string, type: 'article' | 'podcast'): ContentItem[] {
   const fullDir = path.join(process.cwd(), 'content', dir)
-  if (!fs.existsSync(fullDir)) return []
-  return fs.readdirSync(fullDir)
+  let files: string[]
+  try {
+    files = fs.readdirSync(fullDir)
+  } catch {
+    return []
+  }
+  return files
     .filter(f => f.endsWith('.mdx'))
     .map(filename => {
       const slug = filename.replace('.mdx', '')
       const raw = fs.readFileSync(path.join(fullDir, filename), 'utf-8')
       const { data } = matter(raw)
+      if (!data.title || !data.date) {
+        throw new Error(`Missing required frontmatter (title, date) in content/${dir}/${filename}`)
+      }
+      // slug and type intentionally override any same-named frontmatter fields
       return { ...data, slug, type } as ContentItem
     })
 }
