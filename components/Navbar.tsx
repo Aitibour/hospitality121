@@ -3,7 +3,7 @@ import Link from 'next/link'
 
 export default function Navbar() {
   return (
-    <nav className="bg-navy border-b border-surface sticky top-0 z-50">
+    <nav aria-label="Main" className="bg-navy border-b border-surface sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-3">
           <Image src="/images/logo.png" alt="Hospitality121" width={40} height={40} />
@@ -25,7 +25,7 @@ export default function Navbar() {
         </div>
         <Link
           href="/subscribe"
-          className="bg-gold text-navy text-sm font-bold px-5 py-2 rounded hover:bg-yellow-400 transition-colors"
+          className="bg-gold text-navy text-sm font-bold px-5 py-2 rounded hover:opacity-90 transition-opacity"
         >
           Subscribe
         </Link>
