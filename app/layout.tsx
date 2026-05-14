@@ -1,13 +1,13 @@
 import type { Metadata } from 'next'
-import { Inter, Playfair_Display } from 'next/font/google'
+import { Lato, Cormorant_Garamond } from 'next/font/google'
 import Script from 'next/script'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import ThemeProvider from '@/components/ThemeProvider'
 import './globals.css'
 
-const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
-const playfair = Playfair_Display({ subsets: ['latin'], variable: '--font-playfair' })
+const lato = Lato({ subsets: ['latin'], weight: ['300', '400', '700', '900'], variable: '--font-lato' })
+const cormorant = Cormorant_Garamond({ subsets: ['latin'], weight: ['300', '400', '500', '600', '700'], style: ['normal', 'italic'], variable: '--font-cormorant' })
 
 export const metadata: Metadata = {
   title: 'Hospitality One 2 One',
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${inter.variable} ${playfair.variable}`} suppressHydrationWarning>
+    <html lang="en" className={`${lato.variable} ${cormorant.variable}`} suppressHydrationWarning>
       <head>
         <Script
           async
