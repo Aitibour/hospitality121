@@ -4,7 +4,7 @@ import Image from 'next/image'
 import type { ContentItem } from '@/types/content'
 import CategoryLabel from './CategoryLabel'
 import AuthorLine from './AuthorLine'
-import { timeAgo } from '@/lib/timeAgo'
+import { formatDate } from '@/lib/formatDate'
 
 type Props = { items: ContentItem[] }
 
@@ -25,7 +25,7 @@ export default function HeroCarousel({ items }: Props) {
   const name = item.type === 'article' ? item.author : item.guest
   const avatar = item.type === 'article' ? item.authorAvatar : item.guestAvatar
   const meta = item.type === 'article' ? item.readTime : item.duration
-  const publishedAgo = timeAgo(item.date)
+  const publishedAgo = formatDate(item.date)
   const slideId = 'hero-slide'
 
   return (
@@ -63,7 +63,7 @@ export default function HeroCarousel({ items }: Props) {
           {item.title}
         </h1>
         <div className="flex items-center gap-4">
-          <AuthorLine name={name} avatar={avatar} timeAgo={publishedAgo} />
+          <AuthorLine name={name} avatar={avatar} date={publishedAgo} />
           <span className="text-muted text-sm">{meta}</span>
         </div>
       </div>

@@ -3,10 +3,10 @@ import Image from 'next/image'
 type Props = {
   name: string
   avatar: string
-  timeAgo: string
+  date: string
 }
 
-export default function AuthorLine({ name, avatar, timeAgo }: Props) {
+export default function AuthorLine({ name, avatar, date }: Props) {
   return (
     <div className="flex items-center gap-2">
       <Image
@@ -17,7 +17,7 @@ export default function AuthorLine({ name, avatar, timeAgo }: Props) {
         className="rounded-full object-cover"
       />
       <span className="text-white text-sm font-medium">{name}</span>
-      <span className="text-muted text-sm"><span aria-hidden="true">· </span>{timeAgo}</span>
+      <span className="text-muted text-sm"><span aria-hidden="true">· </span>{date}</span>
     </div>
   )
 }

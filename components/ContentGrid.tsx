@@ -3,12 +3,9 @@ import Link from 'next/link'
 import type { ContentItem } from '@/types/content'
 import CategoryLabel from './CategoryLabel'
 import AuthorLine from './AuthorLine'
+import { formatDate } from '@/lib/formatDate'
 
 type Props = { items: ContentItem[] }
-
-function formatDate(dateStr: string): string {
-  return new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric' }).format(new Date(dateStr))
-}
 
 export default function ContentGrid({ items }: Props) {
   if (items.length === 0) return null
@@ -33,7 +30,7 @@ export default function ContentGrid({ items }: Props) {
                   <Image src={item.image} alt={item.title} fill className="object-cover group-hover:scale-105 transition-transform duration-300" />
                 </div>
                 <div className="p-4 flex flex-col gap-2">
-                  <AuthorLine name={name} avatar={avatar} timeAgo={formattedDate} />
+                  <AuthorLine name={name} avatar={avatar} date={formattedDate} />
                   <CategoryLabel label={item.category} />
                   <h3 id={cardId} className="font-serif text-white font-semibold text-base leading-snug line-clamp-3">
                     {item.title}
