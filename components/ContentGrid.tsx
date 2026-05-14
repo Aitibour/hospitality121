@@ -1,10 +1,14 @@
 import Image from 'next/image'
+import Link from 'next/link'
 import type { ContentItem } from '@/types/content'
 import CategoryLabel from './CategoryLabel'
 import AuthorLine from './AuthorLine'
-import { timeAgo } from '@/lib/timeAgo'
 
 type Props = { items: ContentItem[] }
+
+function formatDate(dateStr: string): string {
+  return new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric' }).format(new Date(dateStr))
+}
 
 export default function ContentGrid({ items }: Props) {
   if (items.length === 0) return null
@@ -13,26 +17,30 @@ export default function ContentGrid({ items }: Props) {
     <div className="max-w-7xl mx-auto px-4 py-8">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {items.map(item => {
-          const name = item.type === 'article' ? item.author : item.guest
+          const name   = item.type === 'article' ? item.author    : item.guest
           const avatar = item.type === 'article' ? item.authorAvatar : item.guestAvatar
-          const meta = item.type === 'article' ? item.readTime : item.duration
-          const publishedAgo = timeAgo(item.date)
+          const meta   = item.type === 'article' ? item.readTime  : item.duration
+          const formattedDate = formatDate(item.date)
+          const cardId = `card-title-${item.slug}`
           return (
             <article
               key={item.slug}
-              className="bg-surface rounded-lg overflow-hidden hover:ring-1 hover:ring-gold/40 transition-all cursor-pointer"
+              aria-labelledby={cardId}
+              className="bg-surface rounded-lg overflow-hidden hover:ring-1 hover:ring-gold/40 transition-shadow"
             >
-              <div className="relative h-44">
-                <Image src={item.image} alt={item.title} fill className="object-cover" />
-              </div>
-              <div className="p-4 flex flex-col gap-2">
-                <AuthorLine name={name} avatar={avatar} timeAgo={publishedAgo} />
-                <CategoryLabel label={item.category} />
-                <h3 className="font-serif text-white font-semibold text-base leading-snug line-clamp-3">
-                  {item.title}
-                </h3>
-                <p className="text-muted text-xs">{meta}</p>
-              </div>
+              <Link href={`/content/${item.slug}`} className="block group">
+                <div className="relative h-44">
+                  <Image src={item.image} alt={item.title} fill className="object-cover group-hover:scale-105 transition-transform duration-300" />
+                </div>
+                <div className="p-4 flex flex-col gap-2">
+                  <AuthorLine name={name} avatar={avatar} timeAgo={formattedDate} />
+                  <CategoryLabel label={item.category} />
+                  <h3 id={cardId} className="font-serif text-white font-semibold text-base leading-snug line-clamp-3">
+                    {item.title}
+                  </h3>
+                  <p className="text-muted text-xs">{meta}</p>
+                </div>
+              </Link>
             </article>
           )
         })}
