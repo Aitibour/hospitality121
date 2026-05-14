@@ -3,6 +3,7 @@ import { Inter, Playfair_Display } from 'next/font/google'
 import Script from 'next/script'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
+import ThemeProvider from '@/components/ThemeProvider'
 import './globals.css'
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
@@ -10,12 +11,12 @@ const playfair = Playfair_Display({ subsets: ['latin'], variable: '--font-playfa
 
 export const metadata: Metadata = {
   title: 'Hospitality One 2 One',
-  description: 'Real Leaders. Real Conversations. Real Impact. Podcasts, insights and interviews shaping the future of hospitality.',
+  description: 'Real Leaders. Real Conversations. Real Impact.',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
+    <html lang="en" className={`${inter.variable} ${playfair.variable}`} suppressHydrationWarning>
       <head>
         <Script
           async
@@ -24,10 +25,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           strategy="afterInteractive"
         />
       </head>
-      <body className="bg-navy text-white font-sans">
-        <Navbar />
-        <main>{children}</main>
-        <Footer />
+      <body className="bg-navy font-sans">
+        <ThemeProvider>
+          <Navbar />
+          <main>{children}</main>
+          <Footer />
+        </ThemeProvider>
       </body>
     </html>
   )
