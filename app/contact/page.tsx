@@ -15,7 +15,7 @@ export default function ContactPage() {
       if (typeof value === 'string') params.append(key, value)
     })
     try {
-      const res = await fetch('/', {
+      const res = await fetch('/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: params.toString(),
@@ -29,7 +29,7 @@ export default function ContactPage() {
   if (status === 'success') {
     return (
       <div className="max-w-lg mx-auto px-4 py-24 text-center">
-        <h1 className="font-serif text-3xl font-bold text-gold mb-4">Thanks!</h1>
+        <h1 autoFocus className="font-serif text-3xl font-bold text-gold mb-4">Thanks!</h1>
         <p className="text-muted">We'll be in touch soon.</p>
       </div>
     )
@@ -51,10 +51,8 @@ export default function ContactPage() {
         className="flex flex-col gap-5"
       >
         <input type="hidden" name="form-name" value="contact" />
-        <p className="hidden">
-          <label>
-            Don't fill this out: <input name="bot-field" />
-          </label>
+        <p className="hidden" aria-hidden="true">
+          <input name="bot-field" tabIndex={-1} />
         </p>
 
         <div className="flex flex-col gap-1.5">
@@ -64,7 +62,7 @@ export default function ContactPage() {
             name="name"
             type="text"
             required
-            className="bg-surface border border-muted/30 rounded px-3 py-2.5 text-sm focus:outline-none focus:border-gold transition-colors"
+            className="bg-surface border border-muted/30 rounded px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2 focus:ring-offset-navy transition-colors"
           />
         </div>
 
@@ -75,7 +73,7 @@ export default function ContactPage() {
             name="email"
             type="email"
             required
-            className="bg-surface border border-muted/30 rounded px-3 py-2.5 text-sm focus:outline-none focus:border-gold transition-colors"
+            className="bg-surface border border-muted/30 rounded px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2 focus:ring-offset-navy transition-colors"
           />
         </div>
 
@@ -86,7 +84,7 @@ export default function ContactPage() {
             name="message"
             required
             rows={5}
-            className="bg-surface border border-muted/30 rounded px-3 py-2.5 text-sm focus:outline-none focus:border-gold transition-colors resize-none"
+            className="bg-surface border border-muted/30 rounded px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2 focus:ring-offset-navy transition-colors resize-none"
           />
         </div>
 

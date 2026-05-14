@@ -30,3 +30,7 @@ body {
 .light .text-white {
   color: #0A0E1A;
 }
+
+.light .text-white\/70 {
+  color: rgba(10, 14, 26, 0.7);
+}
