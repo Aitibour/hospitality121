@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import ThemeToggle from '@/components/ThemeToggle'
 
 export default function Navbar() {
   return (
@@ -13,7 +14,7 @@ export default function Navbar() {
           </div>
         </Link>
         <div className="hidden md:flex items-center gap-8">
-          {['PODCASTS', 'INSIGHTS', 'EVENTS', 'ABOUT'].map(link => (
+          {['PODCASTS', 'INSIGHTS', 'CONTACT'].map(link => (
             <Link
               key={link}
               href={`/${link.toLowerCase()}`}
@@ -23,12 +24,15 @@ export default function Navbar() {
             </Link>
           ))}
         </div>
-        <Link
-          href="/subscribe"
-          className="bg-gold text-navy text-sm font-bold px-5 py-2 rounded hover:opacity-90 transition-opacity"
-        >
-          Subscribe
-        </Link>
+        <div className="flex items-center gap-3">
+          <ThemeToggle />
+          <Link
+            href="/subscribe"
+            className="bg-gold text-navy text-sm font-bold px-5 py-2 rounded hover:opacity-90 transition-opacity"
+          >
+            Subscribe
+          </Link>
+        </div>
       </div>
     </nav>
   )
