@@ -9,10 +9,20 @@ type Props = { items: ContentItem[] }
 
 type CardProps = { item: ContentItem; idPrefix: string }
 
+function getItemMeta(item: ContentItem) {
+  switch (item.type) {
+    case 'article':
+    case 'news':
+      return { name: item.author, avatar: item.authorAvatar, meta: item.readTime }
+    case 'podcast':
+      return { name: item.guest, avatar: item.guestAvatar, meta: item.duration }
+    case 'event':
+      return { name: item.organizer, avatar: item.organizerAvatar, meta: item.location }
+  }
+}
+
 function SmallCard({ item, idPrefix }: CardProps) {
-  const name   = item.type === 'article' ? item.author       : item.guest
-  const avatar = item.type === 'article' ? item.authorAvatar : item.guestAvatar
-  const meta   = item.type === 'article' ? item.readTime     : item.duration
+  const { name, avatar, meta } = getItemMeta(item)
   const titleId = `${idPrefix}-${item.slug}`
   return (
     <article aria-labelledby={titleId} className="group">
@@ -36,9 +46,7 @@ function SmallCard({ item, idPrefix }: CardProps) {
 }
 
 function LargeCard({ item, idPrefix }: CardProps) {
-  const name   = item.type === 'article' ? item.author       : item.guest
-  const avatar = item.type === 'article' ? item.authorAvatar : item.guestAvatar
-  const meta   = item.type === 'article' ? item.readTime     : item.duration
+  const { name, avatar, meta } = getItemMeta(item)
   const titleId = `${idPrefix}-${item.slug}`
   return (
     <article aria-labelledby={titleId} className="relative h-[380px] rounded-lg overflow-hidden group">

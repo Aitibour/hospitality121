@@ -7,6 +7,18 @@ import { formatDate } from '@/lib/formatDate'
 
 type Props = { items: ContentItem[] }
 
+function getCardMeta(item: ContentItem) {
+  switch (item.type) {
+    case 'article':
+    case 'news':
+      return { name: item.author, avatar: item.authorAvatar, meta: item.readTime }
+    case 'podcast':
+      return { name: item.guest, avatar: item.guestAvatar, meta: item.duration }
+    case 'event':
+      return { name: item.organizer, avatar: item.organizerAvatar, meta: item.location }
+  }
+}
+
 export default function ContentGrid({ items }: Props) {
   if (items.length === 0) return null
 
@@ -14,10 +26,10 @@ export default function ContentGrid({ items }: Props) {
     <div className="max-w-7xl mx-auto px-4 py-8">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {items.map(item => {
-          const name   = item.type === 'article' ? item.author    : item.guest
-          const avatar = item.type === 'article' ? item.authorAvatar : item.guestAvatar
-          const meta   = item.type === 'article' ? item.readTime  : item.duration
-          const formattedDate = formatDate(item.date)
+          const { name, avatar, meta } = getCardMeta(item)
+          const formattedDate = item.type === 'event'
+            ? `Event: ${formatDate(item.eventDate)}`
+            : formatDate(item.date)
           const cardId = `card-title-${item.slug}`
           return (
             <article

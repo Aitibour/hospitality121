@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { useState } from 'react'
 import ThemeToggle from '@/components/ThemeToggle'
 
-const NAV_LINKS = ['PODCASTS', 'INSIGHTS', 'CONTACT']
+const NAV_LINKS = ['NEWS', 'PODCASTS', 'INSIGHTS', 'EVENTS', 'CONTACT']
 
 export default function Navbar() {
   const [open, setOpen] = useState(false)

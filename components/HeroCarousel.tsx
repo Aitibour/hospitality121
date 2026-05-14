@@ -22,9 +22,15 @@ export default function HeroCarousel({ items }: Props) {
   if (items.length === 0) return null
 
   const item = items[current]
-  const name = item.type === 'article' ? item.author : item.guest
-  const avatar = item.type === 'article' ? item.authorAvatar : item.guestAvatar
-  const meta = item.type === 'article' ? item.readTime : item.duration
+  const name   = item.type === 'article' || item.type === 'news' ? item.author
+               : item.type === 'podcast' ? item.guest
+               : item.organizer
+  const avatar = item.type === 'article' || item.type === 'news' ? item.authorAvatar
+               : item.type === 'podcast' ? item.guestAvatar
+               : item.organizerAvatar
+  const meta   = item.type === 'article' || item.type === 'news' ? item.readTime
+               : item.type === 'podcast' ? item.duration
+               : item.location
   const publishedAgo = formatDate(item.date)
   const slideId = 'hero-slide'
 
