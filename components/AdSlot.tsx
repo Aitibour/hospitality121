@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useRef } from 'react'
+import { useEffect } from 'react'
 import DOMPurify from 'isomorphic-dompurify'
 
 type Zone = 'hero-banner' | 'mid-grid' | 'footer-banner'
@@ -18,14 +18,17 @@ type Props = {
   className?: string
 }
 
-export default function AdSlot({ zone, sponsorHtml, className = '' }: Props) {
-  const ref = useRef<HTMLDivElement>(null)
+DOMPurify.addHook('afterSanitizeAttributes', (node) => {
+  if (node.tagName === 'A' && node.getAttribute('target') === '_blank') {
+    node.setAttribute('rel', 'noopener noreferrer')
+  }
+})
 
+export default function AdSlot({ zone, sponsorHtml, className = '' }: Props) {
   useEffect(() => {
-    if (!sponsorHtml && typeof window !== 'undefined') {
+    if (!sponsorHtml) {
       try {
-        // @ts-ignore
-        ;(window.adsbygoogle = window.adsbygoogle || []).push({})
+        window.adsbygoogle.push({})
       } catch {}
     }
   }, [sponsorHtml])
@@ -33,7 +36,7 @@ export default function AdSlot({ zone, sponsorHtml, className = '' }: Props) {
   if (sponsorHtml) {
     const clean = DOMPurify.sanitize(sponsorHtml, {
       ALLOWED_TAGS: ['a', 'img', 'picture', 'source', 'p', 'span', 'div'],
-      ALLOWED_ATTR: ['href', 'src', 'alt', 'target', 'rel', 'class', 'style', 'width', 'height', 'srcset', 'media'],
+      ALLOWED_ATTR: ['href', 'src', 'alt', 'target', 'rel', 'class', 'width', 'height', 'srcset', 'media'],
     })
     return (
       <div
@@ -44,7 +47,7 @@ export default function AdSlot({ zone, sponsorHtml, className = '' }: Props) {
   }
 
   return (
-    <div className={`flex justify-center my-4 ${className}`} ref={ref}>
+    <div className={`flex justify-center my-4 ${className}`}>
       <ins
         className="adsbygoogle"
         style={{ display: 'block' }}
