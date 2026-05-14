@@ -40,6 +40,9 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# git worktrees
+.worktrees/
+
 # Raw brand assets (served from public/images/ instead)
 *.png
 *.jpg
