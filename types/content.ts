@@ -52,4 +52,17 @@ export type EventItem = {
   featured: boolean
 }
 
-export type ContentItem = Article | Podcast | NewsItem | EventItem
+export type BlogPost = {
+  type: 'blog'
+  slug: string
+  title: string
+  category: string
+  author: string
+  authorAvatar: string
+  date: string
+  readTime: string
+  image: string
+  featured: boolean
+}
+
+export type ContentItem = Article | Podcast | NewsItem | EventItem | BlogPost

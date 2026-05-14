@@ -31,7 +31,8 @@ export function getAllContent(): ContentItem[] {
   const podcasts = readDir('podcasts', 'podcast')
   const news     = readDir('news', 'news')
   const events   = readDir('events', 'event')
-  return [...articles, ...podcasts, ...news, ...events].sort(
+  const blog     = readDir('blog', 'blog')
+  return [...articles, ...podcasts, ...news, ...events, ...blog].sort(
     (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
   )
 }

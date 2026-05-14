@@ -13,6 +13,7 @@ function getItemMeta(item: ContentItem) {
   switch (item.type) {
     case 'article':
     case 'news':
+    case 'blog':
       return { name: item.author, avatar: item.authorAvatar, meta: item.readTime }
     case 'podcast':
       return { name: item.guest, avatar: item.guestAvatar, meta: item.duration }

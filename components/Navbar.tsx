@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { useState } from 'react'
 import ThemeToggle from '@/components/ThemeToggle'
 
-const NAV_LINKS = ['NEWS', 'PODCASTS', 'INSIGHTS', 'EVENTS', 'CONTACT']
+const NAV_LINKS = ['HOME', 'NEWS', 'PODCASTS', 'INSIGHTS', 'EVENTS', 'BLOG', 'CONTACT']
 
 export default function Navbar() {
   const [open, setOpen] = useState(false)
@@ -26,7 +26,7 @@ export default function Navbar() {
           {NAV_LINKS.map(link => (
             <Link
               key={link}
-              href={`/${link.toLowerCase()}`}
+              href={link === 'HOME' ? '/' : `/${link.toLowerCase()}`}
               className="text-white text-sm font-medium tracking-wider hover:text-gold transition-colors"
             >
               {link}
@@ -67,7 +67,7 @@ export default function Navbar() {
           {NAV_LINKS.map(link => (
             <Link
               key={link}
-              href={`/${link.toLowerCase()}`}
+              href={link === 'HOME' ? '/' : `/${link.toLowerCase()}`}
               onClick={() => setOpen(false)}
               className="text-white text-sm font-medium tracking-wider hover:text-gold transition-colors py-1"
             >

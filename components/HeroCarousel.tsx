@@ -22,13 +22,13 @@ export default function HeroCarousel({ items }: Props) {
   if (items.length === 0) return null
 
   const item = items[current]
-  const name   = item.type === 'article' || item.type === 'news' ? item.author
+  const name   = item.type === 'article' || item.type === 'news' || item.type === 'blog' ? item.author
                : item.type === 'podcast' ? item.guest
                : item.organizer
-  const avatar = item.type === 'article' || item.type === 'news' ? item.authorAvatar
+  const avatar = item.type === 'article' || item.type === 'news' || item.type === 'blog' ? item.authorAvatar
                : item.type === 'podcast' ? item.guestAvatar
                : item.organizerAvatar
-  const meta   = item.type === 'article' || item.type === 'news' ? item.readTime
+  const meta   = item.type === 'article' || item.type === 'news' || item.type === 'blog' ? item.readTime
                : item.type === 'podcast' ? item.duration
                : item.location
   const publishedAgo = formatDate(item.date)
