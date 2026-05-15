@@ -9,15 +9,8 @@ export default function InsightsPage() {
   const items = getAllContent().filter(item => item.type === 'article')
   return (
     <>
-      <SectionHeader
-        title="INSIGHTS"
-        description="Expert perspectives, industry analysis, and thought leadership from hospitality's brightest minds."
-        count={items.length}
-        noun="article"
-      />
-      <div className="max-w-7xl mx-auto px-4 py-10">
-        <ContentGrid items={items} />
-      </div>
+      <SectionHeader sectionKey="insights" count={items.length} />
+      <div className="max-w-7xl mx-auto px-4 py-10"><ContentGrid items={items} /></div>
       <AdSlot zone="mid-grid" />
     </>
   )

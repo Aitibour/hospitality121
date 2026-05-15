@@ -6,7 +6,7 @@ export default function Footer() {
     <footer className="bg-surface border-t border-navy mt-16">
       <div className="max-w-7xl mx-auto px-4 py-12 flex flex-col md:flex-row items-center justify-between gap-6">
         <div className="flex items-center gap-3">
-          <Image src="/images/logo.png" alt="Hospitality121" width={48} height={48} />
+          <Image src="/images/Logo.png" alt="Hospitality121" width={48} height={48} />
           <div>
             <p className="font-serif font-bold text-sm">
               <span className="text-white">HOSPITALITY </span>

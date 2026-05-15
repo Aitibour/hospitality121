@@ -4,6 +4,7 @@ import Script from 'next/script'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import ThemeProvider from '@/components/ThemeProvider'
+import { LanguageProvider } from '@/context/LanguageContext'
 import './globals.css'
 
 const lato = Lato({ subsets: ['latin'], weight: ['300', '400', '700', '900'], variable: '--font-lato' })
@@ -27,9 +28,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className="bg-navy font-sans">
         <ThemeProvider>
-          <Navbar />
-          <main>{children}</main>
-          <Footer />
+          <LanguageProvider>
+            <Navbar />
+            <main>{children}</main>
+            <Footer />
+          </LanguageProvider>
         </ThemeProvider>
       </body>
     </html>

@@ -9,15 +9,8 @@ export default function EventsPage() {
   const items = getAllContent().filter(item => item.type === 'event')
   return (
     <>
-      <SectionHeader
-        title="EVENTS"
-        description="Summits, conferences, and forums where hospitality's leaders connect, learn, and shape the industry."
-        count={items.length}
-        noun="event"
-      />
-      <div className="max-w-7xl mx-auto px-4 py-10">
-        <ContentGrid items={items} />
-      </div>
+      <SectionHeader sectionKey="events" count={items.length} />
+      <div className="max-w-7xl mx-auto px-4 py-10"><ContentGrid items={items} /></div>
       <AdSlot zone="mid-grid" />
     </>
   )
