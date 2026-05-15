@@ -15,7 +15,7 @@ export default function HeroCarousel({ items }: Props) {
   const prev = useCallback(() => setCurrent(c => (c - 1 + items.length) % items.length), [items.length])
 
   useEffect(() => {
-    const timer = setInterval(next, 6000)
+    const timer = setInterval(next, 3000)
     return () => clearInterval(timer)
   }, [next])
 

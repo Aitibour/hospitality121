@@ -71,7 +71,13 @@
       "Bash(xargs sed -i 's|/images/logo\\\\.png|/images/Logo.png|g')",
       "Bash(sed -i 's|brand-banner-5\\\\.png|brand-banner-6.png|g' content/articles/ai-in-guest-experience.mdx)",
       "Bash(sed -i 's|brand-banner-5\\\\.png|brand-banner-7.png|g' content/events/world-hotel-congress-dubai.mdx)",
-      "Bash(cat)"
+      "Bash(cat)",
+      "Bash(npx -y @netlify/mcp@latest --site-id 7b971775-1cad-43b5-9172-701405749ba8 --proxy-path \"https://netlify-mcp.netlify.app/proxy/eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2R0NNIn0..9TvMsDD1uhQ2QutI.XSm3QaVN_fWFFih9gH2n4JoEbupaE4eljUSFSKVcRPEdsHJlLxAdWCApvRkmLxiIsOA2RGFOMzWHXQmNel2SZQIcFnK2lRsGnK67crvY9LUDCeTzUw2tv9XGC2bxW61eHhZT0-y613o6eF3JO-FcUlnoUNOssMeTPS6ENRZUY2SZkC3h7WAoF5FgQn3q5WQ0KKA3xURcRc0f5SuzESlbotfK9_uVv5weilZkFQYIYMngXexuF2yYZERwo9ZwiKjLgE1jbmC3oEgSgveZQVmTqW4qtKjeVgMogiyD_cvDSRFt2fRcLhYYMoLRVpUnfQ62v6971225IyWYz8Hywb0rWQbULDjnIbIGzVxDPjxvBGXUxITO5g.Z-QRW_Dm_GQnW9-_DU42zw\")",
+      "Bash(npx -y @netlify/mcp@latest --site-id 7b971775-1cad-43b5-9172-701405749ba8 --proxy-path \"https://netlify-mcp.netlify.app/proxy/eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2R0NNIn0..q65RLmq5kyRbrTSq.9GdD9_OknUYfwcJKFKvDk8QrFqbZuKKtJc-4QEZTSYEKya-kW9VeV5v0wVvHmsJtLeuIak-CBsvq1SDitGSx_o8tJQLLaD0WfmJgGBHbQOkIKA7zhf5cIWR9CfbYslvCwkuau2LhHaKA-0ggPfkMIcHI6CwtcWDPDyFKmUT4ZloaRQNYn7ig5RovM6R9Wpa2Y3QWZaXbxpkcFUgnLzBdBFGyzzu6BkmFoLOXPdjkKHn4cKCmyNuE-3arsr2GdVgvBtHcvGSyLvVIuz1cI6yRwtm_9c8a6S4nX213oN9hzw5funs0ZEamMZdcxXCZVwasrAabs-GdUhRKqRZuK_MW7Gm1YQku9AB5ZVlXXtJxjI6o447tuQ.19uWp1Ett-0NS7B8fC1T7g\")",
+      "Bash(mkdir -p \"c:\\\\Users\\\\Abdel\\\\Documents\\\\Claude Code\\\\Hospitality121\\\\app\\\\content\\\\[slug]\")"
+    ],
+    "additionalDirectories": [
+      "c:\\Users\\Abdel\\Documents\\Claude Code\\Hospitality121\\app\\content"
     ]
   }
 }

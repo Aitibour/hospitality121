@@ -5,6 +5,38 @@ import type { ContentItem } from '@/types/content'
 
 type ContentType = ContentItem['type']
 
+const DIR_MAP: Record<string, ContentType> = {
+  articles: 'article',
+  podcasts: 'podcast',
+  news: 'news',
+  events: 'event',
+  blog: 'blog',
+}
+
+export function getContentBySlug(slug: string): { item: ContentItem; body: string } | null {
+  for (const [dir, type] of Object.entries(DIR_MAP)) {
+    const filePath = path.join(process.cwd(), 'content', dir, `${slug}.mdx`)
+    if (fs.existsSync(filePath)) {
+      const raw = fs.readFileSync(filePath, 'utf-8')
+      const { data, content } = matter(raw)
+      return { item: { ...data, slug, type } as ContentItem, body: content }
+    }
+  }
+  return null
+}
+
+export function getAllSlugs(): { slug: string }[] {
+  const slugs: { slug: string }[] = []
+  for (const dir of Object.keys(DIR_MAP)) {
+    const fullDir = path.join(process.cwd(), 'content', dir)
+    try {
+      const files = fs.readdirSync(fullDir).filter(f => f.endsWith('.mdx'))
+      for (const f of files) slugs.push({ slug: f.replace('.mdx', '') })
+    } catch { /* skip */ }
+  }
+  return slugs
+}
+
 function readDir(dir: string, type: ContentType): ContentItem[] {
   const fullDir = path.join(process.cwd(), 'content', dir)
   let files: string[]
