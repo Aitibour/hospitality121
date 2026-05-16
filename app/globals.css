@@ -42,3 +42,11 @@ body {
 .light .text-white\/70 {
   color: rgba(10, 14, 26, 0.7);
 }
+
+.light .text-white\/85 {
+  color: rgba(10, 14, 26, 0.85);
+}
+
+.light .text-white\/90 {
+  color: rgba(10, 14, 26, 0.9);
+}

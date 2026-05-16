@@ -202,7 +202,7 @@ export default async function ContentDetailPage({ params }: { params: Promise<{ 
         {paragraphs.length > 0 ? (
           <div className="prose prose-lg max-w-none">
             {paragraphs.map((para, i) => (
-              <p key={i} className="mb-5 text-base leading-relaxed text-white/85 dark:text-white/85 light:text-navy/85">
+              <p key={i} className="mb-5 text-base leading-relaxed text-white/85">
                 {para}
               </p>
             ))}
