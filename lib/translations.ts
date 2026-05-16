@@ -4,7 +4,7 @@ export const translations = {
   en: {
     nav: {
       home: 'HOME', news: 'NEWS', podcasts: 'PODCASTS', insights: 'INSIGHTS',
-      events: 'EVENTS', blog: 'BLOG', contact: 'CONTACT', subscribe: 'Subscribe',
+      interviews: 'INTERVIEWS', events: 'EVENTS', blog: 'BLOG', contact: 'CONTACT', subscribe: 'Subscribe',
     },
     sections: {
       insights: {
@@ -32,6 +32,11 @@ export const translations = {
         title: 'BLOG',
         description: 'In-depth perspectives, practical guides, and original thinking from the Hospitality121 team.',
         noun: 'post',
+      },
+      interviews: {
+        title: 'INTERVIEWS',
+        description: 'In-depth conversations with hotel CIOs, IT directors, startup founders, and the innovators reshaping hospitality.',
+        noun: 'interview',
       },
     },
     home: {
@@ -67,7 +72,7 @@ export const translations = {
   fr: {
     nav: {
       home: 'ACCUEIL', news: 'ACTUALITÉS', podcasts: 'PODCASTS', insights: 'ANALYSES',
-      events: 'ÉVÉNEMENTS', blog: 'BLOG', contact: 'CONTACT', subscribe: "S'abonner",
+      interviews: 'INTERVIEWS', events: 'ÉVÉNEMENTS', blog: 'BLOG', contact: 'CONTACT', subscribe: "S'abonner",
     },
     sections: {
       insights: {
@@ -95,6 +100,11 @@ export const translations = {
         title: 'BLOG',
         description: 'Perspectives approfondies, guides pratiques et réflexions originales de l\'équipe Hospitality121.',
         noun: 'article',
+      },
+      interviews: {
+        title: 'INTERVIEWS',
+        description: 'Conversations approfondies avec des DSI hôteliers, fondateurs de startups et les innovateurs qui transforment l\'hôtellerie.',
+        noun: 'interview',
       },
     },
     home: {

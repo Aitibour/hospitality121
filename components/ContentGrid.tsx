@@ -1,9 +1,12 @@
+'use client'
+
 import Image from 'next/image'
 import Link from 'next/link'
 import type { ContentItem } from '@/types/content'
 import CategoryLabel from './CategoryLabel'
 import AuthorLine from './AuthorLine'
 import { formatDate } from '@/lib/formatDate'
+import { getCategorySlugForTerm } from '@/lib/categories'
 
 type Props = { items: ContentItem[] }
 
@@ -44,7 +47,16 @@ export default function ContentGrid({ items }: Props) {
                 </div>
                 <div className="p-4 flex flex-col gap-2">
                   <AuthorLine name={name} avatar={avatar} date={formattedDate} />
-                  <CategoryLabel label={item.category} />
+                  {(() => {
+                    const catSlug = getCategorySlugForTerm(item.category)
+                    return catSlug ? (
+                      <Link href={`/category/${catSlug}`} onClick={e => e.stopPropagation()}>
+                        <CategoryLabel label={item.category} />
+                      </Link>
+                    ) : (
+                      <CategoryLabel label={item.category} />
+                    )
+                  })()}
                   <h3 id={cardId} className="font-serif text-white font-semibold text-base leading-snug line-clamp-3">
                     {item.title}
                   </h3>

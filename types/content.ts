@@ -23,6 +23,11 @@ export type Podcast = {
   image: string
   featured: boolean
   embedUrl: string
+  guestTitle?: string
+  guestLinkedIn?: string
+  guestBio?: string
+  keyTakeaways?: string[]
+  showNotes?: string
 }
 
 export type NewsItem = {

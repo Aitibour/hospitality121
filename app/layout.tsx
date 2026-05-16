@@ -11,8 +11,15 @@ const lato = Lato({ subsets: ['latin'], weight: ['300', '400', '700', '900'], va
 const cormorant = Cormorant_Garamond({ subsets: ['latin'], weight: ['300', '400', '500', '600', '700'], style: ['normal', 'italic'], variable: '--font-cormorant' })
 
 export const metadata: Metadata = {
-  title: 'Hospitality One 2 One',
-  description: 'Real Leaders. Real Conversations. Real Impact.',
+  title: {
+    template: '%s | Hospitality121',
+    default: 'Hospitality121 | The Future of Hospitality',
+  },
+  description: 'Hospitality technology, AI, guest experience, digital transformation, and innovation shaping the next generation of hospitality.',
+  openGraph: {
+    siteName: 'Hospitality121',
+    type: 'website',
+  },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

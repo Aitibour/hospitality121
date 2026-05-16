@@ -1,7 +1,14 @@
+import type { Metadata } from 'next'
 import { getAllContent } from '@/lib/content'
 import ContentGrid from '@/components/ContentGrid'
 import SectionHeader from '@/components/SectionHeader'
 import AdSlot from '@/components/AdSlot'
+
+export const metadata: Metadata = {
+  title: 'News',
+  description: 'Breaking hospitality industry news — hotel openings, brand expansions, technology announcements, and the stories shaping global hospitality.',
+  keywords: 'hospitality news, hotel industry news, hospitality technology news',
+}
 
 export const revalidate = 3600
 

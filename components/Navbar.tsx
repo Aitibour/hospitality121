@@ -6,11 +6,11 @@ import { useState } from 'react'
 import ThemeToggle from '@/components/ThemeToggle'
 import { useLanguage } from '@/context/LanguageContext'
 
-type NavKey = 'home' | 'news' | 'podcasts' | 'insights' | 'events' | 'blog' | 'contact'
-const NAV_KEYS: NavKey[] = ['home', 'news', 'podcasts', 'insights', 'events', 'blog', 'contact']
+type NavKey = 'home' | 'news' | 'podcasts' | 'insights' | 'interviews' | 'events' | 'blog' | 'contact'
+const NAV_KEYS: NavKey[] = ['home', 'news', 'podcasts', 'insights', 'interviews', 'events', 'blog', 'contact']
 const NAV_HREF: Record<NavKey, string> = {
   home: '/', news: '/news', podcasts: '/podcasts', insights: '/insights',
-  events: '/events', blog: '/blog', contact: '/contact',
+  interviews: '/interviews', events: '/events', blog: '/blog', contact: '/contact',
 }
 
 export default function Navbar() {

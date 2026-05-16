@@ -3,7 +3,7 @@
 import { useLanguage } from '@/context/LanguageContext'
 import type { Locale } from '@/lib/translations'
 
-type SectionKey = 'insights' | 'podcasts' | 'news' | 'events' | 'blog'
+type SectionKey = 'insights' | 'podcasts' | 'news' | 'events' | 'blog' | 'interviews'
 
 type Props = {
   sectionKey: SectionKey
