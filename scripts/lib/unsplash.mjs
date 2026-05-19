@@ -51,18 +51,13 @@ export async function fetchImage(keywords, slug) {
     fs.writeFileSync(destPath, Buffer.from(await imgRes.arrayBuffer()))
     console.log(`[unsplash] Image saved from Unsplash: ${filename}`)
   } catch (err) {
-    console.warn(`[unsplash] Unsplash failed (${err.message}), trying local fallback`)
-    try {
-      const fallback = FALLBACK_IMAGES[Math.floor(Math.random() * FALLBACK_IMAGES.length)]
-      fs.copyFileSync(
-        path.join(process.cwd(), FALLBACK_SRC_DIR, fallback),
-        destPath
-      )
-      console.log(`[unsplash] Fallback image copied: ${fallback} -> ${filename}`)
-    } catch (fallbackErr) {
-      console.error(`[unsplash] Fallback copy also failed (${fallbackErr.message}). No image written.`)
-      // Return the filename anyway so callers can continue; the image just won't be on disk.
-    }
+    console.warn(`⚠ Unsplash failed (${err.message}), using fallback`)
+    const fallback = FALLBACK_IMAGES[Math.floor(Math.random() * FALLBACK_IMAGES.length)]
+    fs.copyFileSync(
+      path.join(process.cwd(), FALLBACK_SRC_DIR, fallback),
+      destPath
+    )
+    console.log(`✓ Fallback image copied: ${fallback} → ${filename}`)
   }
 
   return filename

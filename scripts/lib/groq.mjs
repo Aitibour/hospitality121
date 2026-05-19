@@ -47,7 +47,10 @@ Write an original commentary post inspired by this article. Return ONLY a JSON o
 
   const required = ['slug', 'titleEn', 'titleFr', 'excerptEn', 'excerptFr', 'category', 'bodyEn', 'bodyFr', 'keywords']
   for (const key of required) {
-    if (!parsed[key]) throw new Error(`Groq response missing field: ${key}`)
+    if (parsed[key] == null || parsed[key] === '') throw new Error(`Groq response missing field: ${key}`)
+  }
+  if (!Array.isArray(parsed.keywords) || parsed.keywords.length === 0) {
+    throw new Error('Groq response missing field: keywords')
   }
 
   if (!VALID_CATEGORIES.includes(parsed.category)) {

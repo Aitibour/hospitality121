@@ -8,8 +8,8 @@ import { execFileSync } from 'node:child_process'
 export function commitAndPush({ slug, imageFile }) {
   const run = (cmd, args) => execFileSync(cmd, args, { stdio: 'inherit' })
 
-  run('git', ['config', 'user.email', 'action@github.com'])
-  run('git', ['config', 'user.name', 'H1H Auto Blog'])
+  run('git', ['config', '--local', 'user.email', 'action@github.com'])
+  run('git', ['config', '--local', 'user.name', 'H1H Auto Blog'])
   run('git', ['add',
     `content/blog/${slug}.mdx`,
     `public/images/content/${imageFile}`,
