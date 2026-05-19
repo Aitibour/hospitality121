@@ -1,13 +1,19 @@
 import fs from 'node:fs'
 import path from 'node:path'
 
+// Fallback images that actually exist in public/images/.
+// These are used when both Unsplash fails and no dedicated blog images are present.
 const FALLBACK_IMAGES = [
-  'five-trends-reshaping-hospitality.jpg',
-  'future-of-hotel-loyalty.jpg',
-  'what-guests-want-2026.jpg',
-  'revenue-beyond-rooms.jpg',
-  'how-to-build-hotel-culture.jpg',
+  'brand-banner-1.png',
+  'brand-banner-2.png',
+  'brand-banner-3.png',
+  'brand-banner-4.png',
+  'brand-banner-6.png',
+  'brand-banner-7.png',
 ]
+
+// Source directory for fallback images (relative to project root).
+const FALLBACK_SRC_DIR = path.join('public', 'images')
 
 /**
  * Downloads a relevant image from Unsplash and saves to public/images/content/.
@@ -20,6 +26,9 @@ const FALLBACK_IMAGES = [
 export async function fetchImage(keywords, slug) {
   const filename = `auto-${slug}.jpg`
   const destPath = path.join(process.cwd(), 'public', 'images', 'content', filename)
+
+  // Ensure the destination directory exists.
+  fs.mkdirSync(path.dirname(destPath), { recursive: true })
 
   try {
     const query = encodeURIComponent(keywords[0] ?? 'luxury hotel')
@@ -40,15 +49,20 @@ export async function fetchImage(keywords, slug) {
     if (!imgRes.ok) throw new Error(`Image download ${imgRes.status}`)
 
     fs.writeFileSync(destPath, Buffer.from(await imgRes.arrayBuffer()))
-    console.log(`✓ Image saved from Unsplash: ${filename}`)
+    console.log(`[unsplash] Image saved from Unsplash: ${filename}`)
   } catch (err) {
-    console.warn(`⚠ Unsplash failed (${err.message}), using fallback`)
-    const fallback = FALLBACK_IMAGES[Math.floor(Math.random() * FALLBACK_IMAGES.length)]
-    fs.copyFileSync(
-      path.join(process.cwd(), 'public', 'images', 'content', fallback),
-      destPath
-    )
-    console.log(`✓ Fallback image copied: ${fallback} → ${filename}`)
+    console.warn(`[unsplash] Unsplash failed (${err.message}), trying local fallback`)
+    try {
+      const fallback = FALLBACK_IMAGES[Math.floor(Math.random() * FALLBACK_IMAGES.length)]
+      fs.copyFileSync(
+        path.join(process.cwd(), FALLBACK_SRC_DIR, fallback),
+        destPath
+      )
+      console.log(`[unsplash] Fallback image copied: ${fallback} -> ${filename}`)
+    } catch (fallbackErr) {
+      console.error(`[unsplash] Fallback copy also failed (${fallbackErr.message}). No image written.`)
+      // Return the filename anyway so callers can continue; the image just won't be on disk.
+    }
   }
 
   return filename
