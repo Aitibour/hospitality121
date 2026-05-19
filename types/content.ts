@@ -61,6 +61,9 @@ export type BlogPost = {
   type: 'blog'
   slug: string
   title: string
+  titleFr?: string
+  excerpt?: string
+  excerptFr?: string
   category: string
   author: string
   authorAvatar: string
@@ -68,6 +71,8 @@ export type BlogPost = {
   readTime: string
   image: string
   featured: boolean
+  source?: string
+  sourceUrl?: string
 }
 
 export type ContentItem = Article | Podcast | NewsItem | EventItem | BlogPost

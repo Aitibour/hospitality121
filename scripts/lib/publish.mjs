@@ -1,0 +1,56 @@
+import { execFileSync } from 'node:child_process'
+
+/**
+ * Commits the new MDX, image, and tracking file, then pushes to origin main.
+ * Uses execFileSync with argument arrays — no shell interpolation.
+ * @param {{ slug: string, imageFile: string }} params
+ */
+export function commitAndPush({ slug, imageFile }) {
+  const run = (cmd, args) => execFileSync(cmd, args, { stdio: 'inherit' })
+
+  run('git', ['config', '--local', 'user.email', 'action@github.com'])
+  run('git', ['config', '--local', 'user.name', 'H1H Auto Blog'])
+  run('git', ['add',
+    `content/blog/${slug}.mdx`,
+    `public/images/content/${imageFile}`,
+    'scripts/seen-articles.json',
+  ])
+  run('git', ['commit', '-m', `feat(blog): auto-post ${slug}`])
+  run('git', ['push', 'origin', 'HEAD:main'])
+
+  console.log(`✓ Pushed: ${slug}`)
+}
+
+/**
+ * Pings IndexNow to fast-index the new post on Bing and Yandex.
+ * Non-fatal: logs a warning if it fails, never throws.
+ * @param {string} slug
+ */
+export async function pingIndexNow(slug) {
+  const siteUrl = process.env.SITE_URL ?? 'https://hospitality121.com'
+  const key = process.env.INDEXNOW_KEY
+  if (!key) {
+    console.warn('⚠ INDEXNOW_KEY not set, skipping IndexNow ping')
+    return
+  }
+
+  const host = new URL(siteUrl).hostname
+  const payload = {
+    host,
+    key,
+    keyLocation: `${siteUrl}/${key}.txt`,
+    urlList: [`${siteUrl}/content/${slug}`],
+  }
+
+  try {
+    const res = await fetch('https://api.indexnow.org/indexnow', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+      signal: AbortSignal.timeout(10000),
+    })
+    console.log(`✓ IndexNow ping: ${res.status}`)
+  } catch (err) {
+    console.warn(`⚠ IndexNow ping failed: ${err.message}`)
+  }
+}

@@ -5,6 +5,7 @@ import type { Metadata } from 'next'
 import { getContentBySlug, getAllSlugs, getAllContent } from '@/lib/content'
 import { getCategorySlugForTerm } from '@/lib/categories'
 import type { ContentItem } from '@/types/content'
+import BilingualContent from '@/components/BilingualContent'
 
 export const revalidate = 3600
 
@@ -18,7 +19,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   if (!result) return {}
 
   const { item, body } = result
-  const description = body
+  const bodyEn = body.split('\n<!-- FR -->\n')[0]
+  const description = bodyEn
     .split('\n')
     .map(l => l.trim())
     .find(l => l.length > 60)
@@ -71,7 +73,7 @@ function safeJsonLd(obj: Record<string, unknown>): string {
 function buildJsonLd(item: ContentItem, body: string) {
   const base = process.env.NEXT_PUBLIC_BASE_URL || 'https://hospitality121.com'
   const url = `${base}/content/${item.slug}`
-  const description = body.split('\n').map(l => l.trim()).find(l => l.length > 60)?.slice(0, 160) ?? ''
+  const description = body.split('\n<!-- FR -->\n')[0].split('\n').map(l => l.trim()).find(l => l.length > 60)?.slice(0, 160) ?? ''
 
   if (item.type === 'event') {
     return safeJsonLd({
@@ -122,10 +124,8 @@ export default async function ContentDetailPage({ params }: { params: Promise<{ 
   const meta = getMeta(item)
   const catSlug = getCategorySlugForTerm(item.category)
 
-  const paragraphs = body
-    .split(/\n{2,}/)
-    .map(p => p.trim())
-    .filter(Boolean)
+  const [bodyEn, bodyFr] = body.split('\n<!-- FR -->\n')
+  const titleFr = 'titleFr' in item ? (item as { titleFr?: string }).titleFr : undefined
 
   const jsonLdString = buildJsonLd(item, body)
 
@@ -150,8 +150,13 @@ export default async function ContentDetailPage({ params }: { params: Promise<{ 
           )}
         </div>
 
-        {/* Title */}
-        <h1 className="font-serif text-3xl md:text-5xl font-bold leading-tight mb-6">{item.title}</h1>
+        {/* Title + Body (bilingual for auto-generated posts, EN-only for existing posts) */}
+        <BilingualContent
+          titleEn={item.title}
+          titleFr={titleFr}
+          bodyEn={bodyEn}
+          bodyFr={bodyFr}
+        />
 
         {/* Author row */}
         <div className="flex items-center gap-3 mb-8 text-sm text-muted">
@@ -196,19 +201,6 @@ export default async function ContentDetailPage({ params }: { params: Promise<{ 
               className="rounded-lg"
             />
           </div>
-        )}
-
-        {/* Body content */}
-        {paragraphs.length > 0 ? (
-          <div className="prose prose-lg max-w-none">
-            {paragraphs.map((para, i) => (
-              <p key={i} className="mb-5 text-base leading-relaxed text-white/85">
-                {para}
-              </p>
-            ))}
-          </div>
-        ) : (
-          <p className="text-muted italic">Full article coming soon.</p>
         )}
 
         {/* Podcast extras */}
