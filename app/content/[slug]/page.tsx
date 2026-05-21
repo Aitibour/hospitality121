@@ -1,11 +1,14 @@
 import Image from 'next/image'
+import PodcastPlayer from '@/components/PodcastPlayer'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import { getContentBySlug, getAllSlugs, getAllContent } from '@/lib/content'
 import { getCategorySlugForTerm } from '@/lib/categories'
+import { nameToSlug, AUTHORS_BY_NAME } from '@/lib/authors'
 import type { ContentItem } from '@/types/content'
 import BilingualContent from '@/components/BilingualContent'
+import ShareButtons from '@/components/ShareButtons'
 
 export const revalidate = 3600
 
@@ -23,14 +26,17 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const description = bodyEn
     .split('\n')
     .map(l => l.trim())
-    .find(l => l.length > 60)
-    ?.slice(0, 160) ?? ''
+    .find(l => l.length > 60) ?? '')
+    .replace(/[#*`[\]_|>]/g, '')
+    .slice(0, 155)
 
   const base = process.env.NEXT_PUBLIC_BASE_URL || 'https://hospitality121.com'
 
+  const shortTitle = item.title.length > 60 ? item.title.slice(0, 57) + '…' : item.title
   return {
-    title: item.title,
+    title: shortTitle,
     description,
+    alternates: { canonical: `${base}/content/${item.slug}` },
     openGraph: {
       title: item.title,
       description,
@@ -70,6 +76,37 @@ function safeJsonLd(obj: Record<string, unknown>): string {
     .replace(/&/g, '\\u0026')
 }
 
+function buildBreadcrumbJsonLd(item: ContentItem, base: string): string {
+  const url = `${base}/content/${item.slug}`
+  const catSlug = getCategorySlugForTerm(item.category)
+  const items: { '@type': string; position: number; name: string; item: string }[] = [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: base },
+  ]
+  if (catSlug) {
+    items.push({ '@type': 'ListItem', position: 2, name: item.category, item: `${base}/category/${catSlug}` })
+    items.push({ '@type': 'ListItem', position: 3, name: item.title, item: url })
+  } else {
+    items.push({ '@type': 'ListItem', position: 2, name: item.title, item: url })
+  }
+  return safeJsonLd({ '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: items })
+}
+
+function extractFaqJsonLd(body: string): string | null {
+  const faqMatch = body.match(/##\s+(?:FAQ|Frequently Asked Questions)\s*\n+([\s\S]+?)(?=\n##\s|$)/i)
+  if (!faqMatch) return null
+  const pairs = [...faqMatch[1].matchAll(/###\s+(.+?)\n+([\s\S]+?)(?=\n###|$)/g)]
+  if (pairs.length === 0) return null
+  return safeJsonLd({
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: pairs.map(([, q, a]) => ({
+      '@type': 'Question',
+      name: q.trim(),
+      acceptedAnswer: { '@type': 'Answer', text: a.replace(/[#*`[\]_|>]/g, '').trim().slice(0, 400) },
+    })),
+  })
+}
+
 function buildJsonLd(item: ContentItem, body: string) {
   const base = process.env.NEXT_PUBLIC_BASE_URL || 'https://hospitality121.com'
   const url = `${base}/content/${item.slug}`
@@ -85,6 +122,7 @@ function buildJsonLd(item: ContentItem, body: string) {
       organizer: { '@type': 'Person', name: item.organizer },
       url,
       image: `${base}${item.image}`,
+      description,
     })
   }
 
@@ -96,22 +134,30 @@ function buildJsonLd(item: ContentItem, body: string) {
       datePublished: item.date,
       url,
       image: `${base}${item.image}`,
+      description,
       actor: { '@type': 'Person', name: item.guest },
-      publisher: { '@type': 'Organization', name: 'Hospitality121', url: base },
+      publisher: { '@type': 'Organization', name: 'Hospitality121', url: base, logo: { '@type': 'ImageObject', url: `${base}/images/Logo.png` } },
+      partOfSeries: { '@type': 'PodcastSeries', name: 'Hospitality121 Podcast', url: `${base}/podcasts` },
+      ...(item.embedUrl ? { audio: { '@type': 'AudioObject', contentUrl: item.embedUrl, encodingFormat: 'audio/mpeg' } } : {}),
     })
   }
 
   const author = 'author' in item ? item.author : ''
+  const wordCount = body.split(/\s+/).filter(Boolean).length
   return safeJsonLd({
     '@context': 'https://schema.org',
     '@type': 'Article',
     headline: item.title,
     datePublished: item.date,
+    dateModified: item.date,
+    mainEntityOfPage: { '@type': 'WebPage', '@id': url },
     url,
-    image: `${base}${item.image}`,
+    wordCount,
+    image: { '@type': 'ImageObject', url: `${base}${item.image}` },
     author: { '@type': 'Person', name: author },
-    publisher: { '@type': 'Organization', name: 'Hospitality121', url: base },
+    publisher: { '@type': 'Organization', name: 'Hospitality121', url: base, logo: { '@type': 'ImageObject', url: `${base}/images/Logo.png` } },
     description,
+    isPartOf: { '@type': 'WebSite', name: 'Hospitality121', url: base },
   })
 }
 
@@ -127,7 +173,10 @@ export default async function ContentDetailPage({ params }: { params: Promise<{ 
   const [bodyEn, bodyFr] = body.split('\n<!-- FR -->\n')
   const titleFr = 'titleFr' in item ? (item as { titleFr?: string }).titleFr : undefined
 
+  const base = process.env.NEXT_PUBLIC_BASE_URL || 'https://hospitality121.com'
   const jsonLdString = buildJsonLd(item, body)
+  const breadcrumbJsonLd = buildBreadcrumbJsonLd(item, base)
+  const faqJsonLd = extractFaqJsonLd(body)
 
   const related = getAllContent()
     .filter(c => c.slug !== item.slug && c.category === item.category)
@@ -135,8 +184,10 @@ export default async function ContentDetailPage({ params }: { params: Promise<{ 
 
   return (
     <>
-      {/* JSON-LD structured data — content comes from our own MDX files, escaped above */}
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdString }} />
+      {/* JSON-LD: safeJsonLd() escapes <, >, & — nosec: not user content */}
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdString }} /> {/* nosec */}
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: breadcrumbJsonLd }} /> {/* nosec */}
+      {faqJsonLd && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: faqJsonLd }} />} {/* nosec */}
 
       <article className="max-w-3xl mx-auto px-4 py-12">
         {/* Category badge */}
@@ -166,11 +217,17 @@ export default async function ContentDetailPage({ params }: { params: Promise<{ 
               alt={meta.byline}
               width={40}
               height={40}
-              className="rounded-full object-cover"
+              className="rounded-full object-cover object-top"
             />
           )}
           <div>
-            <span className="font-semibold text-white/90">{meta.byline}</span>
+            {(item.type === 'article' || item.type === 'news' || item.type === 'blog') ? (
+              <Link href={`/author/${nameToSlug(meta.byline)}`} className="font-semibold text-gray-800 hover:text-gold transition-colors">
+                {meta.byline}
+              </Link>
+            ) : (
+              <span className="font-semibold text-gray-800">{meta.byline}</span>
+            )}
             <span className="mx-2">·</span>
             <span>{formatDate(item.date)}</span>
             <span className="mx-2">·</span>
@@ -190,17 +247,14 @@ export default async function ContentDetailPage({ params }: { params: Promise<{ 
         </div>
 
         {/* Podcast embed */}
-        {item.type === 'podcast' && item.embedUrl && (
-          <div className="mb-10">
-            <iframe
-              src={item.embedUrl}
-              width="100%"
-              height="152"
-              frameBorder="0"
-              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-              className="rounded-lg"
-            />
-          </div>
+        {item.type === 'podcast' && (
+          <PodcastPlayer
+            title={item.title}
+            guest={item.guest}
+            duration={item.duration}
+            embedUrl={item.embedUrl}
+            showNotes={item.showNotes}
+          />
         )}
 
         {/* Podcast extras */}
@@ -244,6 +298,37 @@ export default async function ContentDetailPage({ params }: { params: Promise<{ 
           </>
         )}
 
+        {/* Share buttons */}
+        <ShareButtons
+          title={item.title}
+          url={`https://hospitality121.com/content/${item.slug}`}
+        />
+
+        {/* Author bio */}
+        {(() => {
+          const authorName = item.type === 'podcast' ? (item as any).guest : (item as any).author
+          const authorRecord = authorName ? AUTHORS_BY_NAME[authorName] : null
+          if (!authorRecord || !authorRecord.bio) return null
+          return (
+            <div className="mt-8 pt-8 border-t border-gray-100 flex gap-4 items-start">
+              <Image
+                src={authorRecord.photo}
+                alt={authorRecord.name}
+                width={56}
+                height={56}
+                className="rounded-full object-cover object-top shrink-0 ring-2 ring-gold/20"
+              />
+              <div>
+                <p className="text-xs font-bold tracking-widest text-gold uppercase mb-1">About the author</p>
+                <Link href={`/author/${nameToSlug(authorRecord.name)}`} className="font-serif font-bold text-gray-900 hover:text-gold transition-colors">
+                  {authorRecord.name}
+                </Link>
+                <p className="text-sm text-muted mt-1 leading-relaxed">{authorRecord.bio}</p>
+              </div>
+            </div>
+          )
+        })()}
+
         {/* Newsletter CTA */}
         <div className="mt-12 bg-surface rounded-xl p-8 text-center">
           <p className="text-xs font-bold tracking-widest text-gold uppercase mb-2">Newsletter</p>
@@ -275,7 +360,7 @@ export default async function ContentDetailPage({ params }: { params: Promise<{ 
                   </div>
                   <div className="flex flex-col gap-1 min-w-0">
                     <span className="text-xs font-bold text-gold tracking-widest">{rel.category}</span>
-                    <span className="text-sm font-semibold text-white group-hover:text-gold transition-colors line-clamp-2">{rel.title}</span>
+                    <span className="text-sm font-semibold text-gray-800 group-hover:text-gold transition-colors line-clamp-2">{rel.title}</span>
                   </div>
                 </Link>
               ))}

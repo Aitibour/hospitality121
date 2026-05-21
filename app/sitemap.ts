@@ -1,38 +1,80 @@
 import type { MetadataRoute } from 'next'
-import { getAllSlugs } from '@/lib/content'
+import { getAllContent } from '@/lib/content'
 import { CATEGORIES } from '@/lib/categories'
+import { TECH_TOPICS } from '@/lib/technology-topics'
+import { SUSTAINABILITY_TOPICS } from '@/lib/sustainability-topics'
 
 export const dynamic = 'force-static'
 
 const BASE = process.env.NEXT_PUBLIC_BASE_URL || 'https://hospitality121.com'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const slugs = getAllSlugs()
+  const all = getAllContent()
+  const now = new Date()
 
   const staticRoutes: MetadataRoute.Sitemap = [
-    { url: BASE, changeFrequency: 'daily', priority: 1.0 },
-    { url: `${BASE}/news`, changeFrequency: 'daily', priority: 0.9 },
-    { url: `${BASE}/insights`, changeFrequency: 'weekly', priority: 0.8 },
-    { url: `${BASE}/podcasts`, changeFrequency: 'weekly', priority: 0.8 },
-    { url: `${BASE}/blog`, changeFrequency: 'weekly', priority: 0.8 },
-    { url: `${BASE}/events`, changeFrequency: 'weekly', priority: 0.7 },
-    { url: `${BASE}/interviews`, changeFrequency: 'weekly', priority: 0.8 },
-    { url: `${BASE}/subscribe`, changeFrequency: 'monthly', priority: 0.6 },
-    { url: `${BASE}/about`, changeFrequency: 'monthly', priority: 0.5 },
-    { url: `${BASE}/contact`, changeFrequency: 'monthly', priority: 0.4 },
+    { url: BASE,                          changeFrequency: 'daily',   priority: 1.0, lastModified: now },
+    { url: `${BASE}/news`,                changeFrequency: 'daily',   priority: 0.9, lastModified: now },
+    { url: `${BASE}/insights`,            changeFrequency: 'weekly',  priority: 0.8, lastModified: now },
+    { url: `${BASE}/podcasts`,            changeFrequency: 'weekly',  priority: 0.8, lastModified: now },
+    { url: `${BASE}/blog`,                changeFrequency: 'weekly',  priority: 0.8, lastModified: now },
+    { url: `${BASE}/events`,              changeFrequency: 'weekly',  priority: 0.7, lastModified: now },
+    { url: `${BASE}/interviews`,          changeFrequency: 'weekly',  priority: 0.8, lastModified: now },
+    { url: `${BASE}/technology`,          changeFrequency: 'weekly',  priority: 0.8, lastModified: now },
+    { url: `${BASE}/sustainability`,      changeFrequency: 'weekly',  priority: 0.8, lastModified: now },
+    { url: `${BASE}/collaborate`,         changeFrequency: 'monthly', priority: 0.7, lastModified: now },
+    { url: `${BASE}/media`,              changeFrequency: 'monthly', priority: 0.7, lastModified: now },
+    { url: `${BASE}/subscribe`,           changeFrequency: 'monthly', priority: 0.6, lastModified: now },
+    { url: `${BASE}/advertise`,           changeFrequency: 'monthly', priority: 0.6, lastModified: now },
+    { url: `${BASE}/resources`,           changeFrequency: 'monthly', priority: 0.6, lastModified: now },
+    { url: `${BASE}/about`,               changeFrequency: 'monthly', priority: 0.5, lastModified: now },
+    { url: `${BASE}/contact`,             changeFrequency: 'monthly', priority: 0.4, lastModified: now },
+    { url: `${BASE}/search`,              changeFrequency: 'monthly', priority: 0.4, lastModified: now },
+    { url: `${BASE}/privacy`,             changeFrequency: 'yearly',  priority: 0.3, lastModified: now },
+    { url: `${BASE}/editorial-standards`, changeFrequency: 'yearly',  priority: 0.5, lastModified: now },
   ]
 
   const categoryRoutes: MetadataRoute.Sitemap = Object.keys(CATEGORIES).map(slug => ({
     url: `${BASE}/category/${slug}`,
     changeFrequency: 'weekly',
     priority: 0.7,
+    lastModified: now,
   }))
 
-  const contentRoutes: MetadataRoute.Sitemap = slugs.map(({ slug }) => ({
-    url: `${BASE}/content/${slug}`,
+  const contentRoutes: MetadataRoute.Sitemap = all.map(item => ({
+    url: `${BASE}/content/${item.slug}`,
     changeFrequency: 'monthly',
     priority: 0.7,
+    lastModified: new Date(item.date),
   }))
 
-  return [...staticRoutes, ...categoryRoutes, ...contentRoutes]
+  const authorSlugs = [...new Set(
+    all
+      .filter(i => i.type === 'article' || i.type === 'news' || i.type === 'blog')
+      .map(i => ('author' in i ? i.author : ''))
+      .filter(Boolean)
+  )].map(name => name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, ''))
+
+  const authorRoutes: MetadataRoute.Sitemap = authorSlugs.map(slug => ({
+    url: `${BASE}/author/${slug}`,
+    changeFrequency: 'monthly',
+    priority: 0.5,
+    lastModified: now,
+  }))
+
+  const techTopicRoutes: MetadataRoute.Sitemap = TECH_TOPICS.map(t => ({
+    url: `${BASE}/technology/${t.slug}`,
+    changeFrequency: 'monthly',
+    priority: 0.7,
+    lastModified: now,
+  }))
+
+  const sustainabilityTopicRoutes: MetadataRoute.Sitemap = SUSTAINABILITY_TOPICS.map(t => ({
+    url: `${BASE}/sustainability/${t.slug}`,
+    changeFrequency: 'monthly',
+    priority: 0.7,
+    lastModified: now,
+  }))
+
+  return [...staticRoutes, ...categoryRoutes, ...contentRoutes, ...authorRoutes, ...techTopicRoutes, ...sustainabilityTopicRoutes]
 }

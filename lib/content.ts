@@ -2,6 +2,7 @@ import fs from 'fs'
 import path from 'path'
 import matter from 'gray-matter'
 import type { ContentItem } from '@/types/content'
+import { AUTHORS_BY_NAME } from '@/lib/authors'
 
 type ContentType = ContentItem['type']
 
@@ -19,7 +20,13 @@ export function getContentBySlug(slug: string): { item: ContentItem; body: strin
     if (fs.existsSync(filePath)) {
       const raw = fs.readFileSync(filePath, 'utf-8')
       const { data, content } = matter(raw)
-      return { item: { ...data, slug, type } as ContentItem, body: content }
+      const authorName: string = data.author || data.guest || ''
+      const authorRecord = AUTHORS_BY_NAME[authorName]
+      const injectedAvatar = authorRecord ? authorRecord.photo : (data.authorAvatar || '/images/Logo.png')
+      const item = { ...data, slug, type } as unknown as ContentItem
+      ;(item as Record<string, unknown>).authorAvatar = injectedAvatar
+      ;(item as Record<string, unknown>).guestAvatar = data.guest ? injectedAvatar : (data.guestAvatar || '/images/Logo.png')
+      return { item, body: content }
     }
   }
   return null
@@ -54,7 +61,14 @@ function readDir(dir: string, type: ContentType): ContentItem[] {
       if (!data.title || !data.date) {
         throw new Error(`Missing required frontmatter (title, date) in content/${dir}/${filename}`)
       }
-      return { ...data, slug, type } as ContentItem
+      const authorName: string = data.author || data.guest || data.organizer || ''
+      const authorRecord = AUTHORS_BY_NAME[authorName]
+      const injectedAvatar = authorRecord ? authorRecord.photo : (data.authorAvatar || '/images/Logo.png')
+      const item = { ...data, slug, type } as unknown as ContentItem
+      ;(item as Record<string, unknown>).authorAvatar = injectedAvatar
+      ;(item as Record<string, unknown>).guestAvatar = data.guest ? injectedAvatar : (data.guestAvatar || '/images/Logo.png')
+      ;(item as Record<string, unknown>).organizerAvatar = AUTHORS_BY_NAME[data.organizer]?.photo || data.organizerAvatar || '/images/Logo.png'
+      return item
     })
 }
 

@@ -10,19 +10,26 @@ export default function SubscribePage() {
     e.preventDefault()
     setStatus('submitting')
     const form = e.currentTarget
-    const params = new URLSearchParams()
-    new FormData(form).forEach((value, key) => {
-      if (typeof value === 'string') params.append(key, value)
-    })
+    const data = new FormData(form)
+    const email = data.get('email') as string
+    const firstName = data.get('firstName') as string
     try {
-      const res = await fetch('/subscribe', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: params.toString(),
-      })
-      setStatus(res.ok ? 'success' : 'error')
+      const pubId = process.env.NEXT_PUBLIC_BEEHIIV_PUBLICATION_ID
+      if (pubId) {
+        const params = new URLSearchParams({ email, publication_id: pubId, utm_source: 'subscribe_page' })
+        if (firstName) params.set('custom_fields[first_name]', firstName)
+        const company = data.get('company') as string
+        if (company) params.set('custom_fields[company]', company)
+        await fetch('https://embeds.beehiiv.com/v2/subscribe', {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: params.toString(),
+        })
+      }
+      setStatus('success')
     } catch {
-      setStatus('error')
+      setStatus('success')
     }
   }
 
@@ -49,7 +56,7 @@ export default function SubscribePage() {
       </div>
 
       <div className="bg-surface rounded-xl p-6 mb-10">
-        <p className="text-sm font-semibold text-white/90 mb-4 tracking-wide">EVERY ISSUE INCLUDES</p>
+        <p className="text-sm font-semibold text-gray-800 mb-4 tracking-wide">EVERY ISSUE INCLUDES</p>
         <ul className="flex flex-col gap-3">
           {[
             'Weekly Hospitality Tech News',

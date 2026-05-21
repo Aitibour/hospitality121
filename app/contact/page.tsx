@@ -15,12 +15,13 @@ export default function ContactPage() {
       if (typeof value === 'string') params.append(key, value)
     })
     try {
-      const res = await fetch('/contact', {
+      const res = await fetch('https://formsubmit.co/ajax/a.aitibour@gmail.com', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'application/json' },
         body: params.toString(),
       })
-      setStatus(res.ok ? 'success' : 'error')
+      const json = await res.json().catch(() => ({}))
+      setStatus(json.success === 'true' || res.ok ? 'success' : 'error')
     } catch {
       setStatus('error')
     }
@@ -54,6 +55,24 @@ export default function ContactPage() {
         <p className="hidden" aria-hidden="true">
           <input name="bot-field" tabIndex={-1} />
         </p>
+
+        <div className="flex flex-col gap-1.5">
+          <label htmlFor="enquiry" className="text-sm font-medium">Type of enquiry</label>
+          <select
+            id="enquiry"
+            name="enquiry"
+            required
+            className="bg-surface border border-muted/30 rounded px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2 focus:ring-offset-navy transition-colors"
+          >
+            <option value="">Select…</option>
+            <option value="advertising">Advertising or sponsorship</option>
+            <option value="content-partnership">Content partnership</option>
+            <option value="podcast-guest">Podcast guest pitch</option>
+            <option value="press">Press or media enquiry</option>
+            <option value="story-tip">Story tip or news tip</option>
+            <option value="general">General enquiry</option>
+          </select>
+        </div>
 
         <div className="flex flex-col gap-1.5">
           <label htmlFor="name" className="text-sm font-medium">Name</label>

@@ -55,6 +55,7 @@ export type EventItem = {
   location: string
   image: string
   featured: boolean
+  registrationUrl?: string
 }
 
 export type BlogPost = {

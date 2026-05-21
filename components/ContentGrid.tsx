@@ -57,7 +57,7 @@ export default function ContentGrid({ items }: Props) {
                       <CategoryLabel label={item.category} />
                     )
                   })()}
-                  <h3 id={cardId} className="font-serif text-white font-semibold text-base leading-snug line-clamp-3">
+                  <h3 id={cardId} className="font-serif text-gray-900 font-semibold text-base leading-snug line-clamp-3">
                     {item.title}
                   </h3>
                   <p className="text-muted text-xs">{meta}</p>

@@ -50,3 +50,6 @@ next-env.d.ts
 !public/**/*.png
 !public/**/*.jpg
 !public/**/*.jpeg
+
+# Local Netlify folder
+.netlify

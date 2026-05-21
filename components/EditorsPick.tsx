@@ -32,8 +32,8 @@ function SmallCard({ item, idPrefix }: CardProps) {
           <Image src={item.image} alt={item.title} fill className="object-cover group-hover:scale-105 transition-transform duration-300" />
         </div>
         <div className="flex flex-col gap-1">
-          <AuthorLine name={name} avatar={avatar} date={formatDate(item.date)} />
-          <h4 id={titleId} className="font-serif text-white text-sm font-semibold leading-snug line-clamp-2 group-hover:text-gold transition-colors">
+          <AuthorLine name={name} avatar={avatar} date={formatDate(item.date)} nameColor="text-gray-900" />
+          <h4 id={titleId} className="font-serif text-gray-900 text-sm font-semibold leading-snug line-clamp-2 group-hover:text-gold transition-colors">
             {item.title}
           </h4>
           <div className="flex items-center gap-2">
@@ -52,16 +52,16 @@ function LargeCard({ item, idPrefix }: CardProps) {
   return (
     <article aria-labelledby={titleId} className="relative h-[380px] rounded-lg overflow-hidden group">
       <Link href={`/content/${item.slug}`} className="absolute inset-0">
-        <Image src={item.image} alt={item.title} fill className="object-cover group-hover:scale-105 transition-transform duration-500" />
-        <div className="absolute inset-0 bg-gradient-to-t from-navy via-navy/50 to-transparent" />
+        <Image src={item.image} alt={item.title} fill className="object-cover group-hover:scale-105 transition-transform duration-500" priority />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/40 to-transparent" />
         <div className="absolute bottom-0 left-0 right-0 p-5">
-          <AuthorLine name={name} avatar={avatar} date={formatDate(item.date)} />
-          <h3 id={titleId} className="font-serif text-white text-xl font-bold leading-snug mt-2 mb-1">
+          <AuthorLine name={name} avatar={avatar} date={formatDate(item.date)} nameColor="text-gray-50" dateColor="text-gray-300" />
+          <h3 id={titleId} className="font-serif text-gray-50 text-xl font-bold leading-snug mt-2 mb-1">
             {item.title}
           </h3>
           <div className="flex items-center gap-2">
             <CategoryLabel label={item.category} />
-            <span className="text-muted text-xs">{meta}</span>
+            <span className="text-gray-300 text-xs">{meta}</span>
           </div>
         </div>
       </Link>
@@ -80,7 +80,7 @@ export default function EditorsPick({ items }: Props) {
   return (
     <section aria-label="Editor's Pick" className="max-w-7xl mx-auto px-4 py-8">
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-white font-serif text-2xl font-bold tracking-wide">EDITOR&apos;S PICK</h2>
+        <h2 className="text-gray-900 font-serif text-2xl font-bold tracking-wide">EDITOR&apos;S PICK</h2>
         <Link href="/insights" className="text-gold text-sm font-semibold hover:underline flex items-center gap-1">
           SEE MORE <span aria-hidden="true">↗</span>
         </Link>

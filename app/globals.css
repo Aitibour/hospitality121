@@ -1,52 +1,40 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 
 @theme {
-  --color-navy: #0A0E1A;
-  --color-surface: #111827;
-  --color-gold: #C9A84C;
-  --color-muted: #9CA3AF;
+  --color-navy: #FFFFFF;
+  --color-surface: #F3F4F6;
+  --color-gold: #B8922E;
+  --color-muted: #6B7280;
   --font-serif: var(--font-cormorant), 'Cormorant Garamond', Georgia, serif;
   --font-sans: var(--font-lato), Lato, system-ui, sans-serif;
 }
 
 body {
   background-color: var(--color-navy);
-  color: #ffffff;
+  color: #0A0E1A;
   font-size: 16px;
   line-height: 1.65;
   letter-spacing: 0.01em;
 }
 
-/* Cormorant reads best with generous letter-spacing at display sizes */
 .font-serif {
   letter-spacing: 0.02em;
 }
 
-/* Light mode token overrides — applied when next-themes sets class="light" on <html> */
-.light {
-  --color-navy: #FFFFFF;
-  --color-surface: #F3F4F6;
-  --color-gold: #B8922E;
-  --color-muted: #6B7280;
-}
-
-.light body {
+/* text-white is used throughout components — map to dark text in light-only mode */
+.text-white {
   color: #0A0E1A;
 }
 
-/* Override hardcoded text-white utilities in light mode */
-.light .text-white {
-  color: #0A0E1A;
-}
-
-.light .text-white\/70 {
+.text-white\/70 {
   color: rgba(10, 14, 26, 0.7);
 }
 
-.light .text-white\/85 {
+.text-white\/85 {
   color: rgba(10, 14, 26, 0.85);
 }
 
-.light .text-white\/90 {
+.text-white\/90 {
   color: rgba(10, 14, 26, 0.9);
 }
