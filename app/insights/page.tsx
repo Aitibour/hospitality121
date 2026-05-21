@@ -5,9 +5,16 @@ import SectionHeader from '@/components/SectionHeader'
 import AdSlot from '@/components/AdSlot'
 
 export const metadata: Metadata = {
-  title: 'Insights',
-  description: 'Expert perspectives, deep analysis, and thought leadership on AI in hospitality, hotel technology trends, guest experience innovation, and digital transformation.',
+  title: 'Hotel Industry Insights & Analysis 2026',
+  description: 'Expert perspectives and thought leadership on AI in hospitality, hotel technology trends, guest experience innovation, and digital transformation.',
+  alternates: { canonical: 'https://hospitality121.com/insights' },
   keywords: 'hospitality insights, AI in hospitality, hotel technology trends, guest experience innovation, hospitality digital transformation',
+  openGraph: {
+    title: 'Hotel Industry Insights & Analysis 2026 | Hospitality121',
+    description: 'Expert perspectives and thought leadership on AI in hospitality, hotel technology trends, guest experience innovation, and digital transformation.',
+    images: [{ url: 'https://hospitality121.com/images/linkedin-banner.jpg', width: 1200, height: 630 }],
+  },
+  twitter: { card: 'summary_large_image', images: ['https://hospitality121.com/images/linkedin-banner.jpg'] },
 }
 
 export const revalidate = 3600

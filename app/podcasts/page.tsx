@@ -5,9 +5,16 @@ import SectionHeader from '@/components/SectionHeader'
 import AdSlot from '@/components/AdSlot'
 
 export const metadata: Metadata = {
-  title: 'Podcasts',
-  description: 'Conversations at the intersection of hospitality, technology, and innovation — with hotel CIOs, startup founders, luxury executives, and guest experience pioneers.',
+  title: 'Hospitality Podcast - Hotel Tech & Leadership Interviews',
+  description: 'Conversations with hotel CIOs, startup founders, luxury executives, and guest experience pioneers at the intersection of hospitality and technology.',
+  alternates: { canonical: 'https://hospitality121.com/podcasts' },
   keywords: 'hospitality podcast, hotel technology podcast, AI hospitality podcast, hospitality leadership',
+  openGraph: {
+    title: 'Hospitality Podcast - Hotel Tech & Leadership Interviews | Hospitality121',
+    description: 'Conversations with hotel CIOs, startup founders, luxury executives, and guest experience pioneers at the intersection of hospitality and technology.',
+    images: [{ url: 'https://hospitality121.com/images/linkedin-banner.jpg', width: 1200, height: 630 }],
+  },
+  twitter: { card: 'summary_large_image', images: ['https://hospitality121.com/images/linkedin-banner.jpg'] },
 }
 
 export const revalidate = 3600
