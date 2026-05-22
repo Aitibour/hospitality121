@@ -1,8 +1,12 @@
 name: Auto Blog Post
 on:
   schedule:
-    - cron: '0 8,20 * * *'
+    - cron: '0 7 * * *'
   workflow_dispatch:
+
+concurrency:
+  group: auto-blog
+  cancel-in-progress: false
 
 jobs:
   auto-blog:
@@ -25,3 +29,5 @@ jobs:
           UNSPLASH_ACCESS_KEY: ${{ secrets.UNSPLASH_ACCESS_KEY }}
           INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY }}
           SITE_URL: https://hospitality121.com
+          LINKEDIN_ACCESS_TOKEN: ${{ secrets.LINKEDIN_ACCESS_TOKEN }}
+          LINKEDIN_ORG_URN: ${{ secrets.LINKEDIN_ORG_URN }}
