@@ -13,5 +13,6 @@ await publishToLinkedIn({
   imageFile: 'marriott-india-expansion.jpg',
   contentType: 'blog',
 })
+// env: LINKEDIN_ORG_URN=urn:li:person:0RYMC9s4lP (personal profile, until Community Management API approved)
 
 console.log('LinkedIn test complete.')

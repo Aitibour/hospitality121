@@ -208,8 +208,8 @@ export async function publishToLinkedIn({ slug, titleEn, excerptEn, category, im
     console.log('LinkedIn credentials not configured — skipping LinkedIn publish')
     return false
   }
-  if (!orgUrn.startsWith('urn:li:organization:')) {
-    console.error('LINKEDIN_ORG_URN must be an organization URN (urn:li:organization:...) — aborting')
+  if (!orgUrn.startsWith('urn:li:organization:') && !orgUrn.startsWith('urn:li:person:')) {
+    console.error('LINKEDIN_ORG_URN must be urn:li:organization:... or urn:li:person:... — aborting')
     return false
   }
 
