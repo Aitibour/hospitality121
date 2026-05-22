@@ -117,7 +117,7 @@ export default function Navbar() {
         </Link>
 
         {/* Desktop nav */}
-        <div className="hidden lg:flex items-center gap-1">
+        <div className="hidden lg:flex items-center gap-0">
           {NAV.map(item => (
             <div
               key={item.key}
@@ -127,7 +127,7 @@ export default function Navbar() {
             >
               <Link
                 href={item.href}
-                className={`flex items-center gap-1 px-3 py-2 text-sm font-semibold rounded transition-colors ${
+                className={`flex items-center gap-1 px-2.5 py-2 text-sm font-semibold rounded transition-colors ${
                   activeDropdown === item.key ? 'text-gold' : 'text-gray-700 hover:text-gold'
                 }`}
               >
