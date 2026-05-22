@@ -3,19 +3,20 @@ import { execFileSync } from 'node:child_process'
 /**
  * Commits the new MDX, image, and tracking file, then pushes to origin main.
  * Uses execFileSync with argument arrays — no shell interpolation.
- * @param {{ slug: string, imageFile: string }} params
+ * @param {{ slug: string, imageFile: string, contentType?: 'blog' | 'news' }} params
  */
-export function commitAndPush({ slug, imageFile }) {
+export function commitAndPush({ slug, imageFile, contentType = 'blog' }) {
   const run = (cmd, args) => execFileSync(cmd, args, { stdio: 'inherit' })
+  const scope = contentType === 'news' ? 'news' : 'blog'
 
   run('git', ['config', '--local', 'user.email', 'action@github.com'])
-  run('git', ['config', '--local', 'user.name', 'H1H Auto Blog'])
+  run('git', ['config', '--local', 'user.name', 'H1H Auto Publisher'])
   run('git', ['add',
-    `content/blog/${slug}.mdx`,
+    `content/${scope}/${slug}.mdx`,
     `public/images/content/${imageFile}`,
     'scripts/seen-articles.json',
   ])
-  run('git', ['commit', '-m', `feat(blog): auto-post ${slug}`])
+  run('git', ['commit', '-m', `feat(${scope}): auto-post ${slug}`])
   run('git', ['push', 'origin', 'HEAD:main'])
 
   console.log(`✓ Pushed: ${slug}`)

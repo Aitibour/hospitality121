@@ -26,10 +26,10 @@ export function calcReadTime(text) {
 
 /**
  * Renders a complete bilingual MDX file string.
- * @param {{ titleEn, titleFr, excerptEn, excerptFr, category, date, readTime, imageFile, sourceDomain, sourceUrl, bodyEn, bodyFr }} params
+ * @param {{ titleEn, titleFr, excerptEn, excerptFr, category, date, readTime, imageFile, sourceDomain, sourceUrl, bodyEn, bodyFr, seoLinks }} params
  * @returns {string}
  */
-export function renderMdx({ titleEn, titleFr, excerptEn, excerptFr, category, date, readTime, imageFile, sourceDomain, sourceUrl, bodyEn, bodyFr }) {
+export function renderMdx({ titleEn, titleFr, excerptEn, excerptFr, category, date, readTime, imageFile, sourceDomain, sourceUrl, bodyEn, bodyFr, seoLinks = '' }) {
   const esc = s => s.replace(/"/g, '\\"')
   return `---
 title: "${esc(titleEn)}"
@@ -50,8 +50,38 @@ sourceUrl: "${sourceUrl}"
 
 ${bodyEn}
 
+${seoLinks}
+
 <!-- FR -->
 
 ${bodyFr}
+`
+}
+
+/**
+ * Renders a complete news MDX file string.
+ * @param {{ title, description, category, date, readTime, imageFile, sourceDomain, sourceUrl, body, seoLinks }} params
+ * @returns {string}
+ */
+export function renderNewsMdx({ title, description, category, date, readTime, imageFile, sourceDomain, sourceUrl, body, seoLinks = '' }) {
+  const esc = s => s.replace(/"/g, '\\"')
+  return `---
+title: "${esc(title)}"
+category: "${category}"
+author: "H1H Newsfeed"
+authorAvatar: "/images/Logo.png"
+date: "${date}"
+readTime: "${readTime}"
+image: "/images/content/${imageFile}"
+featured: false
+type: "news"
+description: "${esc(description)}"
+source: "${sourceDomain}"
+sourceUrl: "${sourceUrl}"
+---
+
+${body}
+
+${seoLinks}
 `
 }
