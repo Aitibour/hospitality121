@@ -1,25 +1,13 @@
 import type { Metadata } from 'next'
-import Image from 'next/image'
 import Link from 'next/link'
-import { getAllAuthors } from '@/lib/authors'
 
 export const metadata: Metadata = {
-  title: 'About Hospitality121 - Hospitality Technology Media',
+  title: 'About',
   alternates: { canonical: 'https://hospitality121.com/about' },
-  description: 'Hospitality121 is a premium media platform exploring how AI, digital transformation, and human connection are shaping the future of hospitality.',
-  keywords: 'about hospitality121, hospitality media platform, hotel technology media, hospitality journalism, editorial team',
-  openGraph: {
-    title: 'About Hospitality121 | Hospitality Technology Media',
-    description: 'Hospitality121 is a premium media platform exploring how AI, digital transformation, and human connection are shaping the future of hospitality.',
-    images: [{ url: 'https://hospitality121.com/images/linkedin-banner.jpg', width: 1200, height: 630 }],
-  },
-  twitter: { card: 'summary_large_image', images: ['https://hospitality121.com/images/linkedin-banner.jpg'] },
+  description: 'Hospitality121 is a North American hospitality media platform headquartered in Vancouver, BC, covering AI, technology, and guest experience innovation for a global industry audience.',
 }
 
 export default function AboutPage() {
-  const team = getAllAuthors()
-    .filter(author => ['sumaya-oneill', 'marcus-webb', 'claire-fontaine', 'elena-marchetti'].includes(author.slug))
-
   return (
     <div className="max-w-3xl mx-auto px-4 py-16">
       <div className="mb-12">
@@ -28,13 +16,29 @@ export default function AboutPage() {
           The Future of Hospitality,<br />One Connection at a Time
         </h1>
         <p className="text-muted text-lg leading-relaxed">
-          Hospitality121 is a premium hospitality technology media platform exploring how AI, digital
-          transformation, guest experience innovation, and human connection are shaping the next
-          generation of hospitality.
+          Hospitality121 is a North American hospitality technology media platform headquartered in
+          Vancouver, British Columbia, exploring how AI, digital transformation, guest experience
+          innovation, and human connection are shaping the next generation of hospitality — for
+          operators, executives, and investors across the US, Canada, and beyond.
         </p>
       </div>
 
       <div className="flex flex-col gap-10">
+
+        <section>
+          <h2 className="font-serif text-2xl font-bold mb-3">Who We Are</h2>
+          <p className="text-muted leading-relaxed mb-4">
+            Founded and operated from Vancouver, BC, Hospitality121 is an independent media company
+            serving the North American and global hospitality industry. Our editorial team spans
+            Canada, the United States, and key hospitality markets across Europe and Asia Pacific.
+          </p>
+          <p className="text-muted leading-relaxed">
+            We are registered in Canada and operate as a bilingual-capable platform, publishing
+            primary coverage in English with a readership of hotel executives, technology leaders,
+            revenue managers, and operators across more than 40 countries.
+          </p>
+        </section>
+
         <section>
           <h2 className="font-serif text-2xl font-bold mb-3">What We Cover</h2>
           <p className="text-muted leading-relaxed mb-4">
@@ -50,6 +54,8 @@ export default function AboutPage() {
               'Guest Experience Innovation',
               'Hospitality Cybersecurity',
               'Leadership & Strategy',
+              'Sustainability & ESG',
+              'Revenue Management & Distribution',
             ].map(topic => (
               <li key={topic} className="flex items-center gap-3 text-sm text-muted">
                 <span className="w-1.5 h-1.5 rounded-full bg-gold shrink-0" />
@@ -60,47 +66,13 @@ export default function AboutPage() {
         </section>
 
         <section>
-          <h2 className="font-serif text-2xl font-bold mb-3">Editorial Team</h2>
-          <p className="text-muted leading-relaxed mb-6">
-            Hospitality121 is written and edited by contributors with direct experience across hotel
-            technology, revenue strategy, luxury guest experience, sustainability, and hospitality
-            operations.
-          </p>
-          <div className="grid sm:grid-cols-2 gap-5">
-            {team.map(author => (
-              <article key={author.slug} className="border border-gray-100 rounded-lg p-4 bg-white">
-                <div className="flex gap-4">
-                  <Image
-                    src={author.photo}
-                    alt={author.name}
-                    width={72}
-                    height={72}
-                    className="h-18 w-18 rounded object-cover bg-surface"
-                  />
-                  <div>
-                    <h3 className="font-serif text-xl font-bold leading-tight">{author.name}</h3>
-                    <p className="text-xs font-bold tracking-wide uppercase text-gold mt-1">{author.title}</p>
-                  </div>
-                </div>
-                <p className="text-muted text-sm leading-relaxed mt-4">{author.bio}</p>
-                <Link
-                  href={`/author/${author.slug}`}
-                  className="inline-block text-sm font-medium text-gray-800 hover:text-gold transition-colors mt-4"
-                >
-                  View articles
-                </Link>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        <section>
           <h2 className="font-serif text-2xl font-bold mb-3">The Podcast</h2>
           <p className="text-muted leading-relaxed">
             The Hospitality121 Podcast brings together conversations at the intersection of
             hospitality, technology, and innovation. We speak with hotel CIOs, startup founders,
             luxury executives, and guest experience pioneers — people building the future of the
-            industry from the inside.
+            industry from the inside. Episodes are produced from our Vancouver studio and distributed
+            globally across all major podcast platforms.
           </p>
         </section>
 
@@ -111,6 +83,41 @@ export default function AboutPage() {
             most important connections, and the most meaningful guest experiences happen between
             individuals. Technology amplifies this; it never replaces it.
           </p>
+        </section>
+
+        {/* Company Info Card */}
+        <section className="bg-surface rounded-xl p-6">
+          <h2 className="font-serif text-xl font-bold mb-4">Company Information</h2>
+          <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4 text-sm">
+            <div>
+              <dt className="text-xs font-bold tracking-widest text-gold uppercase mb-1">Headquarters</dt>
+              <dd className="text-muted">Vancouver, British Columbia, Canada</dd>
+            </div>
+            <div>
+              <dt className="text-xs font-bold tracking-widest text-gold uppercase mb-1">Markets Served</dt>
+              <dd className="text-muted">USA, Canada &amp; Global</dd>
+            </div>
+            <div>
+              <dt className="text-xs font-bold tracking-widest text-gold uppercase mb-1">Founded</dt>
+              <dd className="text-muted">2024</dd>
+            </div>
+            <div>
+              <dt className="text-xs font-bold tracking-widest text-gold uppercase mb-1">Coverage</dt>
+              <dd className="text-muted">40+ countries</dd>
+            </div>
+            <div>
+              <dt className="text-xs font-bold tracking-widest text-gold uppercase mb-1">Publication Type</dt>
+              <dd className="text-muted">Independent B2B Media</dd>
+            </div>
+            <div>
+              <dt className="text-xs font-bold tracking-widest text-gold uppercase mb-1">Editorial Email</dt>
+              <dd className="text-muted">
+                <a href="mailto:editorial@hospitality121.com" className="hover:text-gold transition-colors">
+                  editorial@hospitality121.com
+                </a>
+              </dd>
+            </div>
+          </dl>
         </section>
 
         <div className="flex flex-col sm:flex-row gap-4 pt-4">

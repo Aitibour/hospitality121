@@ -24,6 +24,19 @@ const NAV: NavItem[] = [
       { label: 'Events & Conferences',   href: '/events',     description: 'Industry summits and forums' },
       { label: 'Industry Insights',      href: '/blog',       description: 'Perspectives and analysis' },
       { label: 'Interviews',             href: '/interviews', description: 'Executive conversations' },
+      { label: 'Hospitality Trends',     href: '/hospitality-trends', description: 'Market signals and trend analysis' },
+    ],
+  },
+  {
+    key: 'authority',
+    label: 'Authority',
+    href: '/hospitality-trends',
+    dropdown: [
+      { label: 'Leadership', href: '/hospitality-leadership', description: 'Hotel leaders, executives, and strategy' },
+      { label: 'Operations', href: '/hotel-operations', description: 'Hotel operations and management systems' },
+      { label: 'Recruitment', href: '/hospitality-recruitment', description: 'Careers, hiring, and talent retention' },
+      { label: 'Guest Experience', href: '/guest-experience', description: 'Digital journeys and personalization' },
+      { label: 'Luxury Hospitality', href: '/luxury-hospitality', description: 'Luxury hotels, wellness, and design' },
     ],
   },
   {
@@ -72,6 +85,7 @@ const NAV: NavItem[] = [
       { label: 'Partnerships',        href: '/advertise',               description: 'Media and brand collaborations' },
     ],
   },
+  { key: 'contact', label: 'Contact', href: '/contact' },
 ]
 
 export default function Navbar() {

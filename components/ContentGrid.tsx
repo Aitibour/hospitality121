@@ -1,5 +1,3 @@
-'use client'
-
 import Image from 'next/image'
 import Link from 'next/link'
 import type { ContentItem } from '@/types/content'
@@ -43,26 +41,34 @@ export default function ContentGrid({ items }: Props) {
             >
               <Link href={`/content/${item.slug}`} className="block group">
                 <div className="relative h-44">
-                  <Image src={item.image} alt={item.title} fill className="object-cover group-hover:scale-105 transition-transform duration-300" />
+                  <Image
+                    src={item.image}
+                    alt={item.title}
+                    fill
+                    sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
+                    className="object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
                 </div>
-                <div className="p-4 flex flex-col gap-2">
-                  <AuthorLine name={name} avatar={avatar} date={formattedDate} />
-                  {(() => {
-                    const catSlug = getCategorySlugForTerm(item.category)
-                    return catSlug ? (
-                      <Link href={`/category/${catSlug}`} onClick={e => e.stopPropagation()}>
-                        <CategoryLabel label={item.category} />
-                      </Link>
-                    ) : (
+              </Link>
+              <div className="p-4 flex flex-col gap-2">
+                <AuthorLine name={name} avatar={avatar} date={formattedDate} />
+                {(() => {
+                  const catSlug = getCategorySlugForTerm(item.category)
+                  return catSlug ? (
+                    <Link href={`/category/${catSlug}`}>
                       <CategoryLabel label={item.category} />
-                    )
-                  })()}
+                    </Link>
+                  ) : (
+                    <CategoryLabel label={item.category} />
+                  )
+                })()}
+                <Link href={`/content/${item.slug}`} className="group">
                   <h3 id={cardId} className="font-serif text-gray-900 font-semibold text-base leading-snug line-clamp-3">
                     {item.title}
                   </h3>
-                  <p className="text-muted text-xs">{meta}</p>
-                </div>
-              </Link>
+                </Link>
+                <p className="text-muted text-xs">{meta}</p>
+              </div>
             </article>
           )
         })}

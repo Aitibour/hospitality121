@@ -7,6 +7,7 @@ import ContentGrid from '@/components/ContentGrid'
 import EditorsPick from '@/components/EditorsPick'
 import TopContent from '@/components/TopContent'
 import AdSlot from '@/components/AdSlot'
+import DiamondAuthoritySection from '@/components/DiamondAuthoritySection'
 
 export const metadata: Metadata = {
   title: { absolute: 'Hospitality121 - Hotel Tech News, Insights & Podcasts 2026' },
@@ -41,6 +42,7 @@ export default function HomePage() {
 
       <h1 className="sr-only">Hospitality Technology News & Insights</h1>
       <HeroCarousel items={heroItems} />
+      <DiamondAuthoritySection />
       <AdSlot zone="hero-banner" />
       <ContentGrid items={gridItems} />
       <AdSlot zone="mid-grid" />

@@ -3,6 +3,7 @@ import { getAllContent } from '@/lib/content'
 import { CATEGORIES } from '@/lib/categories'
 import { TECH_TOPICS } from '@/lib/technology-topics'
 import { SUSTAINABILITY_TOPICS } from '@/lib/sustainability-topics'
+import { DIAMOND_PILLARS, GEO_AUTHORITY_PAGES } from '@/lib/diamond-seo'
 
 export const dynamic = 'force-static'
 
@@ -30,6 +31,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/about`,               changeFrequency: 'monthly', priority: 0.5, lastModified: now },
     { url: `${BASE}/contact`,             changeFrequency: 'monthly', priority: 0.4, lastModified: now },
     { url: `${BASE}/search`,              changeFrequency: 'monthly', priority: 0.4, lastModified: now },
+    { url: `${BASE}/seo-diamond.json`,     changeFrequency: 'weekly',  priority: 0.4, lastModified: now },
     { url: `${BASE}/privacy`,             changeFrequency: 'yearly',  priority: 0.3, lastModified: now },
     { url: `${BASE}/editorial-standards`, changeFrequency: 'yearly',  priority: 0.5, lastModified: now },
   ]
@@ -76,5 +78,21 @@ export default function sitemap(): MetadataRoute.Sitemap {
     lastModified: now,
   }))
 
-  return [...staticRoutes, ...categoryRoutes, ...contentRoutes, ...authorRoutes, ...techTopicRoutes, ...sustainabilityTopicRoutes]
+  const diamondPillarRoutes: MetadataRoute.Sitemap = DIAMOND_PILLARS
+    .filter(p => !staticRoutes.some(route => route.url === `${BASE}${p.href}`) && !techTopicRoutes.some(route => route.url === `${BASE}${p.href}`))
+    .map(p => ({
+      url: `${BASE}${p.href}`,
+      changeFrequency: 'weekly',
+      priority: 0.85,
+      lastModified: now,
+    }))
+
+  const geoRoutes: MetadataRoute.Sitemap = GEO_AUTHORITY_PAGES.map(page => ({
+    url: `${BASE}${page.href}`,
+    changeFrequency: 'monthly',
+    priority: 0.65,
+    lastModified: now,
+  }))
+
+  return [...staticRoutes, ...categoryRoutes, ...contentRoutes, ...authorRoutes, ...techTopicRoutes, ...sustainabilityTopicRoutes, ...diamondPillarRoutes, ...geoRoutes]
 }

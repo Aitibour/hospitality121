@@ -2,7 +2,7 @@ import { test } from 'node:test'
 import assert from 'node:assert/strict'
 import { parseFeed } from '../lib/rss.mjs'
 
-const RECENT = new Date(Date.now() - 24 * 60 * 60 * 1000).toUTCString()
+const RECENT = new Date(Date.now() - 12 * 60 * 60 * 1000).toUTCString()
 
 const SAMPLE_RSS = `<?xml version="1.0"?>
 <rss version="2.0">
@@ -40,7 +40,7 @@ const EMPTY_RSS = `<?xml version="1.0"?>
   <channel><title>Empty</title></channel>
 </rss>`
 
-test('parseFeed returns only articles within 48 hours', () => {
+test('parseFeed returns only articles within the recent window', () => {
   const articles = parseFeed(SAMPLE_RSS, 'example.com')
   assert.equal(articles.length, 1)
   assert.equal(articles[0].title, 'Test Article')

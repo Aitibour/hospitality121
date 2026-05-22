@@ -3,32 +3,32 @@ import Link from 'next/link'
 
 const SECTIONS = [
   {
-    title: 'Insights',
+    title: 'Authority',
     links: [
       { label: 'Hospitality News', href: '/news' },
-      { label: 'Articles & Editorials', href: '/insights' },
-      { label: 'Events & Conferences', href: '/events' },
-      { label: 'Industry Blog', href: '/blog' },
-      { label: 'Interviews', href: '/interviews' },
+      { label: 'Hospitality Trends', href: '/hospitality-trends' },
+      { label: 'Leadership', href: '/hospitality-leadership' },
+      { label: 'Operations', href: '/hotel-operations' },
+      { label: 'Recruitment', href: '/hospitality-recruitment' },
     ],
   },
   {
     title: 'Technology',
     links: [
-      { label: 'Hospitality AI', href: '/technology' },
-      { label: 'PMS Solutions', href: '/category/technology' },
-      { label: 'Cybersecurity', href: '/category/cybersecurity' },
-      { label: 'IT Infrastructure', href: '/technology' },
-      { label: 'Tools & Innovation', href: '/technology' },
+      { label: 'Hotel Technology', href: '/technology' },
+      { label: 'Hospitality AI', href: '/technology/ai' },
+      { label: 'PMS Solutions', href: '/technology/pms-pos' },
+      { label: 'Cybersecurity', href: '/technology/cybersecurity' },
+      { label: 'Smart Hotels', href: '/hotel-operations' },
     ],
   },
   {
-    title: 'Sustainability',
+    title: 'Experience',
     links: [
-      { label: 'Sustainable Hospitality', href: '/sustainability' },
-      { label: 'Smart Operations', href: '/sustainability' },
-      { label: 'Green Technologies', href: '/sustainability' },
-      { label: 'ESG & Future Travel', href: '/sustainability' },
+      { label: 'Guest Experience', href: '/guest-experience' },
+      { label: 'Luxury Hospitality', href: '/luxury-hospitality' },
+      { label: 'Sustainability', href: '/sustainability' },
+      { label: 'Smart Operations', href: '/sustainability/smart-operations' },
     ],
   },
   {
@@ -92,8 +92,11 @@ export default function Footer() {
                 <span className="block font-serif font-bold text-xs tracking-widest text-gold">ONE 2 ONE</span>
               </div>
             </Link>
+            <p className="text-xs text-gray-500 leading-relaxed mb-1">
+              North American hospitality media — Vancouver, BC, Canada.
+            </p>
             <p className="text-xs text-gray-500 leading-relaxed mb-4">
-              A modern hospitality media platform covering technology, AI, sustainability, leadership, and the future of guest experience.
+              Covering technology, AI, sustainability, leadership, and the future of guest experience across the US, Canada, and globally.
             </p>
             <div className="flex gap-3">
               <a href="https://linkedin.com/company/hospitality121" target="_blank" rel="noopener noreferrer" className="text-xs text-gray-400 hover:text-gold transition-colors font-medium">LinkedIn</a>
@@ -122,7 +125,7 @@ export default function Footer() {
         {/* Bottom bar */}
         <div className="border-t border-gray-200 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-xs text-gray-400">
-            © {new Date().getFullYear()} Hospitality One 2 One. All rights reserved.
+            © {new Date().getFullYear()} Hospitality One 2 One. Vancouver, BC, Canada. All rights reserved.
           </p>
           <div className="flex gap-5">
             {LEGAL.map(l => (

@@ -44,6 +44,7 @@ export default function HeroCarousel({ items }: Props) {
         src={item.image}
         alt={item.title}
         fill
+        sizes="100vw"
         className="object-cover"
         priority
       />

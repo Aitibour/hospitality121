@@ -1,6 +1,6 @@
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
-import { generateSlug, calcReadTime, renderMdx } from '../lib/mdx.mjs'
+import { generateSlug, calcReadTime, renderMdx, renderNewsMdx } from '../lib/mdx.mjs'
 
 test('generateSlug converts title to kebab case', () => {
   assert.equal(generateSlug('Hello World'), 'hello-world')
@@ -69,4 +69,42 @@ test('renderMdx escapes double quotes in titles', () => {
     bodyFr: 'Corps.',
   })
   assert.ok(result.includes('\\"Smart\\"'))
+})
+
+test('renderMdx includes pillar and cluster links when supplied', () => {
+  const result = renderMdx({
+    titleEn: 'Test Post',
+    titleFr: 'Article Test',
+    excerptEn: 'An excerpt.',
+    excerptFr: 'Un extrait.',
+    category: 'TECHNOLOGY',
+    date: '2026-05-19',
+    readTime: '3 min read',
+    imageFile: 'auto-test-post.jpg',
+    sourceDomain: 'example.com',
+    sourceUrl: 'https://example.com/article',
+    bodyEn: 'English body.',
+    bodyFr: 'French body.',
+    seoLinks: '## Related Hospitality121 Coverage\n\n- [Hospitality Blog](https://hospitality121.com/blog)\n',
+  })
+  assert.ok(result.includes('## Related Hospitality121 Coverage'))
+  assert.ok(result.includes('https://hospitality121.com/blog'))
+})
+
+test('renderNewsMdx produces news frontmatter with source URL', () => {
+  const result = renderNewsMdx({
+    title: 'Hotel News',
+    description: 'A concise news description.',
+    category: 'TECHNOLOGY',
+    date: '2026-05-19',
+    readTime: '3 min read',
+    imageFile: 'auto-hotel-news.jpg',
+    sourceDomain: 'example.com',
+    sourceUrl: 'https://example.com/news',
+    body: 'News body.',
+    seoLinks: '## Related Hospitality121 Coverage\n\n- [Hospitality News](https://hospitality121.com/news)\n',
+  })
+  assert.ok(result.includes('type: "news"'))
+  assert.ok(result.includes('sourceUrl: "https://example.com/news"'))
+  assert.ok(result.includes('https://hospitality121.com/news'))
 })

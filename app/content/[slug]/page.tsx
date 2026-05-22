@@ -9,6 +9,7 @@ import { nameToSlug, AUTHORS_BY_NAME } from '@/lib/authors'
 import type { ContentItem } from '@/types/content'
 import BilingualContent from '@/components/BilingualContent'
 import ShareButtons from '@/components/ShareButtons'
+import { GEO_AUTHORITY_PAGES, getMatchingGeoPage, getMatchingPillar } from '@/lib/diamond-seo'
 
 export const revalidate = 3600
 
@@ -23,7 +24,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
   const { item, body } = result
   const bodyEn = body.split('\n<!-- FR -->\n')[0]
-  const description = bodyEn
+  const description = (bodyEn
     .split('\n')
     .map(l => l.trim())
     .find(l => l.length > 60) ?? '')
@@ -181,6 +182,18 @@ export default async function ContentDetailPage({ params }: { params: Promise<{ 
   const related = getAllContent()
     .filter(c => c.slug !== item.slug && c.category === item.category)
     .slice(0, 3)
+  const diamondText = `${item.title} ${item.category} ${bodyEn.slice(0, 500)}`
+  const diamondPillar = getMatchingPillar(diamondText)
+  const diamondGeo = getMatchingGeoPage(diamondText)
+  const relatedPillars = [
+    diamondPillar,
+    getMatchingPillar(`${item.category} hospitality technology AI operations`),
+    getMatchingPillar(`${item.category} guest experience leadership trends`),
+  ].filter((pillar, index, arr) => arr.findIndex(p => p.slug === pillar.slug) === index)
+  const relatedGeoPages = [
+    diamondGeo,
+    ...GEO_AUTHORITY_PAGES.filter(page => page.slug !== diamondGeo.slug).slice(0, 2),
+  ]
 
   return (
     <>
@@ -304,9 +317,41 @@ export default async function ContentDetailPage({ params }: { params: Promise<{ 
           url={`https://hospitality121.com/content/${item.slug}`}
         />
 
+        {/* Diamond SEO links */}
+        <nav className="mt-8 bg-surface rounded-xl p-6" aria-label="Diamond authority links">
+          <p className="text-xs font-bold tracking-widest text-gold uppercase mb-4">Hospitality121 Authority Network</p>
+          <div className="grid sm:grid-cols-2 gap-5">
+            <div>
+              <p className="text-xs font-bold text-gray-500 uppercase mb-2">Core and Pillars</p>
+              <div className="flex flex-col gap-2">
+                <Link href="/" className="text-sm font-medium text-gray-800 hover:text-gold transition-colors">Hospitality121 Core Hub</Link>
+                {relatedPillars.map(pillar => (
+                  <Link key={pillar.slug} href={pillar.href} className="text-sm font-medium text-gray-800 hover:text-gold transition-colors">
+                    {pillar.title}
+                  </Link>
+                ))}
+              </div>
+            </div>
+            <div>
+              <p className="text-xs font-bold text-gray-500 uppercase mb-2">GEO Hospitality Pages</p>
+              <div className="flex flex-col gap-2">
+                {relatedGeoPages.map(page => (
+                  <Link key={page.slug} href={page.href} className="text-sm font-medium text-gray-800 hover:text-gold transition-colors">
+                    {page.title}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </div>
+        </nav>
+
         {/* Author bio */}
         {(() => {
-          const authorName = item.type === 'podcast' ? (item as any).guest : (item as any).author
+          const authorName = item.type === 'podcast'
+            ? item.guest
+            : item.type === 'event'
+              ? item.organizer
+              : item.author
           const authorRecord = authorName ? AUTHORS_BY_NAME[authorName] : null
           if (!authorRecord || !authorRecord.bio) return null
           return (
