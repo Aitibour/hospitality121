@@ -28,15 +28,15 @@ const NAV: NavItem[] = [
     ],
   },
   {
-    key: 'authority',
-    label: 'Authority',
-    href: '/hospitality-trends',
+    key: 'about',
+    label: 'About',
+    href: '/about',
     dropdown: [
-      { label: 'Leadership', href: '/hospitality-leadership', description: 'Hotel leaders, executives, and strategy' },
-      { label: 'Operations', href: '/hotel-operations', description: 'Hotel operations and management systems' },
-      { label: 'Recruitment', href: '/hospitality-recruitment', description: 'Careers, hiring, and talent retention' },
-      { label: 'Guest Experience', href: '/guest-experience', description: 'Digital journeys and personalization' },
-      { label: 'Luxury Hospitality', href: '/luxury-hospitality', description: 'Luxury hotels, wellness, and design' },
+      { label: 'About Us',             href: '/about',              description: 'North American media platform, Vancouver BC' },
+      { label: 'Editorial Standards',  href: '/editorial-standards', description: 'How we research and verify content' },
+      { label: 'Collaborate',          href: '/collaborate',         description: 'Write for us or join the podcast' },
+      { label: 'Advertise',            href: '/advertise',           description: 'Reach hospitality leaders' },
+      { label: 'Contact',              href: '/contact',             description: 'Get in touch with our team' },
     ],
   },
   {
@@ -85,7 +85,6 @@ const NAV: NavItem[] = [
       { label: 'Partnerships',        href: '/advertise',               description: 'Media and brand collaborations' },
     ],
   },
-  { key: 'contact', label: 'Contact', href: '/contact' },
 ]
 
 export default function Navbar() {
