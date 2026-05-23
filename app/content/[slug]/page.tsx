@@ -374,21 +374,6 @@ export default async function ContentDetailPage({ params }: { params: Promise<{ 
           )
         })()}
 
-        {/* Newsletter CTA */}
-        <div className="mt-12 bg-surface rounded-xl p-8 text-center">
-          <p className="text-xs font-bold tracking-widest text-gold uppercase mb-2">Newsletter</p>
-          <h2 className="font-serif text-2xl font-bold mb-2">Stay in the know.</h2>
-          <p className="text-muted text-sm mb-6">
-            The best hospitality insights, podcasts, and events — delivered weekly.
-          </p>
-          <Link
-            href="/subscribe"
-            className="inline-block bg-gold text-navy font-bold px-8 py-3 rounded hover:opacity-90 transition-opacity text-sm"
-          >
-            SUBSCRIBE FREE
-          </Link>
-        </div>
-
         {/* Related content */}
         {related.length > 0 && (
           <div className="mt-12">
