@@ -8,6 +8,7 @@ import { formatDate } from '@/lib/formatDate'
 type Props = {
   items: ContentItem[]
   showEpisodeNumbers?: boolean
+  contained?: boolean
 }
 
 function getCardMeta(item: ContentItem) {
@@ -23,11 +24,11 @@ function getCardMeta(item: ContentItem) {
   }
 }
 
-export default function ContentGrid({ items, showEpisodeNumbers = false }: Props) {
+export default function ContentGrid({ items, showEpisodeNumbers = false, contained = true }: Props) {
   if (items.length === 0) return null
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-8">
+    <div className={contained ? 'max-w-7xl mx-auto px-4 py-8' : 'py-8'}>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {items.map((item, index) => {
           const { name, avatar, meta } = getCardMeta(item)

@@ -51,9 +51,13 @@ export default function HomePage() {
 
       <h1 className="sr-only">Hospitality Technology News & Insights</h1>
       <HeroCarousel items={heroItems} />
-      <DiamondAuthoritySection />
       <AdSlot zone="hero-banner" />
-      <ContentGrid items={gridItems} />
+      <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-8 items-start">
+        <ContentGrid items={gridItems} contained={false} />
+        <div className="py-8">
+          <DiamondAuthoritySection />
+        </div>
+      </div>
       <AdSlot zone="mid-grid" />
       <EditorsPick items={featuredItems} />
       <TopContent articles={articles} podcasts={podcasts} />

@@ -3,51 +3,50 @@ import { DIAMOND_PILLARS, GEO_AUTHORITY_PAGES } from '@/lib/diamond-seo'
 
 export default function DiamondAuthoritySection() {
   return (
-    <section className="bg-white py-14 border-y border-gray-100">
-      <div className="max-w-7xl mx-auto px-4">
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8">
-          <div>
-            <span className="text-xs font-bold tracking-widest text-gold uppercase">Authority Network</span>
-            <h2 className="font-serif text-3xl md:text-4xl font-bold tracking-tight mt-2 text-gray-900">
-              Hospitality Leadership, Technology, AI, and Operations
-            </h2>
-          </div>
-          <Link href="/hospitality-trends" className="text-sm font-bold text-gold hover:underline">
-            Explore hospitality trends
-          </Link>
-        </div>
+    <aside className="lg:sticky lg:top-20 h-fit rounded-lg border border-gray-100 bg-white p-4 shadow-sm">
+      <div className="mb-4">
+        <span className="text-[11px] font-bold tracking-widest text-gold uppercase">Authority Network</span>
+        <h2 className="font-serif text-xl font-bold leading-tight mt-1 text-gray-900">
+          Hospitality Authority Map
+        </h2>
+        <p className="mt-2 text-xs leading-relaxed text-muted">
+          Pillars and GEO pages connected to the latest Hospitality121 coverage.
+        </p>
+      </div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-10">
-          {DIAMOND_PILLARS.map(pillar => (
+      <div className="flex flex-col divide-y divide-gray-100">
+        {DIAMOND_PILLARS.slice(0, 6).map(pillar => (
+          <Link
+            key={pillar.slug}
+            href={pillar.href}
+            className="group py-3"
+          >
+            <p className="text-[10px] font-bold tracking-widest text-gold uppercase">{pillar.eyebrow}</p>
+            <h3 className="mt-1 text-sm font-bold text-gray-900 group-hover:text-gold transition-colors">
+              {pillar.title}
+            </h3>
+          </Link>
+        ))}
+      </div>
+
+      <div className="mt-5">
+        <p className="text-[11px] font-bold tracking-widest text-gray-500 uppercase mb-2">GEO Pages</p>
+        <div className="flex flex-wrap gap-2">
+          {GEO_AUTHORITY_PAGES.slice(0, 5).map(page => (
             <Link
-              key={pillar.slug}
-              href={pillar.href}
-              className="border border-gray-100 rounded-lg p-5 hover:border-gold/50 hover:shadow-sm transition group"
+              key={page.slug}
+              href={page.href}
+              className="rounded-full border border-gray-200 px-2.5 py-1 text-[11px] font-semibold text-gray-600 hover:border-gold hover:text-gold transition-colors"
             >
-              <p className="text-xs font-bold tracking-widest text-gold uppercase mb-2">{pillar.eyebrow}</p>
-              <h3 className="font-serif text-xl font-bold text-gray-900 group-hover:text-gold transition-colors">
-                {pillar.title}
-              </h3>
-              <p className="text-sm text-muted leading-relaxed mt-2">{pillar.description}</p>
+              {page.title.replace('Hospitality ', '').replace('Hotel Technology ', 'Tech ')}
             </Link>
           ))}
         </div>
-
-        <div>
-          <p className="text-xs font-bold tracking-widest text-gray-500 uppercase mb-3">GEO Hospitality Authority</p>
-          <div className="flex flex-wrap gap-2">
-            {GEO_AUTHORITY_PAGES.map(page => (
-              <Link
-                key={page.slug}
-                href={page.href}
-                className="text-xs font-semibold border border-gray-200 rounded-full px-3 py-1.5 text-gray-700 hover:border-gold hover:text-gold transition-colors"
-              >
-                {page.title}
-              </Link>
-            ))}
-          </div>
-        </div>
       </div>
-    </section>
+
+      <Link href="/hospitality-trends" className="mt-5 inline-flex text-xs font-bold text-gold hover:underline">
+        Explore trends
+      </Link>
+    </aside>
   )
 }
