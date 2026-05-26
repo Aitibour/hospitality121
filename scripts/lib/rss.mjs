@@ -1,12 +1,72 @@
-const FEEDS = [
+export const TOP_HOTEL_BRANDS = [
+  'Marriott International',
+  'Hilton',
+  'Hyatt',
+  'IHG Hotels & Resorts',
+  'Wyndham Hotels & Resorts',
+  'Choice Hotels',
+  'Accor',
+  'Radisson Hotels',
+  'Best Western / BWH Hotels',
+  'Four Seasons',
+  'Mandarin Oriental',
+  'Rosewood Hotels & Resorts',
+  'Kempinski',
+  'Minor Hotels',
+  'Melia Hotels International',
+  'NH Hotels',
+  'Scandic Hotels',
+  'Louvre Hotels Group',
+  'citizenM',
+  'Motel One',
+]
+
+const INDUSTRY_FEEDS = [
   { url: 'https://hotelmanagement.net/feed', source: 'hotelmanagement.net' },
   { url: 'https://www.hospitalitynet.org/rss/news.xml', source: 'hospitalitynet.org' },
   { url: 'https://skift.com/feed/', source: 'skift.com' },
 ]
 
+const HOTEL_BRAND_FEEDS = [
+  {
+    url: 'https://marriott.gcs-web.com/rss/news-releases.xml',
+    source: 'Marriott International',
+  },
+  {
+    url: 'https://news.hiltonworldwide.com/index.cfm/newsroom/rss/topic/731',
+    source: 'Hilton',
+  },
+  {
+    url: 'https://newsroom.hyatt.com/news-releases?pagetemplate=rss',
+    source: 'Hyatt',
+  },
+  {
+    url: 'https://www.ihgplc.com/en/rss/rss-news/corporate-and-financial-news',
+    source: 'IHG Hotels & Resorts',
+  },
+  {
+    url: 'https://corporate.wyndhamhotels.com/feed/press-release/',
+    source: 'Wyndham Hotels & Resorts',
+  },
+  {
+    url: 'https://media.choicehotels.com/press-releases?pagetemplate=rss',
+    source: 'Choice Hotels',
+  },
+  {
+    url: 'https://press.mandarinoriental.com/feed/',
+    source: 'Mandarin Oriental',
+  },
+  {
+    url: 'https://press.accor.com/feed/?lang=eng',
+    source: 'Accor',
+  },
+]
+
+export const FEEDS = [...INDUSTRY_FEEDS, ...HOTEL_BRAND_FEEDS]
+
 /**
- * Fetches all 3 RSS feeds in parallel, returns flat date-sorted article array.
- * Feeds that fail are skipped; logs a warning if all 3 fail.
+ * Fetches industry and official hotel-brand RSS feeds in parallel, returns a flat date-sorted article array.
+ * Feeds that fail are skipped; logs a warning if all feeds fail.
  * Defaults to articles published in the last 24 hours.
  * @returns {Promise<Array<{title, url, excerpt, pubDate, source}>>}
  */
@@ -22,6 +82,7 @@ export async function fetchAllArticles({ maxAgeHours = 24 } = {}) {
 
   return succeeded
     .flatMap(r => r.value)
+    .filter((article, index, articles) => articles.findIndex(candidate => candidate.url === article.url) === index)
     .sort((a, b) => b.pubDate - a.pubDate)
 }
 

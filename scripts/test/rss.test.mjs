@@ -1,6 +1,6 @@
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
-import { parseFeed } from '../lib/rss.mjs'
+import { FEEDS, TOP_HOTEL_BRANDS, parseFeed } from '../lib/rss.mjs'
 
 const RECENT = new Date(Date.now() - 12 * 60 * 60 * 1000).toUTCString()
 
@@ -70,4 +70,17 @@ test('parseFeed handles single item (XML gives object not array)', () => {
 test('parseFeed returns empty array for feed with no items', () => {
   const articles = parseFeed(EMPTY_RSS, 'example.com')
   assert.equal(articles.length, 0)
+})
+
+test('RSS source list includes official hotel brand feeds', () => {
+  const sources = FEEDS.map(feed => feed.source)
+  for (const expected of ['Marriott International', 'Hilton', 'Hyatt', 'IHG Hotels & Resorts', 'Wyndham Hotels & Resorts', 'Choice Hotels']) {
+    assert.ok(sources.includes(expected), `missing ${expected}`)
+  }
+})
+
+test('top hotel brand keyword set covers 20 brands', () => {
+  assert.equal(TOP_HOTEL_BRANDS.length, 20)
+  assert.ok(TOP_HOTEL_BRANDS.includes('Four Seasons'))
+  assert.ok(TOP_HOTEL_BRANDS.includes('Rosewood Hotels & Resorts'))
 })
