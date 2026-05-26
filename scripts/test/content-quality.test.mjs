@@ -1,11 +1,37 @@
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
-import { isDuplicateTitle, isHospitalitySource, validateHumanizedPost } from '../lib/content-quality.mjs'
+import { isAllowedRegionalArticle, isDuplicateTitle, isHospitalitySource, validateHumanizedPost } from '../lib/content-quality.mjs'
 
 test('isHospitalitySource accepts broad hospitality sources', () => {
   assert.equal(isHospitalitySource({
     title: 'Hotel leaders rethink staffing before summer',
     excerpt: 'Operators are adjusting hospitality recruitment and guest experience plans.',
+    source: 'example.com',
+  }), true)
+})
+
+test('regional filter blocks India and disallowed Arab-market stories', () => {
+  assert.equal(isAllowedRegionalArticle({
+    title: 'Yatra Eyes Corporate Travel Growth in India',
+    excerpt: 'The travel company is expanding hotel distribution.',
+    source: 'example.com',
+  }), false)
+  assert.equal(isAllowedRegionalArticle({
+    title: 'Dubai hotel pipeline accelerates',
+    excerpt: 'Operators are planning new hotel openings.',
+    source: 'example.com',
+  }), false)
+})
+
+test('regional filter allows Saudi Arabia and Qatar stories', () => {
+  assert.equal(isAllowedRegionalArticle({
+    title: 'Saudi Arabia luxury hospitality investment grows',
+    excerpt: 'Riyadh hotel development remains active.',
+    source: 'example.com',
+  }), true)
+  assert.equal(isAllowedRegionalArticle({
+    title: 'Qatar hotels prepare for meetings demand',
+    excerpt: 'Doha operators invest in guest experience.',
     source: 'example.com',
   }), true)
 })

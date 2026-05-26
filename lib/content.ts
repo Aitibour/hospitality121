@@ -3,6 +3,7 @@ import path from 'path'
 import matter from 'gray-matter'
 import type { ContentItem } from '@/types/content'
 import { AUTHORS_BY_NAME } from '@/lib/authors'
+import { isAllowedRegionalContent } from '@/lib/regional-filter'
 
 type ContentType = ContentItem['type']
 
@@ -78,9 +79,9 @@ export function getAllContent(): ContentItem[] {
   const news     = readDir('news', 'news')
   const events   = readDir('events', 'event')
   const blog     = readDir('blog', 'blog')
-  return [...articles, ...podcasts, ...news, ...events, ...blog].sort(
-    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-  )
+  return [...articles, ...podcasts, ...news, ...events, ...blog]
+    .filter(isAllowedRegionalContent)
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
 }
 
 export function getFeaturedContent(): ContentItem[] {

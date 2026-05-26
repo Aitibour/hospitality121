@@ -28,7 +28,7 @@ export default function HomePage() {
   const heroItems     = [
     ...generatedHero,
     ...limitByAuthor(editorial.filter(item => !isGeneratedPost(item)), 2),
-  ].filter((item, index, items) => items.findIndex(candidate => candidate.slug === item.slug) === index).slice(0, 4)
+  ].filter((item, index, items) => items.findIndex(candidate => candidate.slug === item.slug) === index).slice(0, 10)
   const heroSlugs     = new Set(heroItems.map(item => item.slug))
   const gridItems     = limitByAuthor(editorial.filter(item => !heroSlugs.has(item.slug)), 2).slice(0, 10)
   const featuredItems = pickEditorItems(all.filter(item => item.featured), 10)

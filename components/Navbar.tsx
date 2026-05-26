@@ -36,7 +36,6 @@ const NAV: NavItem[] = [
       { label: 'Editorial Standards',  href: '/editorial-standards', description: 'How we research and verify content' },
       { label: 'Collaborate',          href: '/collaborate',         description: 'Write for us or join the podcast' },
       { label: 'Advertise',            href: '/advertise',           description: 'Reach hospitality leaders' },
-      { label: 'Contact',              href: '/contact',             description: 'Get in touch with our team' },
     ],
   },
   {

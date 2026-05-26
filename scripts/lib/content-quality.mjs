@@ -50,9 +50,49 @@ const BANNED_PHRASES = [
   'cutting edge',
 ]
 
+const BLOCKED_REGION_TERMS = [
+  'india',
+  'indian',
+  'yatra',
+  'mumbai',
+  'delhi',
+  'bangalore',
+  'uae',
+  'dubai',
+  'abu dhabi',
+  'emirates',
+  'morocco',
+  'marrakech',
+  'casablanca',
+  'bahrain',
+  'kuwait',
+  'oman',
+  'egypt',
+  'jordan',
+  'lebanon',
+  'iraq',
+  'syria',
+  'yemen',
+]
+
+const ALLOWED_REGION_TERMS = [
+  'saudi arabia',
+  'saudi',
+  'riyadh',
+  'jeddah',
+  'qatar',
+  'doha',
+]
+
 export function isHospitalitySource(article) {
   const haystack = `${article.title} ${article.excerpt} ${article.source}`.toLowerCase()
-  return HOSPITALITY_TERMS.some(term => haystack.includes(term))
+  return isAllowedRegionalArticle(article) && HOSPITALITY_TERMS.some(term => haystack.includes(term))
+}
+
+export function isAllowedRegionalArticle(article) {
+  const haystack = `${article.title} ${article.excerpt} ${article.source}`.toLowerCase()
+  if (ALLOWED_REGION_TERMS.some(term => haystack.includes(term))) return true
+  return !BLOCKED_REGION_TERMS.some(term => haystack.includes(term))
 }
 
 export function normalizeText(value) {
