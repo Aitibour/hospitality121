@@ -13,7 +13,8 @@ export default function NewsletterPopup() {
   useEffect(() => {
     if (typeof window === 'undefined') return
     if (localStorage.getItem(STORAGE_KEY)) return
-    const timer = setTimeout(() => setVisible(true), 5000)
+    if (window.matchMedia('(max-width: 767px)').matches) return
+    const timer = setTimeout(() => setVisible(true), 12000)
     return () => clearTimeout(timer)
   }, [])
 
@@ -38,7 +39,7 @@ export default function NewsletterPopup() {
           body: params.toString(),
         })
       }
-    } catch { /* silent fail — don't block success state */ }
+    } catch { /* silent fail, don't block success state */ }
     setStatus('success')
     setTimeout(dismiss, 3000)
   }
@@ -93,7 +94,7 @@ export default function NewsletterPopup() {
                   The hospitality intelligence briefing.
                 </h2>
                 <p className="text-gray-500 text-sm leading-relaxed">
-                  Join 4,000+ hotel leaders. Get the sharpest insights on technology, sustainability, and leadership — every week.
+                  Join 4,000+ hotel leaders. Get the sharpest insights on technology, sustainability, and leadership every week.
                 </p>
               </div>
 
@@ -121,7 +122,7 @@ export default function NewsletterPopup() {
                   disabled={status === 'submitting'}
                   className="bg-gold text-gray-900 font-bold py-3 rounded-lg hover:opacity-90 transition-opacity disabled:opacity-50 text-sm tracking-wider"
                 >
-                  {status === 'submitting' ? 'Subscribing…' : 'GET THE BRIEFING FREE'}
+                  {status === 'submitting' ? 'Subscribing...' : 'GET THE BRIEFING FREE'}
                 </button>
               </form>
 

@@ -24,7 +24,7 @@ export default function PodcastsPage() {
   return (
     <>
       <SectionHeader sectionKey="podcasts" count={items.length} />
-      <div className="max-w-7xl mx-auto px-4 py-10"><ContentGrid items={items} /></div>
+      <div className="max-w-7xl mx-auto px-4 py-10"><ContentGrid items={items} showEpisodeNumbers /></div>
       <AdSlot zone="mid-grid" />
     </>
   )

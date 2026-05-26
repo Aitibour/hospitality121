@@ -4,9 +4,11 @@ import type { ContentItem } from '@/types/content'
 import CategoryLabel from './CategoryLabel'
 import AuthorLine from './AuthorLine'
 import { formatDate } from '@/lib/formatDate'
-import { getCategorySlugForTerm } from '@/lib/categories'
 
-type Props = { items: ContentItem[] }
+type Props = {
+  items: ContentItem[]
+  showEpisodeNumbers?: boolean
+}
 
 function getCardMeta(item: ContentItem) {
   switch (item.type) {
@@ -21,25 +23,26 @@ function getCardMeta(item: ContentItem) {
   }
 }
 
-export default function ContentGrid({ items }: Props) {
+export default function ContentGrid({ items, showEpisodeNumbers = false }: Props) {
   if (items.length === 0) return null
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        {items.map(item => {
+        {items.map((item, index) => {
           const { name, avatar, meta } = getCardMeta(item)
           const formattedDate = item.type === 'event'
             ? `Event: ${formatDate(item.eventDate)}`
             : formatDate(item.date)
           const cardId = `card-title-${item.slug}`
           return (
-            <article
+            <Link
               key={item.slug}
+              href={`/content/${item.slug}`}
               aria-labelledby={cardId}
-              className="bg-surface rounded-lg overflow-hidden hover:ring-1 hover:ring-gold/40 transition-shadow"
+              className="group block bg-surface rounded-lg overflow-hidden hover:ring-1 hover:ring-gold/40 transition-shadow"
             >
-              <Link href={`/content/${item.slug}`} className="block group">
+              <article>
                 <div className="relative h-44">
                   <Image
                     src={item.image}
@@ -48,28 +51,23 @@ export default function ContentGrid({ items }: Props) {
                     sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
                     className="object-cover group-hover:scale-105 transition-transform duration-300"
                   />
+                  {showEpisodeNumbers && item.type === 'podcast' && (
+                    <div className="absolute left-3 top-3 rounded-full bg-gray-950/85 px-3 py-1 text-xs font-bold tracking-widest text-gray-50">
+                      EP {String(index + 1).padStart(2, '0')}
+                    </div>
+                  )}
                 </div>
-              </Link>
               <div className="p-4 flex flex-col gap-2">
                 <AuthorLine name={name} avatar={avatar} date={formattedDate} />
-                {(() => {
-                  const catSlug = getCategorySlugForTerm(item.category)
-                  return catSlug ? (
-                    <Link href={`/category/${catSlug}`}>
-                      <CategoryLabel label={item.category} />
-                    </Link>
-                  ) : (
-                    <CategoryLabel label={item.category} />
-                  )
-                })()}
-                <Link href={`/content/${item.slug}`} className="group">
-                  <h3 id={cardId} className="font-serif text-gray-900 font-semibold text-base leading-snug line-clamp-3">
-                    {item.title}
-                  </h3>
-                </Link>
+                <CategoryLabel label={item.category} />
+                <h3 id={cardId} className="font-serif text-gray-900 font-semibold text-base leading-snug line-clamp-3 group-hover:text-gold transition-colors">
+                  {showEpisodeNumbers && item.type === 'podcast' ? `Episode ${index + 1}: ` : ''}
+                  {item.title}
+                </h3>
                 <p className="text-muted text-xs">{meta}</p>
               </div>
-            </article>
+              </article>
+            </Link>
           )
         })}
       </div>

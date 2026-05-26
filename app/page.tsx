@@ -17,12 +17,21 @@ export const metadata: Metadata = {
 
 export const revalidate = 3600
 
+function isGeneratedPost(item: { type: string; sourceUrl?: string; author?: string }) {
+  return (item.type === 'blog' || item.type === 'news') && (!!item.sourceUrl || item.author === 'H1H Newsfeed')
+}
+
 export default function HomePage() {
   const all = getAllContent()
   const editorial     = all.filter(item => item.type !== 'event')
-  const heroItems     = limitByAuthor(editorial, 2).slice(0, 4)
-  const gridItems     = limitByAuthor(editorial, 2).slice(4, 8)
-  const featuredItems = pickEditorItems(all.filter(item => item.featured))
+  const generatedHero = editorial.filter(isGeneratedPost)
+  const heroItems     = [
+    ...generatedHero,
+    ...limitByAuthor(editorial.filter(item => !isGeneratedPost(item)), 2),
+  ].filter((item, index, items) => items.findIndex(candidate => candidate.slug === item.slug) === index).slice(0, 4)
+  const heroSlugs     = new Set(heroItems.map(item => item.slug))
+  const gridItems     = limitByAuthor(editorial.filter(item => !heroSlugs.has(item.slug)), 2).slice(0, 10)
+  const featuredItems = pickEditorItems(all.filter(item => item.featured), 10)
   const articles      = all.filter((item): item is Article => item.type === 'article')
   const podcasts      = all.filter((item): item is Podcast => item.type === 'podcast')
 

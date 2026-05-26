@@ -27,6 +27,27 @@ export function collectExistingSourceUrls(rootDir = process.cwd()) {
   return urls
 }
 
+export function collectExistingTitles(rootDir = process.cwd()) {
+  const titles = []
+  for (const dir of ['blog', 'news', 'articles']) {
+    for (const meta of readContentMeta(path.join(rootDir, 'content', dir))) {
+      if (meta.title) titles.push(meta.title)
+    }
+  }
+  return titles
+}
+
+export function collectExistingKeywordSets(rootDir = process.cwd()) {
+  const sets = []
+  for (const dir of ['blog', 'news', 'articles']) {
+    for (const meta of readContentMeta(path.join(rootDir, 'content', dir))) {
+      if (meta.keywords) sets.push(meta.keywords)
+      if (meta.primaryKeyword) sets.push(meta.primaryKeyword)
+    }
+  }
+  return sets
+}
+
 export function countGeneratedToday(type, rootDir = process.cwd(), date = todayIso()) {
   return readContentMeta(path.join(rootDir, 'content', type))
     .filter(meta => meta.date === date && meta.sourceUrl)

@@ -44,6 +44,14 @@ test('renderMdx produces valid MDX with frontmatter and bilingual body', () => {
     sourceUrl: 'https://example.com/article',
     bodyEn: 'English body.',
     bodyFr: 'French body.',
+    primaryKeyword: 'hospitality technology trends',
+    keywords: ['hospitality technology', 'hotel automation', 'AI in hospitality', 'hotel IT infrastructure'],
+    imageConcept: 'A hotel operations team reviewing guest technology dashboards in a realistic luxury lobby.',
+    editorialFormat: 'hotel-operations',
+    linkedinCaption: 'Hospitality technology is moving closer to daily operations. This piece looks at what that means for hotel leaders.',
+    facebookCaption: 'A practical look at how hospitality technology is changing hotel operations.',
+    xCaption: 'Hospitality technology is becoming an operating discipline, not a side project.',
+    newsletterTeaser: 'A concise look at the systems changing hotel operations this week.',
   })
   assert.ok(result.startsWith('---\n'))
   assert.ok(result.includes('type: "blog"'))
@@ -51,6 +59,9 @@ test('renderMdx produces valid MDX with frontmatter and bilingual body', () => {
   assert.ok(result.includes('<!-- FR -->'))
   assert.ok(result.includes('English body.'))
   assert.ok(result.includes('French body.'))
+  assert.ok(result.includes('primaryKeyword: "hospitality technology trends"'))
+  assert.ok(result.includes('editorialFormat: "hotel-operations"'))
+  assert.ok(result.includes('linkedinCaption: "Hospitality technology is moving closer'))
 })
 
 test('renderMdx escapes double quotes in titles', () => {

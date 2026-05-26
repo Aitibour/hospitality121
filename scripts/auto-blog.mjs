@@ -8,16 +8,32 @@ import { calcReadTime, generateSlug, renderMdx } from './lib/mdx.mjs'
 import { commitAndPush, pingIndexNow } from './lib/publish.mjs'
 import { publishToLinkedIn } from './lib/linkedin.mjs'
 import { buildSeoLinks } from './lib/seo-links.mjs'
-import { collectExistingSourceUrls, countGeneratedToday, loadSeen, saveSeen, todayIso } from './lib/content-history.mjs'
+import { collectExistingKeywordSets, collectExistingSourceUrls, collectExistingTitles, countGeneratedToday, loadSeen, saveSeen, todayIso } from './lib/content-history.mjs'
+import { isHospitalitySource, validateHumanizedPost } from './lib/content-quality.mjs'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const TRACKER_PATH = path.join(__dirname, 'seen-articles.json')
+const DAILY_BLOG_LIMIT = 2
+const EDITORIAL_FORMATS = [
+  'articles-and-editorials',
+  'hospitality-news-analysis',
+  'events-and-conferences',
+  'podcast-style-insight',
+  'executive-interview-angle',
+  'leadership',
+  'hotel-operations',
+  'recruitment-and-workforce',
+  'guest-experience',
+  'luxury-hospitality',
+  'sustainability',
+  'hospitality-technology',
+]
 
 async function main() {
   console.log('Auto-blog pipeline starting...')
 
-  if (countGeneratedToday('blog') >= 1) {
-    console.log('Blog daily quota reached (1 post). Exiting cleanly.')
+  if (countGeneratedToday('blog') >= DAILY_BLOG_LIMIT) {
+    console.log(`Blog daily quota reached (${DAILY_BLOG_LIMIT} posts). Exiting cleanly.`)
     process.exit(0)
   }
 
@@ -28,25 +44,48 @@ async function main() {
   // 2. Skip already-processed articles across both Blog and News.
   const seen = loadSeen(TRACKER_PATH)
   const existingSources = collectExistingSourceUrls()
-  const unseen = articles.filter(a => !seen.includes(a.url) && !existingSources.has(a.url))
+  const unseen = articles
+    .filter(a => !seen.includes(a.url) && !existingSources.has(a.url))
+    .filter(isHospitalitySource)
+
   if (unseen.length === 0) {
-    console.log('No new articles found. Exiting cleanly.')
+    console.log('No new hospitality articles found. Exiting cleanly.')
     process.exit(0)
   }
-  const article = unseen[0]
-  console.log(`Picked: "${article.title}" from ${article.source}`)
 
-  // 3. Generate bilingual content via Groq (one retry on failure).
+  const existingTitles = collectExistingTitles()
+  const existingKeywordSets = collectExistingKeywordSets()
+  const targetFormat = EDITORIAL_FORMATS[(new Date().getHours() + countGeneratedToday('blog')) % EDITORIAL_FORMATS.length]
   let post
-  for (let attempt = 1; attempt <= 2; attempt++) {
-    try {
-      post = await generatePost(article)
-      console.log(`Groq generated: "${post.titleEn}"`)
-      break
-    } catch (err) {
-      console.error(`Groq attempt ${attempt} failed: ${err.message}`)
-      if (attempt === 2) process.exit(1)
+  let article
+
+  const shuffled = unseen.sort(() => Math.random() - 0.5)
+  for (const candidate of shuffled.slice(0, 8)) {
+    console.log(`Evaluating: "${candidate.title}" from ${candidate.source}`)
+
+    for (let attempt = 1; attempt <= 2; attempt++) {
+      try {
+        post = await generatePost(candidate, { existingTitles, existingKeywordSets, targetFormat })
+        const issues = validateHumanizedPost(post, existingTitles, existingKeywordSets)
+        if (issues.length > 0) {
+          throw new Error(`quality gate failed: ${issues.join('; ')}`)
+        }
+        article = candidate
+        console.log(`Groq generated: "${post.titleEn}"`)
+        break
+      } catch (err) {
+        console.error(`Groq attempt ${attempt} failed: ${err.message}`)
+        if (attempt === 2) seen.push(candidate.url)
+      }
     }
+
+    if (post && article) break
+  }
+
+  if (!post || !article) {
+    saveSeen(TRACKER_PATH, seen)
+    console.log('No article passed uniqueness and quality gates. Exiting cleanly.')
+    process.exit(0)
   }
 
   // 4. Sanitize slug from Groq output, check for collision.
@@ -62,7 +101,7 @@ async function main() {
   }
 
   // 5. Download hero image.
-  const imageFile = await fetchImage(post.keywords, slug)
+  const imageFile = await fetchImage([post.imageConcept, post.primaryKeyword, ...post.keywords], slug)
 
   // 6. Render and write MDX file.
   const mdxContent = renderMdx({
@@ -78,6 +117,14 @@ async function main() {
     sourceUrl: article.url,
     bodyEn: post.bodyEn,
     bodyFr: post.bodyFr,
+    primaryKeyword: post.primaryKeyword,
+    keywords: post.keywords,
+    imageConcept: post.imageConcept,
+    editorialFormat: post.editorialFormat || targetFormat,
+    linkedinCaption: post.linkedinCaption,
+    facebookCaption: post.facebookCaption,
+    xCaption: post.xCaption,
+    newsletterTeaser: post.newsletterTeaser,
     seoLinks: buildSeoLinks({
       contentType: 'blog',
       title: post.titleEn,

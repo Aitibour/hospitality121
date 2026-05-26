@@ -32,7 +32,7 @@ const NAV: NavItem[] = [
     label: 'About',
     href: '/about',
     dropdown: [
-      { label: 'About Us',             href: '/about',              description: 'North American media platform, Vancouver BC' },
+      { label: 'About Us',             href: '/about',              description: 'Hospitality media platform, New York USA' },
       { label: 'Editorial Standards',  href: '/editorial-standards', description: 'How we research and verify content' },
       { label: 'Collaborate',          href: '/collaborate',         description: 'Write for us or join the podcast' },
       { label: 'Advertise',            href: '/advertise',           description: 'Reach hospitality leaders' },
@@ -79,10 +79,9 @@ const NAV: NavItem[] = [
     label: 'Collaborate',
     href: '/collaborate',
     dropdown: [
-      { label: 'Become a Guest',      href: '/collaborate#guest',       description: 'Apply to join the podcast' },
       { label: 'Submit an Article',   href: '/collaborate#article',     description: 'Contribute editorial content' },
       { label: 'Sponsorships',        href: '/advertise',               description: 'Reach hospitality leaders' },
-      { label: 'Partnerships',        href: '/advertise',               description: 'Media and brand collaborations' },
+      { label: 'Contact the Team',     href: '/contact',                 description: 'Talk to Hospitality121' },
     ],
   },
 ]

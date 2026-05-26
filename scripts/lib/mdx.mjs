@@ -26,11 +26,12 @@ export function calcReadTime(text) {
 
 /**
  * Renders a complete bilingual MDX file string.
- * @param {{ titleEn, titleFr, excerptEn, excerptFr, category, date, readTime, imageFile, sourceDomain, sourceUrl, bodyEn, bodyFr, seoLinks }} params
+ * @param {{ titleEn, titleFr, excerptEn, excerptFr, category, date, readTime, imageFile, sourceDomain, sourceUrl, bodyEn, bodyFr, seoLinks, primaryKeyword?, keywords?, imageConcept?, editorialFormat?, linkedinCaption?, facebookCaption?, xCaption?, newsletterTeaser? }} params
  * @returns {string}
  */
-export function renderMdx({ titleEn, titleFr, excerptEn, excerptFr, category, date, readTime, imageFile, sourceDomain, sourceUrl, bodyEn, bodyFr, seoLinks = '' }) {
+export function renderMdx({ titleEn, titleFr, excerptEn, excerptFr, category, date, readTime, imageFile, sourceDomain, sourceUrl, bodyEn, bodyFr, seoLinks = '', primaryKeyword = '', keywords = [], imageConcept = '', editorialFormat = '', linkedinCaption = '', facebookCaption = '', xCaption = '', newsletterTeaser = '' }) {
   const esc = s => s.replace(/"/g, '\\"')
+  const keywordLine = Array.isArray(keywords) ? keywords.join(', ') : String(keywords || '')
   return `---
 title: "${esc(titleEn)}"
 titleFr: "${esc(titleFr)}"
@@ -46,6 +47,14 @@ featured: false
 type: "blog"
 source: "${sourceDomain}"
 sourceUrl: "${sourceUrl}"
+primaryKeyword: "${esc(primaryKeyword)}"
+keywords: "${esc(keywordLine)}"
+imageConcept: "${esc(imageConcept)}"
+editorialFormat: "${esc(editorialFormat)}"
+linkedinCaption: "${esc(linkedinCaption)}"
+facebookCaption: "${esc(facebookCaption)}"
+xCaption: "${esc(xCaption)}"
+newsletterTeaser: "${esc(newsletterTeaser)}"
 ---
 
 ${bodyEn}

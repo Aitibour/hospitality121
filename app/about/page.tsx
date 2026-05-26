@@ -4,7 +4,7 @@ import Link from 'next/link'
 export const metadata: Metadata = {
   title: 'About',
   alternates: { canonical: 'https://hospitality121.com/about' },
-  description: 'Hospitality121 is a North American hospitality media platform headquartered in Vancouver, BC, covering AI, technology, and guest experience innovation for a global industry audience.',
+  description: 'Hospitality121 is a hospitality media platform based in New York, USA, covering leadership, news, events, podcasts, technology, guest experience, operations, recruitment, sustainability, and luxury hospitality.',
 }
 
 export default function AboutPage() {
@@ -16,46 +16,45 @@ export default function AboutPage() {
           The Future of Hospitality,<br />One Connection at a Time
         </h1>
         <p className="text-muted text-lg leading-relaxed">
-          Hospitality121 is a North American hospitality technology media platform headquartered in
-          Vancouver, British Columbia, exploring how AI, digital transformation, guest experience
-          innovation, and human connection are shaping the next generation of hospitality — for
-          operators, executives, and investors across the US, Canada, and beyond.
+          Hospitality121 is a hospitality media platform based in New York, USA, exploring the
+          people, ideas, technology, operations, events, and market shifts shaping the next
+          generation of hospitality for operators, executives, investors, and emerging leaders.
         </p>
       </div>
 
       <div className="flex flex-col gap-10">
-
         <section>
           <h2 className="font-serif text-2xl font-bold mb-3">Who We Are</h2>
           <p className="text-muted leading-relaxed mb-4">
-            Founded and operated from Vancouver, BC, Hospitality121 is an independent media company
-            serving the North American and global hospitality industry. Our editorial team spans
-            Canada, the United States, and key hospitality markets across Europe and Asia Pacific.
+            Founded and operated from New York, Hospitality121 is an independent media company
+            serving the US and global hospitality industry. Our editorial lens spans the United
+            States, Canada, Europe, the Middle East, Africa, and Asia Pacific.
           </p>
           <p className="text-muted leading-relaxed">
-            We are registered in Canada and operate as a bilingual-capable platform, publishing
-            primary coverage in English with a readership of hotel executives, technology leaders,
-            revenue managers, and operators across more than 40 countries.
+            We operate as a bilingual-capable platform, publishing primary coverage in English
+            with a readership of hotel executives, technology leaders, revenue managers, operators,
+            recruiters, event organizers, and hospitality professionals across more than 40 countries.
           </p>
         </section>
 
         <section>
           <h2 className="font-serif text-2xl font-bold mb-3">What We Cover</h2>
           <p className="text-muted leading-relaxed mb-4">
-            We sit at the intersection of hospitality and technology — covering the trends, leaders,
-            and innovations driving the industry forward. From AI-powered guest experiences to
-            cybersecurity challenges facing hotel operators, we bring executive-level insights to a
-            global audience of hospitality professionals.
+            We cover hospitality as a complete industry, not only as a technology beat. Our work
+            moves across news, articles, podcasts, events, leadership, operations, recruitment,
+            sustainability, luxury, guest experience, and the technology changing how hotels work.
           </p>
           <ul className="flex flex-col gap-2">
             {[
-              'AI & Machine Learning in Hospitality',
-              'Hotel Technology & Digital Transformation',
+              'Hospitality News & Market Signals',
+              'Articles & Editorial Analysis',
+              'Events, Conferences & Community',
+              'Podcasts & Executive Interviews',
+              'Leadership, Recruitment & Operations',
+              'Hotel Technology & AI',
               'Guest Experience Innovation',
-              'Hospitality Cybersecurity',
-              'Leadership & Strategy',
+              'Luxury Hospitality',
               'Sustainability & ESG',
-              'Revenue Management & Distribution',
             ].map(topic => (
               <li key={topic} className="flex items-center gap-3 text-sm text-muted">
                 <span className="w-1.5 h-1.5 rounded-full bg-gold shrink-0" />
@@ -69,33 +68,32 @@ export default function AboutPage() {
           <h2 className="font-serif text-2xl font-bold mb-3">The Podcast</h2>
           <p className="text-muted leading-relaxed">
             The Hospitality121 Podcast brings together conversations at the intersection of
-            hospitality, technology, and innovation. We speak with hotel CIOs, startup founders,
-            luxury executives, and guest experience pioneers — people building the future of the
-            industry from the inside. Episodes are produced from our Vancouver studio and distributed
-            globally across all major podcast platforms.
+            hospitality, leadership, operations, technology, recruitment, and innovation. We speak
+            with hotel executives, founders, operators, event leaders, and guest experience pioneers.
+            Episodes are produced from our New York base and distributed globally across all major
+            podcast platforms.
           </p>
         </section>
 
         <section>
           <h2 className="font-serif text-2xl font-bold mb-3">The Name</h2>
           <p className="text-muted leading-relaxed">
-            &ldquo;121&rdquo; stands for one-to-one — the belief that the most powerful conversations, the
+            &ldquo;121&rdquo; stands for one-to-one: the belief that the most powerful conversations, the
             most important connections, and the most meaningful guest experiences happen between
             individuals. Technology amplifies this; it never replaces it.
           </p>
         </section>
 
-        {/* Company Info Card */}
         <section className="bg-surface rounded-xl p-6">
           <h2 className="font-serif text-xl font-bold mb-4">Company Information</h2>
           <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4 text-sm">
             <div>
               <dt className="text-xs font-bold tracking-widest text-gold uppercase mb-1">Headquarters</dt>
-              <dd className="text-muted">Vancouver, British Columbia, Canada</dd>
+              <dd className="text-muted">New York, NY, United States</dd>
             </div>
             <div>
               <dt className="text-xs font-bold tracking-widest text-gold uppercase mb-1">Markets Served</dt>
-              <dd className="text-muted">USA, Canada &amp; Global</dd>
+              <dd className="text-muted">USA &amp; Global</dd>
             </div>
             <div>
               <dt className="text-xs font-bold tracking-widest text-gold uppercase mb-1">Founded</dt>
