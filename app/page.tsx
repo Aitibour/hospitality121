@@ -24,9 +24,9 @@ function isGeneratedPost(item: { type: string; sourceUrl?: string; author?: stri
 export default function HomePage() {
   const all = getAllContent()
   const editorial     = all.filter(item => item.type !== 'event')
-  const generatedHero = editorial.filter(isGeneratedPost)
+  const generatedItems = editorial.filter(isGeneratedPost)
   const heroItems     = [
-    ...generatedHero,
+    ...generatedItems,
     ...limitByAuthor(editorial.filter(item => !isGeneratedPost(item)), 2),
   ].filter((item, index, items) => items.findIndex(candidate => candidate.slug === item.slug) === index).slice(0, 10)
   const heroSlugs     = new Set(heroItems.map(item => item.slug))
@@ -55,7 +55,7 @@ export default function HomePage() {
       <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-8 items-start">
         <ContentGrid items={gridItems} contained={false} />
         <div className="py-8">
-          <DiamondAuthoritySection />
+          <DiamondAuthoritySection items={generatedItems} />
         </div>
       </div>
       <AdSlot zone="mid-grid" />
