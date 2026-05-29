@@ -20,6 +20,14 @@ const REPORTS = [
   },
 ]
 
+function isValidEmail(email: string) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) && email.length <= 254
+}
+
+function getField(data: FormData, name: string, maxLength: number) {
+  return String(data.get(name) || '').trim().slice(0, maxLength)
+}
+
 export default function ResourcesPage() {
   const [selected, setSelected] = useState(REPORTS[0].id)
   const [status, setStatus] = useState<Status>('idle')
@@ -27,14 +35,28 @@ export default function ResourcesPage() {
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    setStatus('submitting')
     const form = e.currentTarget
+    const data = new FormData(form)
+    if (String(data.get('bot-field') || '')) {
+      setStatus('success')
+      return
+    }
+    const email = getField(data, 'email', 254)
+    const name = getField(data, 'name', 120)
+    const company = getField(data, 'company', 160)
+    const role = getField(data, 'role', 120)
+    if (!isValidEmail(email) || name.length < 2 || company.length < 2 || role.length < 2) {
+      setStatus('error')
+      return
+    }
+
+    setStatus('submitting')
     const params = new URLSearchParams()
-    new FormData(form).forEach((value, key) => {
+    data.forEach((value, key) => {
       if (typeof value === 'string') params.append(key, value)
     })
     try {
-      const res = await fetch('/resources', {
+      const res = await fetch('/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: params.toString(),
@@ -65,8 +87,6 @@ export default function ResourcesPage() {
       </div>
     )
   }
-
-  const report = REPORTS.find(r => r.id === selected) ?? REPORTS[0]
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-16">
@@ -132,6 +152,8 @@ export default function ResourcesPage() {
                 name="name"
                 type="text"
                 required
+                maxLength={120}
+                autoComplete="name"
                 placeholder="Jane Smith"
                 className="bg-navy border border-muted/30 rounded px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2 focus:ring-offset-surface transition-colors"
               />
@@ -144,6 +166,8 @@ export default function ResourcesPage() {
                 name="email"
                 type="email"
                 required
+                maxLength={254}
+                autoComplete="email"
                 placeholder="jane@hotel.com"
                 className="bg-navy border border-muted/30 rounded px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2 focus:ring-offset-surface transition-colors"
               />
@@ -156,6 +180,8 @@ export default function ResourcesPage() {
                 name="company"
                 type="text"
                 required
+                maxLength={160}
+                autoComplete="organization"
                 placeholder="Marriott International"
                 className="bg-navy border border-muted/30 rounded px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2 focus:ring-offset-surface transition-colors"
               />
@@ -168,6 +194,8 @@ export default function ResourcesPage() {
                 name="role"
                 type="text"
                 required
+                maxLength={120}
+                autoComplete="organization-title"
                 placeholder="Director of Technology"
                 className="bg-navy border border-muted/30 rounded px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2 focus:ring-offset-surface transition-colors"
               />

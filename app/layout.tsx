@@ -11,6 +11,15 @@ const lato = Lato({ subsets: ['latin'], weight: ['400', '700'], variable: '--fon
 const cormorant = Cormorant_Garamond({ subsets: ['latin'], weight: ['600', '700'], variable: '--font-cormorant' })
 const ADSENSE_CLIENT = process.env.NEXT_PUBLIC_ADSENSE_CLIENT
 
+function safeJsonLd(obj: Record<string, unknown>) {
+  return JSON.stringify(obj)
+    .replace(/</g, '\\u003c')
+    .replace(/>/g, '\\u003e')
+    .replace(/&/g, '\\u0026')
+    .replace(/\u2028/g, '\\u2028')
+    .replace(/\u2029/g, '\\u2029')
+}
+
 export const metadata: Metadata = {
   metadataBase: new URL('https://hospitality121.com'),
   title: {
@@ -36,7 +45,7 @@ export const metadata: Metadata = {
   },
 }
 
-const WEBSITE_SCHEMA = JSON.stringify({
+const WEBSITE_SCHEMA = safeJsonLd({
   '@context': 'https://schema.org',
   '@type': 'WebSite',
   name: 'Hospitality121',
@@ -51,7 +60,7 @@ const WEBSITE_SCHEMA = JSON.stringify({
   },
 })
 
-const ORG_SCHEMA = JSON.stringify({
+const ORG_SCHEMA = safeJsonLd({
   '@context': 'https://schema.org',
   '@type': 'Organization',
   name: 'Hospitality121',

@@ -3,22 +3,36 @@ import { useState } from 'react'
 
 type Status = 'idle' | 'submitting' | 'success' | 'error'
 
+function isValidEmail(email: string) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) && email.length <= 254
+}
+
 export default function SubscribePage() {
   const [status, setStatus] = useState<Status>('idle')
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    setStatus('submitting')
     const form = e.currentTarget
     const data = new FormData(form)
-    const email = data.get('email') as string
-    const firstName = data.get('firstName') as string
+    const honeypot = String(data.get('bot-field') || '')
+    if (honeypot) {
+      setStatus('success')
+      return
+    }
+    const email = String(data.get('email') || '').trim().slice(0, 254)
+    const firstName = String(data.get('firstName') || '').trim().slice(0, 80)
+    const company = String(data.get('company') || '').trim().slice(0, 160)
+    if (!isValidEmail(email) || firstName.length < 1) {
+      setStatus('error')
+      return
+    }
+
+    setStatus('submitting')
     try {
       const pubId = process.env.NEXT_PUBLIC_BEEHIIV_PUBLICATION_ID
       if (pubId) {
         const params = new URLSearchParams({ email, publication_id: pubId, utm_source: 'subscribe_page' })
         if (firstName) params.set('custom_fields[first_name]', firstName)
-        const company = data.get('company') as string
         if (company) params.set('custom_fields[company]', company)
         await fetch('https://embeds.beehiiv.com/v2/subscribe', {
           method: 'POST',
@@ -94,6 +108,8 @@ export default function SubscribePage() {
               name="firstName"
               type="text"
               required
+              maxLength={80}
+              autoComplete="given-name"
               className="bg-navy border border-muted/30 rounded px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2 focus:ring-offset-surface transition-colors"
             />
           </div>
@@ -104,6 +120,8 @@ export default function SubscribePage() {
               name="email"
               type="email"
               required
+              maxLength={254}
+              autoComplete="email"
               className="bg-navy border border-muted/30 rounded px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2 focus:ring-offset-surface transition-colors"
             />
           </div>
@@ -117,6 +135,8 @@ export default function SubscribePage() {
             id="company"
             name="company"
             type="text"
+            maxLength={160}
+            autoComplete="organization"
             className="bg-navy border border-muted/30 rounded px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2 focus:ring-offset-surface transition-colors"
           />
         </div>

@@ -3,25 +3,49 @@ import { useState } from 'react'
 
 type Status = 'idle' | 'submitting' | 'success' | 'error'
 
+function isValidEmail(email: string) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) && email.length <= 254
+}
+
+function fieldValue(form: HTMLFormElement, name: string, maxLength: number) {
+  const value = String(new FormData(form).get(name) || '').trim()
+  return value.slice(0, maxLength)
+}
+
 export default function ContactPage() {
   const [status, setStatus] = useState<Status>('idle')
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    setStatus('submitting')
     const form = e.currentTarget
+    const data = new FormData(form)
+    const honeypot = String(data.get('bot-field') || '')
+    if (honeypot) {
+      setStatus('success')
+      return
+    }
+
+    const email = fieldValue(form, 'email', 254)
+    const name = fieldValue(form, 'name', 120)
+    const message = fieldValue(form, 'message', 2000)
+    const enquiry = fieldValue(form, 'enquiry', 80)
+    if (!isValidEmail(email) || name.length < 2 || message.length < 10 || !enquiry) {
+      setStatus('error')
+      return
+    }
+
+    setStatus('submitting')
     const params = new URLSearchParams()
-    new FormData(form).forEach((value, key) => {
+    data.forEach((value, key) => {
       if (typeof value === 'string') params.append(key, value)
     })
     try {
-      const res = await fetch('https://formsubmit.co/ajax/a.aitibour@gmail.com', {
+      const res = await fetch('/', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'application/json' },
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: params.toString(),
       })
-      const json = await res.json().catch(() => ({}))
-      setStatus(json.success === 'true' || res.ok ? 'success' : 'error')
+      setStatus(res.ok ? 'success' : 'error')
     } catch {
       setStatus('error')
     }
@@ -31,7 +55,7 @@ export default function ContactPage() {
     return (
       <div className="max-w-lg mx-auto px-4 py-24 text-center">
         <h1 autoFocus className="font-serif text-3xl font-bold text-gold mb-4">Thanks!</h1>
-        <p className="text-muted">We'll be in touch soon.</p>
+        <p className="text-muted">We&apos;ll be in touch soon.</p>
       </div>
     )
   }
@@ -40,7 +64,7 @@ export default function ContactPage() {
     <div className="max-w-lg mx-auto px-4 py-16">
       <h1 className="font-serif text-4xl font-bold tracking-tight mb-3">GET IN TOUCH</h1>
       <p className="text-muted mb-10">
-        Have a story to share? Want to collaborate or advertise? We'd love to hear from you.
+        Have a story to share? Want to collaborate or advertise? We&apos;d love to hear from you.
       </p>
 
       <form
@@ -81,6 +105,8 @@ export default function ContactPage() {
             name="name"
             type="text"
             required
+            maxLength={120}
+            autoComplete="name"
             className="bg-surface border border-muted/30 rounded px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2 focus:ring-offset-navy transition-colors"
           />
         </div>
@@ -92,6 +118,8 @@ export default function ContactPage() {
             name="email"
             type="email"
             required
+            maxLength={254}
+            autoComplete="email"
             className="bg-surface border border-muted/30 rounded px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2 focus:ring-offset-navy transition-colors"
           />
         </div>
@@ -102,6 +130,7 @@ export default function ContactPage() {
             id="message"
             name="message"
             required
+            maxLength={2000}
             rows={5}
             className="bg-surface border border-muted/30 rounded px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2 focus:ring-offset-navy transition-colors resize-none"
           />

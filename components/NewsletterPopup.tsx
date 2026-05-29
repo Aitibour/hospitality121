@@ -4,6 +4,10 @@ import { useEffect, useState } from 'react'
 
 const STORAGE_KEY = 'h1h_newsletter_dismissed'
 
+function isValidEmail(email: string) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) && email.length <= 254
+}
+
 export default function NewsletterPopup() {
   const [visible, setVisible] = useState(false)
   const [email, setEmail] = useState('')
@@ -25,13 +29,21 @@ export default function NewsletterPopup() {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
-    if (!email) return
+    const form = e.currentTarget as HTMLFormElement
+    const data = new FormData(form)
+    if (String(data.get('website') || '')) {
+      dismiss()
+      return
+    }
+    const cleanEmail = email.trim().slice(0, 254)
+    const cleanName = name.trim().slice(0, 80)
+    if (!isValidEmail(cleanEmail)) return
     setStatus('submitting')
     try {
       const pubId = process.env.NEXT_PUBLIC_BEEHIIV_PUBLICATION_ID
       if (pubId) {
-        const params = new URLSearchParams({ email, publication_id: pubId, utm_source: 'website_popup' })
-        if (name) params.set('custom_fields[first_name]', name)
+        const params = new URLSearchParams({ email: cleanEmail, publication_id: pubId, utm_source: 'website_popup' })
+        if (cleanName) params.set('custom_fields[first_name]', cleanName)
         await fetch('https://embeds.beehiiv.com/v2/subscribe', {
           method: 'POST',
           mode: 'no-cors',
@@ -100,10 +112,13 @@ export default function NewsletterPopup() {
 
               <form onSubmit={handleSubmit} className="flex flex-col gap-3">
                 <input type="hidden" name="form-name" value="newsletter" />
+                <input type="text" name="website" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden="true" />
                 <input
                   type="text"
                   name="name"
                   placeholder="First name"
+                  maxLength={80}
+                  autoComplete="given-name"
                   value={name}
                   onChange={e => setName(e.target.value)}
                   className="border border-gray-200 rounded-lg px-4 py-3 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-gold/40 placeholder:text-gray-400 bg-white"
@@ -113,6 +128,8 @@ export default function NewsletterPopup() {
                   name="email"
                   placeholder="Work email address"
                   required
+                  maxLength={254}
+                  autoComplete="email"
                   value={email}
                   onChange={e => setEmail(e.target.value)}
                   className="border border-gray-200 rounded-lg px-4 py-3 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-gold/40 placeholder:text-gray-400 bg-white"

@@ -89,6 +89,11 @@ function renderInlineLinks(text: string): ReactNode[] {
     }
 
     const [, label, href] = match
+    if (href.startsWith('//')) {
+      parts.push(label)
+      lastIndex = linkPattern.lastIndex
+      continue
+    }
     const isExternal = href.startsWith('http') && !href.includes('hospitality121.com')
     parts.push(
       <a
