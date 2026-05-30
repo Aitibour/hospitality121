@@ -12,6 +12,7 @@ import ShareButtons from '@/components/ShareButtons'
 import { GEO_AUTHORITY_PAGES, getMatchingGeoPage, getMatchingPillar } from '@/lib/diamond-seo'
 
 export const revalidate = 3600
+export const dynamicParams = false
 
 export async function generateStaticParams() {
   return getAllSlugs()

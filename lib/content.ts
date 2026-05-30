@@ -15,18 +15,25 @@ const DIR_MAP: Record<string, ContentType> = {
   blog: 'blog',
 }
 
+function buildContentItem(data: Record<string, unknown>, slug: string, type: ContentType): ContentItem {
+  const authorName = String(data.author || data.guest || data.organizer || '')
+  const authorRecord = AUTHORS_BY_NAME[authorName]
+  const injectedAvatar = authorRecord ? authorRecord.photo : (data.authorAvatar || '/images/Logo.png')
+  const item = { ...data, slug, type } as unknown as ContentItem
+  ;(item as Record<string, unknown>).authorAvatar = injectedAvatar
+  ;(item as Record<string, unknown>).guestAvatar = data.guest ? injectedAvatar : (data.guestAvatar || '/images/Logo.png')
+  ;(item as Record<string, unknown>).organizerAvatar = AUTHORS_BY_NAME[String(data.organizer)]?.photo || data.organizerAvatar || '/images/Logo.png'
+  return item
+}
+
 export function getContentBySlug(slug: string): { item: ContentItem; body: string } | null {
   for (const [dir, type] of Object.entries(DIR_MAP)) {
     const filePath = path.join(process.cwd(), 'content', dir, `${slug}.mdx`)
     if (fs.existsSync(filePath)) {
       const raw = fs.readFileSync(filePath, 'utf-8')
       const { data, content } = matter(raw)
-      const authorName: string = data.author || data.guest || ''
-      const authorRecord = AUTHORS_BY_NAME[authorName]
-      const injectedAvatar = authorRecord ? authorRecord.photo : (data.authorAvatar || '/images/Logo.png')
-      const item = { ...data, slug, type } as unknown as ContentItem
-      ;(item as Record<string, unknown>).authorAvatar = injectedAvatar
-      ;(item as Record<string, unknown>).guestAvatar = data.guest ? injectedAvatar : (data.guestAvatar || '/images/Logo.png')
+      const item = buildContentItem(data, slug, type)
+      if (!isAllowedRegionalContent(item)) return null
       return { item, body: content }
     }
   }
@@ -39,7 +46,13 @@ export function getAllSlugs(): { slug: string }[] {
     const fullDir = path.join(process.cwd(), 'content', dir)
     try {
       const files = fs.readdirSync(fullDir).filter(f => f.endsWith('.mdx'))
-      for (const f of files) slugs.push({ slug: f.replace('.mdx', '') })
+      for (const f of files) {
+        const slug = f.replace('.mdx', '')
+        const raw = fs.readFileSync(path.join(fullDir, f), 'utf-8')
+        const { data } = matter(raw)
+        const item = buildContentItem(data, slug, DIR_MAP[dir])
+        if (isAllowedRegionalContent(item)) slugs.push({ slug })
+      }
     } catch { /* skip */ }
   }
   return slugs
@@ -62,14 +75,7 @@ function readDir(dir: string, type: ContentType): ContentItem[] {
       if (!data.title || !data.date) {
         throw new Error(`Missing required frontmatter (title, date) in content/${dir}/${filename}`)
       }
-      const authorName: string = data.author || data.guest || data.organizer || ''
-      const authorRecord = AUTHORS_BY_NAME[authorName]
-      const injectedAvatar = authorRecord ? authorRecord.photo : (data.authorAvatar || '/images/Logo.png')
-      const item = { ...data, slug, type } as unknown as ContentItem
-      ;(item as Record<string, unknown>).authorAvatar = injectedAvatar
-      ;(item as Record<string, unknown>).guestAvatar = data.guest ? injectedAvatar : (data.guestAvatar || '/images/Logo.png')
-      ;(item as Record<string, unknown>).organizerAvatar = AUTHORS_BY_NAME[data.organizer]?.photo || data.organizerAvatar || '/images/Logo.png'
-      return item
+      return buildContentItem(data, slug, type)
     })
 }
 
