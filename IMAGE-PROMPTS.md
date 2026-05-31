@@ -105,11 +105,6 @@ Use the exact filename shown.
 **File:** `sustainable-hospitality-forum-nyc.jpg`
 > Cinematic editorial photo of a sustainable hospitality event space in New York, biophilic design with abundant greenery, recycled material furniture, natural light, green walls, urban skyline visible through windows, no text, no people, 16:9
 
-**File:** `world-hotel-congress-dubai.jpg`
-> Cinematic editorial photo of a grand hospitality congress event in Dubai, stunning contemporary Arabic architecture, chandelier-lit ballroom, gold and white colour palette, luxury event setup, desert city skyline at dusk through windows, no text, no people, 16:9
-
----
-
 ## NEWS
 
 **File:** `airbnb-hotel-blur-2026.jpg`
@@ -126,9 +121,6 @@ Use the exact filename shown.
 
 **File:** `cruise-hotel-partnerships-boom.jpg`
 > Cinematic editorial photo of a luxury cruise ship docked at a stunning Mediterranean port, a grand hotel visible on the waterfront, golden evening light reflecting off the water, partnership between sea and land luxury, no text, no people, 16:9
-
-**File:** `dubai-opens-luxury-resort-2026.jpg`
-> Cinematic editorial photo of the most spectacular luxury resort in Dubai, dramatic architectural structure on a private island or beachfront, infinity pools cascading toward the Gulf, desert sky at sunset, iconic opulence, no text, no people, 16:9
 
 **File:** `four-seasons-private-jet-expansion.jpg`
 > Cinematic editorial photo of a private jet interior outfitted in luxury hospitality style, cream leather seats, fresh orchids, champagne service setup, aerial view of clouds through oval window, exclusive and rarified atmosphere, no text, no people, 16:9
