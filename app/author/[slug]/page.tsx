@@ -5,6 +5,8 @@ import Link from 'next/link'
 import { getAuthorBySlug, getAllAuthors, nameToSlug } from '@/lib/authors'
 import { getAllContent } from '@/lib/content'
 
+export const dynamicParams = false
+
 export function generateStaticParams() {
   return getAllAuthors().map(a => ({ slug: a.slug }))
 }

@@ -93,6 +93,13 @@ const AUTHORS: Author[] = [
     bio: 'The Hospitality121 editorial team produces news analysis, industry briefings, and original reporting on the trends and developments shaping the global hospitality sector.',
   },
   {
+    name: 'H1H Newsfeed',
+    slug: 'h1h-newsfeed',
+    title: 'Hospitality121 News Desk',
+    photo: '/images/Logo.png',
+    bio: 'The Hospitality121 News Desk monitors hotel brands, hospitality technology, operations, leadership, investment, events, and travel-market signals for timely editorial briefings.',
+  },
+  {
     name: 'Hospitality121',
     slug: 'hospitality121',
     title: 'Hospitality121 Editorial Team',
