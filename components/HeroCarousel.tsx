@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 import type { ContentItem } from '@/types/content'
 import CategoryLabel from './CategoryLabel'
 import AuthorLine from './AuthorLine'
@@ -72,9 +73,15 @@ export default function HeroCarousel({ items }: Props) {
             </span>
           )}
         </div>
-        <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-gray-50 leading-tight mb-3">
-          {item.title}
-        </h2>
+        <Link href={`/content/${item.slug}`} className="group/title inline-block max-w-full">
+          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-gray-50 leading-tight mb-3 group-hover/title:text-gold transition-colors">
+            {item.title}
+          </h2>
+          <span className="inline-flex items-center gap-2 rounded-full bg-gold px-4 py-2 text-xs font-bold uppercase tracking-widest text-gray-950 shadow-sm transition-transform group-hover/title:translate-x-1">
+            Read now
+            <span aria-hidden="true">-&gt;</span>
+          </span>
+        </Link>
         <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
           <AuthorLine name={name} avatar={avatar} date={publishedAgo} nameColor="text-gray-100" dateColor="text-gray-300" />
           <span className="text-gray-300 text-sm">{meta}</span>
