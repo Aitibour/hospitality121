@@ -66,8 +66,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const techTopicRoutes: MetadataRoute.Sitemap = TECH_TOPICS.map(t => ({
     url: `${BASE}/technology/${t.slug}`,
-    changeFrequency: 'monthly',
-    priority: 0.7,
+    changeFrequency: 'weekly',
+    priority: t.slug === 'ai' || t.slug === 'pms-pos' || t.slug === 'cybersecurity' ? 0.85 : 0.8,
     lastModified: now,
   }))
 

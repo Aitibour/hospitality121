@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { DIAMOND_PILLARS, GEO_AUTHORITY_PAGES } from '@/lib/diamond-seo'
+import { TECH_TOPICS } from '@/lib/technology-topics'
 
 export const dynamic = 'force-static'
 
@@ -21,6 +22,23 @@ export function GET() {
       label: page.title,
       url: `${BASE}${page.href}`,
       region: page.region,
+    })),
+    technologySolutions: TECH_TOPICS.map(topic => ({
+      label: topic.title,
+      url: `${BASE}/technology/${topic.slug}`,
+      keywords: topic.keywords.split(',').map(keyword => keyword.trim()).filter(Boolean),
+      products: topic.solutions.map((solution, index) => ({
+        label: solution.title,
+        url: `${BASE}/technology/${topic.slug}#solution-${index + 1}`,
+        buyer: solution.buyer,
+        useCase: solution.useCase,
+        keywords: solution.seo,
+        linksTo: [
+          BASE,
+          `${BASE}/technology`,
+          `${BASE}/technology/${topic.slug}`,
+        ],
+      })),
     })),
     workflow: {
       blog: {

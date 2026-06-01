@@ -26,3 +26,15 @@ test('technology pages expose solution structured data', () => {
   assert.match(pageSource, /buildTechnologySolutionJsonLd/)
   assert.match(pageSource, /#solution-\$\{index \+ 1\}/)
 })
+
+test('diamond feed and sitemap surface technology solution pages', () => {
+  const diamondRoute = fs.readFileSync('app/seo-diamond.json/route.ts', 'utf8')
+  const sitemapSource = fs.readFileSync('app/sitemap.ts', 'utf8')
+
+  assert.match(diamondRoute, /technologySolutions/)
+  assert.match(diamondRoute, /topic\.solutions/)
+  assert.match(diamondRoute, /#solution-\$\{index \+ 1\}/)
+  assert.match(sitemapSource, /TECH_TOPICS\.map/)
+  assert.match(sitemapSource, /changeFrequency: 'weekly'/)
+  assert.match(sitemapSource, /priority: t\.slug === 'ai'/)
+})
