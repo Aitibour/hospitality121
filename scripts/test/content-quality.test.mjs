@@ -57,6 +57,37 @@ test('validateHumanizedPost flags banned AI patterns', () => {
   assert.ok(issues.some(issue => issue.includes('banned phrase')))
 })
 
+test('validateHumanizedPost flags forbidden punctuation and leverage repetition', () => {
+  const issues = validateHumanizedPost({
+    titleEn: 'Fresh Hotel Operations Lessons',
+    primaryKeyword: 'hotel operations technology',
+    keywords: ['hotel operations technology', 'hospitality automation', 'guest experience systems', 'hotel data strategy'],
+    imageConcept: 'A realistic hotel operations director reviewing service dashboards with front office leaders in a calm lobby setting.',
+    editorialFormat: 'hotel-operations',
+    linkedinCaption: 'A practical note for hotel leaders about operational technology.',
+    facebookCaption: 'A useful look at hotel operations decisions.',
+    xCaption: 'Hotel operations technology is an operating choice.',
+    newsletterTeaser: 'A sharp look at hotel operations strategy.',
+    bodyEn: 'Hotels can leverage data — carefully. Teams should not leverage dashboards without service context.',
+  }, [], [])
+
+  assert.ok(issues.includes('contains em dash, en dash, or double hyphen'))
+  assert.ok(issues.includes('overuses leverage phrasing'))
+})
+
+test('validateNewsPost flags stock closing language', () => {
+  const issues = validateNewsPost({
+    title: 'Hotel Groups Expand Guest Data Programs',
+    description: 'Hotel groups are investing in guest data programs.',
+    category: 'TECHNOLOGY',
+    body: 'Hotel operators are studying guest data workflows. In conclusion, this cannot be overstated for the sector.',
+    keywords: ['hotel data', 'hospitality technology', 'guest experience'],
+  }, [])
+
+  assert.ok(issues.some(issue => issue.includes('in conclusion')))
+  assert.ok(issues.some(issue => issue.includes('cannot be overstated')))
+})
+
 test('validateNewsPost blocks duplicate and regional news', () => {
   const issues = validateNewsPost({
     title: 'Yatra Eyes Corporate Travel Growth in India',

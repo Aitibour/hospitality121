@@ -66,12 +66,21 @@ const HOSPITALITY_TERMS = [
 const BANNED_PHRASES = [
   'in today’s rapidly evolving world',
   "in today's rapidly evolving world",
+  'in todays rapidly evolving world',
+  'rapidly evolving world',
   'it is important to note',
   'delve',
+  'delve into',
   'game changer',
   'revolutionary',
   'cutting edge',
+  'in conclusion',
+  'as the hospitality industry continues to evolve',
+  'as the travel industry continues to evolve',
+  'cannot be overstated',
 ]
+
+const FORBIDDEN_PUNCTUATION = /[\u2013\u2014]|--/
 
 const BLOCKED_REGION_TERMS = [
   'india',
@@ -164,6 +173,7 @@ export function validateHumanizedPost(post, existingTitles, existingKeywordSets)
   for (const phrase of BANNED_PHRASES) {
     if (bodyLower.includes(phrase)) issues.push(`contains banned phrase: ${phrase}`)
   }
+  issues.push(...findForbiddenStyleIssues(body, bodyLower))
   if ((post.keywords || []).length < 4) {
     issues.push('needs at least four SEO keywords')
   }
@@ -200,11 +210,27 @@ export function validateNewsPost(post, existingTitles) {
   for (const phrase of BANNED_PHRASES) {
     if (bodyLower.includes(phrase)) issues.push(`contains banned phrase: ${phrase}`)
   }
+  issues.push(...findForbiddenStyleIssues(body, bodyLower))
   if (!Array.isArray(post.keywords) || post.keywords.length < 3) {
     issues.push('needs at least three SEO keywords')
   }
   if (!normalizeText([post.title, post.description, post.category, ...(post.keywords || [])].join(' ')).match(/\b(hospitality|hotel|guest|resort|travel|restaurant|lodging)\b/)) {
     issues.push('missing hospitality keyword focus')
+  }
+
+  return issues
+}
+
+function findForbiddenStyleIssues(body, bodyLower = body.toLowerCase()) {
+  const issues = []
+
+  if (FORBIDDEN_PUNCTUATION.test(body)) {
+    issues.push('contains em dash, en dash, or double hyphen')
+  }
+
+  const leverageUses = (bodyLower.match(/\bleverage(?:d|s|ing)?\b/g) || []).length
+  if (leverageUses > 1) {
+    issues.push('overuses leverage phrasing')
   }
 
   return issues
