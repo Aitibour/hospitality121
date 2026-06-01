@@ -25,6 +25,9 @@ test('technology pages expose solution structured data', () => {
   assert.match(pageSource, /Service/)
   assert.match(pageSource, /buildTechnologySolutionJsonLd/)
   assert.match(pageSource, /#solution-\$\{index \+ 1\}/)
+  assert.match(pageSource, /Product and solution grid/)
+  assert.doesNotMatch(pageSource, /t\.sections\.map/)
+  assert.doesNotMatch(pageSource, /Editorial sections/)
 })
 
 test('diamond feed and sitemap surface technology solution pages', () => {

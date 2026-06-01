@@ -9,18 +9,11 @@ import { DIAMOND_PILLARS, GEO_AUTHORITY_PAGES } from '@/lib/diamond-seo'
 
 export const dynamic = 'force-static'
 
-const SECTION_STYLES = [
-  'border-gold/30 bg-gold/10 hover:border-gold',
-  'border-blue-200 bg-blue-50 hover:border-blue-400',
-  'border-emerald-200 bg-emerald-50 hover:border-emerald-400',
-  'border-gray-200 bg-gray-50 hover:border-gray-400',
-]
-
 const SOLUTION_STYLES = [
-  'border-l-gold bg-white',
-  'border-l-blue-500 bg-blue-50/40',
-  'border-l-emerald-500 bg-emerald-50/40',
-  'border-l-slate-500 bg-slate-50',
+  'bg-white hover:border-gold/50',
+  'bg-blue-50/40 hover:border-blue-300',
+  'bg-emerald-50/40 hover:border-emerald-300',
+  'bg-slate-50 hover:border-slate-300',
 ]
 
 const BASE = 'https://hospitality121.com'
@@ -150,59 +143,28 @@ export default async function TechTopicPage({ params }: { params: Promise<{ topi
         </div>
       </div>
 
-      {/* Editorial sections */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
-        {t.sections.map((section, i) => (
-          <Link
-            key={section.heading}
-            href={`/search?q=${encodeURIComponent(section.heading)}`}
-            className={`group relative overflow-hidden rounded-lg border p-6 transition hover:-translate-y-0.5 hover:shadow-sm ${SECTION_STYLES[i % SECTION_STYLES.length]}`}
-          >
-            <span className="mb-5 inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/80 text-xs font-bold text-gray-900 ring-1 ring-black/5">
-              {String(i + 1).padStart(2, '0')}
-            </span>
-            <h2 className="font-serif text-xl font-bold mb-3 text-gray-900 group-hover:text-gold transition-colors">{section.heading}</h2>
-            <p className="text-gray-600 text-sm leading-relaxed">{section.body}</p>
-            <span className="mt-5 inline-flex text-xs font-bold tracking-widest text-gray-800 group-hover:text-gold transition-colors">
-              Explore related coverage
-            </span>
-          </Link>
-        ))}
-      </div>
-
       {/* Products and solutions */}
       <section className="mb-16">
         <div className="flex flex-col gap-2 mb-7">
           <span className="text-xs font-bold tracking-widest text-gold uppercase">Products & Solutions</span>
-          <h2 className="font-serif text-3xl font-bold text-gray-900">Hospitality technology solutions for this category</h2>
+          <h2 className="font-serif text-3xl font-bold text-gray-900">Product and solution grid</h2>
           <p className="text-sm text-muted max-w-3xl">
-            A practical buyer map of product categories, operating use cases, and long-tail search themes connected back into the Hospitality121 diamond authority network.
+            Article-style cards for the product categories, operating use cases, and search themes that connect this topic back into the Hospitality121 diamond authority network.
           </p>
         </div>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5">
           {t.solutions.map((solution, i) => (
             <article
               key={solution.title}
               id={`solution-${i + 1}`}
-              className={`rounded-lg border border-gray-100 border-l-4 p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md ${SOLUTION_STYLES[i % SOLUTION_STYLES.length]}`}
+              className={`group flex min-h-[360px] flex-col rounded-lg border border-gray-100 p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md ${SOLUTION_STYLES[i % SOLUTION_STYLES.length]}`}
             >
-              <div className="flex items-start justify-between gap-4 mb-4">
-                <div>
-                  <p className="text-xs font-bold tracking-widest text-gold uppercase">Solution {String(i + 1).padStart(2, '0')}</p>
-                  <h3 className="font-serif text-xl font-bold text-gray-900 mt-1">{solution.title}</h3>
-                </div>
-                <Link
-                  href={`/search?q=${encodeURIComponent(solution.title)}`}
-                  className="shrink-0 rounded-full border border-gray-200 px-3 py-1 text-xs font-bold text-gray-600 hover:border-gold hover:text-gold transition-colors"
-                >
-                  Research
-                </Link>
-              </div>
-              <p className="text-xs font-bold uppercase tracking-widest text-gray-500 mb-2">Best fit</p>
-              <p className="text-sm text-gray-700 mb-4">{solution.buyer}</p>
-              <p className="text-xs font-bold uppercase tracking-widest text-gray-500 mb-2">Hospitality use case</p>
-              <p className="text-sm leading-relaxed text-gray-600 mb-5">{solution.useCase}</p>
-              <div className="flex flex-wrap gap-2">
+              <p className="text-xs font-bold tracking-widest text-gold uppercase">Solution {String(i + 1).padStart(2, '0')}</p>
+              <h3 className="font-serif text-xl font-bold text-gray-900 mt-3 group-hover:text-gold transition-colors">{solution.title}</h3>
+              <p className="mt-4 text-sm leading-relaxed text-gray-600">{solution.useCase}</p>
+              <p className="mt-5 text-xs font-bold uppercase tracking-widest text-gray-500">Best fit</p>
+              <p className="mt-2 text-sm text-gray-700">{solution.buyer}</p>
+              <div className="mt-auto pt-5 flex flex-wrap gap-2">
                 {solution.seo.map(term => (
                   <Link
                     key={term}
@@ -213,6 +175,12 @@ export default async function TechTopicPage({ params }: { params: Promise<{ topi
                   </Link>
                 ))}
               </div>
+              <Link
+                href={`/search?q=${encodeURIComponent(solution.title)}`}
+                className="mt-5 inline-flex text-xs font-bold tracking-widest text-gray-800 group-hover:text-gold transition-colors"
+              >
+                Research solution
+              </Link>
             </article>
           ))}
         </div>
