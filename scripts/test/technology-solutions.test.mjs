@@ -52,3 +52,23 @@ test('technology hub links to topic solution anchors', () => {
   assert.match(hubSource, /\/technology\/\$\{topic\.slug\}#solution-\$\{index \+ 1\}/)
   assert.match(hubSource, /View diamond feed/)
 })
+
+test('navbar exposes all technology solution topic pages', () => {
+  const navbarSource = fs.readFileSync('components/Navbar.tsx', 'utf8')
+  const requiredRoutes = [
+    '/technology/ai',
+    '/technology/pms-pos',
+    '/technology/key-systems',
+    '/technology/iptv-signage',
+    '/technology/cybersecurity',
+    '/technology/smart-hotels',
+    '/technology/revenue-management',
+    '/technology/companies',
+    '/technology/events',
+    '/technology/careers',
+  ]
+
+  for (const route of requiredRoutes) {
+    assert.match(navbarSource, new RegExp(route.replace('/', '\\/')))
+  }
+})

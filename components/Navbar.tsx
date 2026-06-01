@@ -46,6 +46,11 @@ const NAV: NavItem[] = [
       { label: 'Key & Mobile Key',    href: '/technology/key-systems',  description: 'RFID locks, mobile key and access' },
       { label: 'IPTV & Signage',      href: '/technology/iptv-signage', description: 'In-room entertainment and displays' },
       { label: 'Cybersecurity',       href: '/technology/cybersecurity',description: 'Data protection and guest privacy' },
+      { label: 'Smart Hotels',        href: '/technology/smart-hotels', description: 'IoT rooms and connected operations' },
+      { label: 'Revenue Management',  href: '/technology/revenue-management', description: 'AI pricing and commercial analytics' },
+      { label: 'Tech Companies',      href: '/technology/companies',    description: 'Vendors, startups, consultants, and partners' },
+      { label: 'Tech Events',         href: '/technology/events',       description: 'HITEC, forums, expos, and awards' },
+      { label: 'Tech Careers',        href: '/technology/careers',      description: 'Jobs, courses, certifications, and skills' },
     ],
   },
   {
@@ -134,11 +139,16 @@ export default function Navbar() {
                 )}
               </Link>
 
-              {item.dropdown && activeDropdown === item.key && (
+              {item.dropdown && (
                 <div
-                  className="absolute top-full left-1/2 -translate-x-1/2 mt-1 w-64 bg-white border border-gray-100 rounded-xl shadow-xl py-2 z-50"
+                  className={`absolute top-full left-1/2 -translate-x-1/2 mt-1 w-64 bg-white border border-gray-100 rounded-xl shadow-xl py-2 z-50 transition duration-150 ${
+                    activeDropdown === item.key
+                      ? 'visible opacity-100 translate-y-0 pointer-events-auto'
+                      : 'invisible opacity-0 -translate-y-1 pointer-events-none'
+                  }`}
                   onMouseEnter={() => handleMouseEnter(item.key)}
                   onMouseLeave={handleMouseLeave}
+                  aria-hidden={activeDropdown !== item.key}
                 >
                   {item.dropdown.map(sub => (
                     <Link
