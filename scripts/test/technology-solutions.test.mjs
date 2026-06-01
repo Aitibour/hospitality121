@@ -16,3 +16,13 @@ test('technology topics include product and solution SEO blocks', () => {
   assert.match(source, /hotel property management system/)
   assert.match(source, /hotel cybersecurity/)
 })
+
+test('technology pages expose solution structured data', () => {
+  const pageSource = fs.readFileSync('app/technology/[topic]/page.tsx', 'utf8')
+
+  assert.match(pageSource, /CollectionPage/)
+  assert.match(pageSource, /ItemList/)
+  assert.match(pageSource, /Service/)
+  assert.match(pageSource, /buildTechnologySolutionJsonLd/)
+  assert.match(pageSource, /#solution-\$\{index \+ 1\}/)
+})

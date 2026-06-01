@@ -3,6 +3,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
 import { TECH_TOPICS, getTechTopicBySlug } from '@/lib/technology-topics'
+import type { TechTopic } from '@/lib/technology-topics'
 import { getAllContent } from '@/lib/content'
 import { DIAMOND_PILLARS, GEO_AUTHORITY_PAGES } from '@/lib/diamond-seo'
 
@@ -21,6 +22,67 @@ const SOLUTION_STYLES = [
   'border-l-emerald-500 bg-emerald-50/40',
   'border-l-slate-500 bg-slate-50',
 ]
+
+const BASE = 'https://hospitality121.com'
+
+function safeJsonLd(obj: Record<string, unknown>): string {
+  return JSON.stringify(obj)
+    .replace(/</g, '\\u003c')
+    .replace(/>/g, '\\u003e')
+    .replace(/&/g, '\\u0026')
+}
+
+function buildTechnologySolutionJsonLd(topic: TechTopic): string {
+  const pageUrl = `${BASE}/technology/${topic.slug}`
+
+  return safeJsonLd({
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: topic.title,
+    headline: `${topic.title} Products and Solutions`,
+    description: topic.description,
+    url: pageUrl,
+    isPartOf: { '@type': 'WebSite', name: 'Hospitality121', url: BASE },
+    publisher: {
+      '@type': 'Organization',
+      name: 'Hospitality121',
+      url: BASE,
+      logo: { '@type': 'ImageObject', url: `${BASE}/images/Logo.png` },
+    },
+    about: ['hospitality technology', 'hotel technology', ...topic.keywords.split(',').map(keyword => keyword.trim()).filter(Boolean).slice(0, 8)],
+    mainEntity: {
+      '@type': 'ItemList',
+      name: `${topic.title} hospitality technology solutions`,
+      itemListElement: topic.solutions.map((solution, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        item: {
+          '@type': 'Service',
+          name: solution.title,
+          serviceType: solution.seo[0],
+          description: solution.useCase,
+          url: `${pageUrl}#solution-${index + 1}`,
+          provider: { '@type': 'Organization', name: 'Hospitality121', url: BASE },
+          audience: { '@type': 'Audience', audienceType: solution.buyer },
+          areaServed: 'Global hospitality industry',
+          category: solution.seo,
+        },
+      })),
+    },
+  })
+}
+
+function buildTechnologyBreadcrumbJsonLd(topic: TechTopic): string {
+  return safeJsonLd({
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: BASE },
+      { '@type': 'ListItem', position: 2, name: 'Technology', item: `${BASE}/technology` },
+      { '@type': 'ListItem', position: 3, name: topic.title, item: `${BASE}/technology/${topic.slug}` },
+    ],
+  })
+}
 
 export async function generateStaticParams() {
   return TECH_TOPICS.map(t => ({ topic: t.slug }))
@@ -55,9 +117,16 @@ export default async function TechTopicPage({ params }: { params: Promise<{ topi
 
   const featured = related.slice(0, 3)
   const rest = related.slice(3)
+  const solutionJsonLd = buildTechnologySolutionJsonLd(t)
+  const breadcrumbJsonLd = buildTechnologyBreadcrumbJsonLd(t)
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-12">
+    <>
+      {/* JSON-LD: safeJsonLd() escapes <, >, &. Content is curated in lib/technology-topics.ts. */}
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: solutionJsonLd }} /> {/* nosec */}
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: breadcrumbJsonLd }} /> {/* nosec */}
+
+      <div className="max-w-7xl mx-auto px-4 py-12">
       {/* Breadcrumb */}
       <nav className="text-xs text-muted mb-8 flex items-center gap-2">
         <Link href="/" className="hover:text-gold transition-colors">Home</Link>
@@ -114,6 +183,7 @@ export default async function TechTopicPage({ params }: { params: Promise<{ topi
           {t.solutions.map((solution, i) => (
             <article
               key={solution.title}
+              id={`solution-${i + 1}`}
               className={`rounded-lg border border-gray-100 border-l-4 p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md ${SOLUTION_STYLES[i % SOLUTION_STYLES.length]}`}
             >
               <div className="flex items-start justify-between gap-4 mb-4">
@@ -234,6 +304,7 @@ export default async function TechTopicPage({ params }: { params: Promise<{ topi
         </div>
       </div>
 
-    </div>
+      </div>
+    </>
   )
 }
