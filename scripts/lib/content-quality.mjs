@@ -167,12 +167,6 @@ export function validateHumanizedPost(post, existingTitles, existingKeywordSets)
   if (hasDuplicateKeywordSet(post.keywords || [], existingKeywordSets)) {
     issues.push('duplicate keyword combination')
   }
-  if (body.includes('—')) {
-    issues.push('contains em dash')
-  }
-  for (const phrase of BANNED_PHRASES) {
-    if (bodyLower.includes(phrase)) issues.push(`contains banned phrase: ${phrase}`)
-  }
   issues.push(...findForbiddenStyleIssues(body, bodyLower))
   if ((post.keywords || []).length < 4) {
     issues.push('needs at least four SEO keywords')
@@ -204,12 +198,6 @@ export function validateNewsPost(post, existingTitles) {
   if (!isAllowedRegionalArticle({ title: post.title, excerpt: body, source: '' })) {
     issues.push('blocked regional topic')
   }
-  if (body.includes('—')) {
-    issues.push('contains em dash')
-  }
-  for (const phrase of BANNED_PHRASES) {
-    if (bodyLower.includes(phrase)) issues.push(`contains banned phrase: ${phrase}`)
-  }
   issues.push(...findForbiddenStyleIssues(body, bodyLower))
   if (!Array.isArray(post.keywords) || post.keywords.length < 3) {
     issues.push('needs at least three SEO keywords')
@@ -226,6 +214,9 @@ export function findForbiddenStyleIssues(body, bodyLower = body.toLowerCase()) {
 
   if (FORBIDDEN_PUNCTUATION.test(body)) {
     issues.push('contains em dash, en dash, or double hyphen')
+  }
+  for (const phrase of BANNED_PHRASES) {
+    if (bodyLower.includes(phrase)) issues.push(`contains banned phrase: ${phrase}`)
   }
 
   const leverageUses = (bodyLower.match(/\bleverage(?:d|s|ing)?\b/g) || []).length

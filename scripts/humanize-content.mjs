@@ -25,10 +25,34 @@ function humanize(body) {
     .replace(/—/g, ', ')
     // En dash directly adjacent to words
     .replace(/–/g, ' to ')
+    // Stock AI-style conclusions and transitions
+    .replace(/\bIn conclusion,\s*/gi, '')
+    .replace(/\bin conclusion\b/gi, 'overall')
+    .replace(/\bAs the hospitality industry continues to evolve,?\s*/gi, 'As hotel operators adapt to new market conditions, ')
+    .replace(/\bAs the travel industry continues to evolve,?\s*/gi, 'As travel companies adapt to new market conditions, ')
+    .replace(/\bcannot be overstated\b/gi, 'is significant')
+    .replace(/\brevolutionary\b/gi, 'material')
+    .replace(/\bleveraging\b/gi, 'using')
+    .replace(/\bleveraged\b/gi, 'used')
+    .replace(/\bleverages\b/gi, 'uses')
+    .replace(/\bleverage\b/gi, 'use')
+    .replace(/\. the appointment/g, '. The appointment')
+    .replace(/\. the rise/g, '. The rise')
+    .replace(/\. the importance/g, '. The importance')
+    .replace(/\. the luxury/g, '. The luxury')
+    .replace(/\. the launch/g, '. The launch')
+    .split(/\r?\n/)
+    .map(line => line.trimEnd())
+    .join('\n')
+}
+
+function normalizeFile(raw) {
+  return raw.replace(/^\uFEFF/, '')
 }
 
 async function processFile(filePath) {
-  const raw = fs.readFileSync(filePath, 'utf8')
+  const original = fs.readFileSync(filePath, 'utf8')
+  const raw = normalizeFile(original)
 
   // Split on frontmatter: find second --- delimiter
   const fmEnd = raw.indexOf('---', 3)
@@ -38,7 +62,7 @@ async function processFile(filePath) {
   const body = raw.slice(fmEnd + 3)
 
   const newBody = humanize(body)
-  if (newBody === body) return false
+  if (newBody === body && raw === original) return false
 
   fs.writeFileSync(filePath, frontmatter + newBody, 'utf8')
   return true

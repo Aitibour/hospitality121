@@ -22,8 +22,9 @@ function listMdxFiles() {
 }
 
 function stripFrontmatter(raw) {
-  const match = raw.match(/^---\s*\n[\s\S]*?\n---\s*\n?/)
-  return match ? raw.slice(match[0].length) : raw
+  const normalized = raw.replace(/^\uFEFF/, '')
+  const match = normalized.match(/^---\s*\n[\s\S]*?\n---\s*\n?/)
+  return match ? normalized.slice(match[0].length) : normalized
 }
 
 function auditFile(filePath) {
