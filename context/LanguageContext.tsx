@@ -20,7 +20,9 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const saved = localStorage.getItem('h1h_locale') as Locale | null
-    if (saved === 'en' || saved === 'fr') setLocaleState(saved)
+    if (saved === 'en' || saved === 'fr') {
+      queueMicrotask(() => setLocaleState(saved))
+    }
   }, [])
 
   function setLocale(l: Locale) {

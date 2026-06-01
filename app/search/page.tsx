@@ -4,7 +4,6 @@ import { useState, useMemo, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import Fuse from 'fuse.js'
-import type { ContentItem } from '@/types/content'
 
 type SearchItem = {
   slug: string

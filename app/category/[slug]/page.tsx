@@ -1,9 +1,8 @@
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import { getAllContent } from '@/lib/content'
-import { getCategoryBySlug, CATEGORIES, type CategorySlug } from '@/lib/categories'
+import { getCategoryBySlug, CATEGORIES } from '@/lib/categories'
 import ContentGrid from '@/components/ContentGrid'
-import SectionHeader from '@/components/SectionHeader'
 
 export function generateStaticParams() {
   return Object.keys(CATEGORIES).map(slug => ({ slug }))

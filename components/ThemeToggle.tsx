@@ -6,7 +6,9 @@ export default function ThemeToggle() {
   const { resolvedTheme, setTheme } = useTheme()
   const [mounted, setMounted] = useState(false)
 
-  useEffect(() => setMounted(true), [])
+  useEffect(() => {
+    queueMicrotask(() => setMounted(true))
+  }, [])
 
   // Render a placeholder before mount to avoid layout shift
   if (!mounted) return <div className="w-8 h-8" aria-hidden="true" />

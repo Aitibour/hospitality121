@@ -1,7 +1,6 @@
 'use client'
 
 import { useLanguage } from '@/context/LanguageContext'
-import type { Locale } from '@/lib/translations'
 
 type SectionKey = 'insights' | 'podcasts' | 'news' | 'events' | 'blog' | 'interviews'
 

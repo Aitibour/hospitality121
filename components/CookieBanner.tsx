@@ -11,7 +11,7 @@ export default function CookieBanner() {
   useEffect(() => {
     if (typeof window === 'undefined') return
     if (localStorage.getItem(COOKIE_KEY)) return
-    setVisible(true)
+    queueMicrotask(() => setVisible(true))
   }, [])
 
   function accept() {

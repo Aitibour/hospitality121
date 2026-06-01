@@ -1,7 +1,6 @@
 'use client'
 
 import { useEffect } from 'react'
-import Script from 'next/script'
 import { usePathname } from 'next/navigation'
 
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID
@@ -18,7 +17,7 @@ function loadGA() {
   if (!GA_ID || typeof window === 'undefined') return
   if (document.getElementById('ga-script')) return
   window.dataLayer = window.dataLayer || []
-  window.gtag = function () { window.dataLayer.push(arguments) }
+  window.gtag = (...args: unknown[]) => { window.dataLayer.push(args) }
   window.gtag('js', new Date())
   window.gtag('config', GA_ID, { send_page_view: false })
   const s = document.createElement('script')
