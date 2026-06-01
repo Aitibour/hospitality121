@@ -4,12 +4,14 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "prebuild": "npm run content:audit:strict",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
     "test": "node --test scripts/test/*.mjs",
     "content:audit": "node scripts/audit-content-quality.mjs",
     "content:audit:strict": "node scripts/audit-content-quality.mjs --fail-on-issues",
+    "verify": "npm run content:audit:strict && npm run lint && npm test && npm run build",
     "optimize:images": "node scripts/optimize-images.mjs"
   },
   "dependencies": {
