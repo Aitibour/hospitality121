@@ -32,9 +32,7 @@ const NAV: NavItem[] = [
     label: 'About',
     href: '/about',
     dropdown: [
-      { label: 'About Us',             href: '/about',              description: 'Hospitality media platform, New York USA' },
       { label: 'Editorial Standards',  href: '/editorial-standards', description: 'How we research and verify content' },
-      { label: 'Collaborate',          href: '/collaborate',         description: 'Write for us or join the podcast' },
       { label: 'Advertise',            href: '/advertise',           description: 'Reach hospitality leaders' },
     ],
   },
