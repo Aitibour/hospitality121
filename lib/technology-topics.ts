@@ -6,6 +6,7 @@ export type TechTopic = {
   keywords: string
   intro: string[]
   sections: { heading: string; body: string }[]
+  solutions: { title: string; buyer: string; useCase: string; seo: string[] }[]
   filterTerms: string[]
 }
 
@@ -39,6 +40,32 @@ export const TECH_TOPICS: TechTopic[] = [
         body: 'Predictive maintenance systems analyse sensor data from HVAC, elevators, and kitchen equipment to flag failures before they occur. Housekeeping scheduling algorithms optimise room assignment based on check-out patterns and staff availability. Food and beverage AI models reduce kitchen waste by forecasting cover counts and ingredient demand with greater precision than manual estimates.',
       },
     ],
+    solutions: [
+      {
+        title: 'AI Guest Messaging Platform',
+        buyer: 'Front office, guest experience, and contact centre leaders',
+        useCase: 'Automates pre-arrival questions, in-stay requests, service recovery, upsell prompts, and multilingual guest support across web chat, WhatsApp, SMS, and app messaging.',
+        seo: ['AI guest experience', 'AI concierge hotel', 'hotel guest messaging'],
+      },
+      {
+        title: 'Revenue Forecasting Engine',
+        buyer: 'Revenue managers, commercial directors, and ownership groups',
+        useCase: 'Uses booking pace, demand signals, event calendars, competitor rates, and cancellation behaviour to recommend pricing actions by room type and segment.',
+        seo: ['AI revenue management', 'AI pricing hotels', 'hotel revenue optimization'],
+      },
+      {
+        title: 'Housekeeping Optimization Tool',
+        buyer: 'Rooms division, housekeeping, and operations teams',
+        useCase: 'Prioritizes room turns, predicts room readiness, routes attendants, and gives managers live visibility into daily room status and service exceptions.',
+        seo: ['AI housekeeping', 'hotel automation', 'hotel operations AI'],
+      },
+      {
+        title: 'Predictive Maintenance System',
+        buyer: 'Engineering, facilities, and asset management teams',
+        useCase: 'Monitors equipment signals from HVAC, lifts, pumps, and kitchen assets to flag likely failures before they disrupt guests or create emergency repair costs.',
+        seo: ['predictive maintenance hotel', 'operational AI', 'hospitality automation'],
+      },
+    ],
   },
   {
     slug: 'pms-pos',
@@ -67,6 +94,32 @@ export const TECH_TOPICS: TechTopic[] = [
       {
         heading: 'Payments, Reporting, and Compliance',
         body: 'Modern hospitality payment platforms handle multi-currency processing, digital wallets, contactless card terminals, and split billing in a single PCI-compliant environment. Centralised reporting across PMS and POS gives revenue managers and F&B directors a single view of performance by outlet, day-part, and revenue category. For groups with multiple properties, unified reporting eliminates the manual consolidation overhead and enables meaningful benchmarking across the estate.',
+      },
+    ],
+    solutions: [
+      {
+        title: 'Cloud Property Management System',
+        buyer: 'General managers, IT directors, and ownership groups',
+        useCase: 'Centralizes reservations, profiles, room status, rates, folios, housekeeping, and reporting in a cloud environment with mobile access and open integrations.',
+        seo: ['cloud PMS', 'hotel property management system', 'hotel technology solutions'],
+      },
+      {
+        title: 'Integrated Hotel POS',
+        buyer: 'F&B directors, finance teams, and resort operators',
+        useCase: 'Connects restaurant, bar, spa, banquet, and in-room dining transactions to PMS folios, inventory, kitchen workflows, and outlet performance reporting.',
+        seo: ['hotel POS', 'restaurant POS hotel', 'PMS POS integration'],
+      },
+      {
+        title: 'Booking Engine and Channel Manager',
+        buyer: 'Commercial teams, revenue managers, and independent hotels',
+        useCase: 'Synchronizes direct booking availability, rates, restrictions, packages, and OTA distribution while reducing manual updates and overbooking risk.',
+        seo: ['hotel booking technology', 'channel manager hotel', 'booking engine hotel'],
+      },
+      {
+        title: 'Hospitality Payments Platform',
+        buyer: 'Finance, front office, and corporate IT teams',
+        useCase: 'Supports tokenized payments, digital wallets, room charges, deposits, refunds, chargebacks, and PCI-aware settlement across departments and properties.',
+        seo: ['hotel payment technology', 'PCI DSS hotel', 'hospitality payment platform'],
       },
     ],
   },
@@ -99,6 +152,32 @@ export const TECH_TOPICS: TechTopic[] = [
         body: 'Near Field Communication and Bluetooth Low Energy are the two dominant mobile key transmission technologies, each with different read range, speed, and hardware requirements. NFC delivers tap-to-open functionality similar to contactless payment, while BLE enables hands-free operation where the door unlocks as the guest approaches. The growing availability of NFC in both iOS and Android devices is accelerating mobile key adoption, with several major lock manufacturers now supporting both standards simultaneously on the same hardware.',
       },
     ],
+    solutions: [
+      {
+        title: 'RFID Hotel Lock System',
+        buyer: 'Engineering, security, and ownership teams',
+        useCase: 'Replaces magnetic stripe access with reliable RFID credentials, audit trails, master key controls, and PMS-connected check-in and check-out permissions.',
+        seo: ['RFID hotel lock', 'hotel key systems', 'hotel access control'],
+      },
+      {
+        title: 'Mobile Key Platform',
+        buyer: 'Brand digital teams, loyalty teams, and front office leaders',
+        useCase: 'Issues secure smartphone room keys after digital check-in, reducing lobby queues and giving returning guests a faster arrival journey.',
+        seo: ['mobile key hotel', 'keyless hotel entry', 'NFC hotel access'],
+      },
+      {
+        title: 'Lift and Amenity Access Control',
+        buyer: 'Security, spa, club lounge, and resort operations teams',
+        useCase: 'Controls access to lifts, gyms, pools, lounges, parking, staff areas, and premium amenities based on reservation dates, room type, or package entitlement.',
+        seo: ['hotel access control', 'smart hotel technology', 'connected guest rooms'],
+      },
+      {
+        title: 'Digital Check-in Kiosk',
+        buyer: 'Front office, limited-service hotels, and airport properties',
+        useCase: 'Lets guests verify identity, assign rooms, take payments, and collect credentials while staff focus on exceptions and high-value service moments.',
+        seo: ['contactless check-in', 'hotel kiosk', 'hotel automation'],
+      },
+    ],
   },
   {
     slug: 'iptv-signage',
@@ -127,6 +206,32 @@ export const TECH_TOPICS: TechTopic[] = [
       {
         heading: 'Network Infrastructure and Content Management',
         body: 'Reliable IPTV and signage delivery depends on a hotel network infrastructure capable of handling simultaneous high-definition video streams across all occupied rooms and public spaces. Dedicated VLAN separation for entertainment traffic, sufficient bandwidth provisioning, and managed switching are prerequisites for a stable in-room entertainment experience. Cloud-based content management systems allow properties to update signage content and IPTV channel lists remotely, reducing the on-site IT involvement required for routine updates and enabling centralised management across multi-property portfolios.',
+      },
+    ],
+    solutions: [
+      {
+        title: 'Hotel IPTV Platform',
+        buyer: 'IT directors, guest experience teams, and owners',
+        useCase: 'Delivers live TV, hotel information, branded welcome screens, room service access, spa booking, and guest account features through the in-room screen.',
+        seo: ['hotel IPTV', 'in-room entertainment hotel', 'hotel room technology'],
+      },
+      {
+        title: 'Secure Guest Casting',
+        buyer: 'Upper-upscale, luxury, and extended-stay properties',
+        useCase: 'Allows guests to cast personal streaming content to room TVs without exposing credentials or requiring staff support at check-out.',
+        seo: ['hotel casting', 'guest room entertainment', 'smart hotel technology'],
+      },
+      {
+        title: 'Lobby and Wayfinding Signage',
+        buyer: 'Marketing, events, F&B, and operations teams',
+        useCase: 'Runs dynamic lobby messages, venue directions, meeting room schedules, restaurant promotions, and emergency notices from a central content manager.',
+        seo: ['digital signage hotel', 'hotel lobby display', 'meeting room screens'],
+      },
+      {
+        title: 'Conference Display Network',
+        buyer: 'Meetings, events, and convention hotel teams',
+        useCase: 'Connects banquet event orders, meeting schedules, room changes, and sponsor content to property-wide screens for real-time event communication.',
+        seo: ['hotel meeting room screens', 'conference hotel technology', 'digital signage hotel'],
       },
     ],
   },
@@ -159,6 +264,32 @@ export const TECH_TOPICS: TechTopic[] = [
         body: 'The hotel technology ecosystem involves dozens of vendors with varying levels of security maturity. Channel managers, booking engines, spa software, F&B platforms, and loyalty systems all connect to the hotel network and handle guest data. Vendor security assessments, contractual data processing agreements, and network segmentation that limits third-party system access to only what is operationally necessary are essential components of a mature hospitality cybersecurity programme.',
       },
     ],
+    solutions: [
+      {
+        title: 'Hospitality SIEM and Monitoring',
+        buyer: 'Hotel IT, managed service providers, and security teams',
+        useCase: 'Aggregates logs from PMS, POS, network equipment, endpoints, and cloud tools to detect suspicious activity and accelerate incident response.',
+        seo: ['hotel cybersecurity', 'hospitality data protection', 'hotel IT security'],
+      },
+      {
+        title: 'PCI Scope Reduction Toolkit',
+        buyer: 'Finance, payments, and compliance leaders',
+        useCase: 'Combines tokenization, point-to-point encryption, secure payment links, network segmentation, and evidence tracking for PCI DSS readiness.',
+        seo: ['PCI DSS hotel', 'payment security hotel', 'hospitality cybersecurity'],
+      },
+      {
+        title: 'Guest Data Privacy Platform',
+        buyer: 'Legal, marketing, loyalty, and data governance teams',
+        useCase: 'Manages consent, retention, deletion requests, data mapping, and vendor processing records across guest systems and marketing platforms.',
+        seo: ['guest data privacy', 'hotel data protection', 'GDPR hotels'],
+      },
+      {
+        title: 'Vendor Risk Management System',
+        buyer: 'Procurement, IT, and ownership groups',
+        useCase: 'Tracks vendor security questionnaires, data processing agreements, access reviews, and remediation tasks across the hotel technology supply chain.',
+        seo: ['third party risk hotel', 'hotel technology vendors', 'hospitality security'],
+      },
+    ],
   },
   {
     slug: 'smart-hotels',
@@ -187,6 +318,32 @@ export const TECH_TOPICS: TechTopic[] = [
       {
         heading: 'Smart Hotel ROI',
         body: 'The return on smart hotel technology comes from energy savings, fewer service delays, better upsell timing, improved reviews, and richer guest data. Operators should evaluate systems by integration quality, adoption rate, and measurable impact on service recovery.',
+      },
+    ],
+    solutions: [
+      {
+        title: 'Connected Room Controls',
+        buyer: 'Owners, engineering teams, and luxury operators',
+        useCase: 'Links lighting, HVAC, curtains, occupancy sensors, and guest preferences to create more comfortable rooms while reducing energy waste.',
+        seo: ['connected guest rooms', 'hotel room technology', 'smart hotel technology'],
+      },
+      {
+        title: 'Smart Thermostat and Energy System',
+        buyer: 'Asset managers, sustainability teams, and facilities leaders',
+        useCase: 'Adjusts room temperature by occupancy, check-in status, and guest comfort preferences to lower utility cost without damaging service quality.',
+        seo: ['IoT hotels', 'smart hotel energy', 'green hotel technology'],
+      },
+      {
+        title: 'Guest Service Request App',
+        buyer: 'Operations, housekeeping, and guest experience teams',
+        useCase: 'Routes towel requests, maintenance issues, amenities, and service recovery tasks directly to the right department with status tracking.',
+        seo: ['hotel guest app', 'digital guest journey', 'hotel automation'],
+      },
+      {
+        title: 'IoT Asset Monitoring Layer',
+        buyer: 'Engineering, security, and multi-property operators',
+        useCase: 'Tracks equipment, water leaks, temperature anomalies, minibar sensors, and staff alerts through one operational dashboard.',
+        seo: ['IoT hotels', 'hotel operations technology', 'smart hotel systems'],
       },
     ],
   },
@@ -219,6 +376,32 @@ export const TECH_TOPICS: TechTopic[] = [
         body: 'A revenue management system is only as strong as its integrations. PMS, channel manager, booking engine, and CRM connectivity determine whether insights become timely commercial action.',
       },
     ],
+    solutions: [
+      {
+        title: 'Revenue Management System',
+        buyer: 'Revenue managers, commercial teams, and ownership groups',
+        useCase: 'Recommends rates, restrictions, and length-of-stay controls using booking pace, competitor sets, events, demand forecasts, and segment performance.',
+        seo: ['hotel revenue optimization', 'revenue management system hotel', 'AI pricing hotels'],
+      },
+      {
+        title: 'Rate Shopping and Market Intelligence',
+        buyer: 'Commercial strategy, asset management, and sales teams',
+        useCase: 'Tracks competitor pricing, parity, demand compression, local events, and market movement to inform rate strategy and owner reporting.',
+        seo: ['hotel technology report', 'market intelligence hotel', 'hospitality analytics'],
+      },
+      {
+        title: 'Profit Analytics Dashboard',
+        buyer: 'Finance, owners, and general managers',
+        useCase: 'Combines room revenue, distribution cost, payroll, F&B, channel mix, and ancillary spend to show profitability beyond top-line RevPAR.',
+        seo: ['hospitality analytics', 'hotel data platform', 'hotel revenue optimization'],
+      },
+      {
+        title: 'CRM Revenue Activation Tool',
+        buyer: 'Marketing, loyalty, and direct booking teams',
+        useCase: 'Segments guests by behaviour and value, then activates personalized offers, win-back campaigns, and pre-arrival upsells.',
+        seo: ['hotel CRM systems', 'hotel personalization AI', 'direct booking technology'],
+      },
+    ],
   },
   {
     slug: 'companies',
@@ -247,6 +430,32 @@ export const TECH_TOPICS: TechTopic[] = [
       {
         heading: 'Choosing Partners',
         body: 'Operators should evaluate vendors by integration depth, support quality, cybersecurity controls, product roadmap, total cost of ownership, and adoption evidence from similar properties.',
+      },
+    ],
+    solutions: [
+      {
+        title: 'Vendor Selection Scorecard',
+        buyer: 'Owners, operators, consultants, and procurement teams',
+        useCase: 'Compares products by integration quality, support model, cybersecurity controls, total cost, references, roadmap, and fit by hotel segment.',
+        seo: ['hospitality technology companies', 'hotel technology vendors', 'hospitality technology consultant'],
+      },
+      {
+        title: 'Implementation Partner Network',
+        buyer: 'Hotel groups, management companies, and independent owners',
+        useCase: 'Matches properties with consultants, migration specialists, trainers, and integration partners for PMS, POS, CRM, RMS, and guest technology rollouts.',
+        seo: ['hospitality technology consulting', 'hospitality technology partners', 'hotel technology implementation'],
+      },
+      {
+        title: 'Startup Landscape Tracker',
+        buyer: 'Investors, brands, innovation teams, and accelerators',
+        useCase: 'Organizes hospitality tech startups by category, funding stage, market focus, customer segment, and operational problem solved.',
+        seo: ['hospitality tech startup', 'hospitality tech market map', 'hospitality technology market'],
+      },
+      {
+        title: 'RFP Template Library',
+        buyer: 'Procurement, IT, and operations executives',
+        useCase: 'Standardizes requirements for demos, security reviews, pricing comparison, integration scope, implementation timeline, and service-level expectations.',
+        seo: ['hotel technology vendors', 'hospitality technology advisory', 'hospitality technology solutions'],
       },
     ],
   },
@@ -279,6 +488,32 @@ export const TECH_TOPICS: TechTopic[] = [
         body: 'A strong conference strategy turns event coverage into evergreen trend pages, vendor comparisons, and internal links back to the hospitality technology authority hub.',
       },
     ],
+    solutions: [
+      {
+        title: 'Conference Intelligence Brief',
+        buyer: 'Executives, vendors, and hotel innovation teams',
+        useCase: 'Turns event agendas, exhibitor themes, product launches, and operator panels into practical buying signals and trend analysis.',
+        seo: ['hospitality technology conference', 'hotel technology forum', 'HITEC'],
+      },
+      {
+        title: 'Event Vendor Shortlist',
+        buyer: 'Hotel buyers attending expos and summits',
+        useCase: 'Prioritizes booths, demos, and meetings by property needs, current stack gaps, budget cycle, and integration requirements.',
+        seo: ['hospitality technology expo', 'hotel technology vendors', 'hospitality tech expo 2026'],
+      },
+      {
+        title: 'Post-Event Trend Report',
+        buyer: 'Hospitality executives, consultants, and media teams',
+        useCase: 'Summarizes the product categories, operator pain points, funding signals, and partnership themes that matter after each major conference.',
+        seo: ['hospitality technology report', 'hotel technology trends', 'hospitality innovation summit'],
+      },
+      {
+        title: 'Awards and Innovation Watchlist',
+        buyer: 'Brands, owners, investors, and technology partners',
+        useCase: 'Tracks award-winning products and validates them against operational maturity, adoption evidence, and fit for hotel segments.',
+        seo: ['hospitality technology awards', 'hotel innovation awards', 'hospitality technology companies'],
+      },
+    ],
   },
   {
     slug: 'careers',
@@ -307,6 +542,32 @@ export const TECH_TOPICS: TechTopic[] = [
       {
         heading: 'Career Pathways',
         body: 'Hotel operators can move into technology careers by specializing in systems ownership, project rollouts, reporting, revenue tools, or digital guest experience platforms.',
+      },
+    ],
+    solutions: [
+      {
+        title: 'Hospitality Tech Career Pathway',
+        buyer: 'Hotel professionals, training teams, and recruiters',
+        useCase: 'Maps operational roles into PMS administration, implementation, revenue systems, product support, customer success, and hotel IT careers.',
+        seo: ['hospitality technology careers', 'hospitality tech careers', 'hotel technology jobs'],
+      },
+      {
+        title: 'Certification and Course Finder',
+        buyer: 'Students, hotel teams, and career switchers',
+        useCase: 'Organizes certifications and courses by PMS, cybersecurity, analytics, revenue management, project management, and hospitality technology fundamentals.',
+        seo: ['hospitality technology certification', 'hospitality technology course', 'certified hospitality technology professional'],
+      },
+      {
+        title: 'Remote Hospitality Tech Jobs Board',
+        buyer: 'Candidates, vendors, and hospitality technology recruiters',
+        useCase: 'Highlights remote support, implementation, sales, customer success, product, and revenue technology roles serving hotel customers.',
+        seo: ['hospitality tech jobs remote', 'hospitality technology jobs remote', 'hospitality tech recruiters'],
+      },
+      {
+        title: 'Skills Gap Assessment',
+        buyer: 'HR teams, hotel groups, and training leaders',
+        useCase: 'Identifies gaps in system ownership, data literacy, integrations, cybersecurity basics, vendor management, and digital guest experience skills.',
+        seo: ['hospitality management technology', 'hospitality technology salary', 'hotel IT jobs'],
       },
     ],
   },
