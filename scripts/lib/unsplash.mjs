@@ -1,5 +1,6 @@
 import fs from 'node:fs'
 import path from 'node:path'
+import { optimizeImage } from './image-optimizer.mjs'
 
 // Fallback images that actually exist in public/images/.
 // These are used when both Unsplash fails and no dedicated blog images are present.
@@ -58,6 +59,11 @@ export async function fetchImage(keywords, slug) {
       destPath
     )
     console.log(`✓ Fallback image copied: ${fallback} → ${filename}`)
+  }
+
+  const result = await optimizeImage(destPath, { minBytes: 0 })
+  if (result.changed) {
+    console.log(`[image] Optimized ${filename}: ${result.before} -> ${result.after} bytes`)
   }
 
   return filename
