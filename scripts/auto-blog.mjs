@@ -13,7 +13,7 @@ import { isHospitalitySource, validateHumanizedPost } from './lib/content-qualit
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const TRACKER_PATH = path.join(__dirname, 'seen-articles.json')
-const DAILY_BLOG_LIMIT = 2
+const DAILY_BLOG_LIMIT = 1
 const EDITORIAL_FORMATS = [
   'articles-and-editorials',
   'hospitality-news-analysis',
