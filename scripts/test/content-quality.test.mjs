@@ -1,6 +1,6 @@
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
-import { isAllowedRegionalArticle, isDuplicateTitle, isHospitalitySource, validateHumanizedPost } from '../lib/content-quality.mjs'
+import { isAllowedRegionalArticle, isDuplicateTitle, isHospitalitySource, validateHumanizedPost, validateNewsPost } from '../lib/content-quality.mjs'
 
 test('isHospitalitySource accepts broad hospitality sources', () => {
   assert.equal(isHospitalitySource({
@@ -55,4 +55,29 @@ test('validateHumanizedPost flags banned AI patterns', () => {
   }, [], [])
 
   assert.ok(issues.some(issue => issue.includes('banned phrase')))
+})
+
+test('validateNewsPost blocks duplicate and regional news', () => {
+  const issues = validateNewsPost({
+    title: 'Yatra Eyes Corporate Travel Growth in India',
+    description: 'A hotel distribution story about India.',
+    category: 'DISTRIBUTION',
+    body: 'The story covers hotel distribution and travel demand.',
+    keywords: ['hotel distribution', 'hospitality news', 'travel technology'],
+  }, ['Yatra Eyes Corporate Travel Growth in India'])
+
+  assert.ok(issues.includes('duplicate or semantically similar title'))
+  assert.ok(issues.includes('blocked regional topic'))
+})
+
+test('validateNewsPost accepts clean hospitality news', () => {
+  const issues = validateNewsPost({
+    title: 'Hotel Operators Expand AI Guest Messaging',
+    description: 'Hospitality technology teams are investing in guest messaging.',
+    category: 'TECHNOLOGY',
+    body: 'Hotel operators are testing AI guest messaging across front office workflows. The operational impact is focused on response times and service consistency.',
+    keywords: ['hospitality technology', 'hotel AI', 'guest experience'],
+  }, [])
+
+  assert.deepEqual(issues, [])
 })

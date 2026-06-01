@@ -183,6 +183,33 @@ export function validateHumanizedPost(post, existingTitles, existingKeywordSets)
   return issues
 }
 
+export function validateNewsPost(post, existingTitles) {
+  const issues = []
+  const body = `${post.description || ''} ${post.body || ''}`
+  const bodyLower = body.toLowerCase()
+
+  if (isDuplicateTitle(post.title, existingTitles)) {
+    issues.push('duplicate or semantically similar title')
+  }
+  if (!isAllowedRegionalArticle({ title: post.title, excerpt: body, source: '' })) {
+    issues.push('blocked regional topic')
+  }
+  if (body.includes('—')) {
+    issues.push('contains em dash')
+  }
+  for (const phrase of BANNED_PHRASES) {
+    if (bodyLower.includes(phrase)) issues.push(`contains banned phrase: ${phrase}`)
+  }
+  if (!Array.isArray(post.keywords) || post.keywords.length < 3) {
+    issues.push('needs at least three SEO keywords')
+  }
+  if (!normalizeText([post.title, post.description, post.category, ...(post.keywords || [])].join(' ')).match(/\b(hospitality|hotel|guest|resort|travel|restaurant|lodging)\b/)) {
+    issues.push('missing hospitality keyword focus')
+  }
+
+  return issues
+}
+
 function normalizeKeywordSet(keywords) {
   return keywords
     .map(normalizeText)

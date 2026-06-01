@@ -8,7 +8,8 @@ import { calcReadTime, generateSlug, renderNewsMdx } from './lib/mdx.mjs'
 import { commitAndPush, pingIndexNow } from './lib/publish.mjs'
 import { publishToLinkedIn } from './lib/linkedin.mjs'
 import { buildSeoLinks } from './lib/seo-links.mjs'
-import { collectExistingSourceUrls, countGeneratedToday, loadSeen, saveSeen, todayIso } from './lib/content-history.mjs'
+import { collectExistingSourceUrls, collectExistingTitles, countGeneratedToday, loadSeen, saveSeen, todayIso } from './lib/content-history.mjs'
+import { isHospitalitySource, validateNewsPost } from './lib/content-quality.mjs'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const TRACKER_PATH = path.join(__dirname, 'seen-articles.json')
@@ -27,25 +28,44 @@ async function main() {
 
   const seen = loadSeen(TRACKER_PATH)
   const existingSources = collectExistingSourceUrls()
-  const unseen = articles.filter(article => !seen.includes(article.url) && !existingSources.has(article.url))
+  const unseen = articles
+    .filter(article => !seen.includes(article.url) && !existingSources.has(article.url))
+    .filter(isHospitalitySource)
   if (unseen.length === 0) {
     console.log('No new news articles found. Exiting cleanly.')
     process.exit(0)
   }
 
-  const article = unseen[0]
-  console.log(`Picked: "${article.title}" from ${article.source}`)
-
+  const existingTitles = collectExistingTitles()
+  let article
   let post
-  for (let attempt = 1; attempt <= 2; attempt++) {
-    try {
-      post = await generateNewsItem(article)
-      console.log(`Groq generated: "${post.title}"`)
-      break
-    } catch (err) {
-      console.error(`Groq attempt ${attempt} failed: ${err.message}`)
-      if (attempt === 2) process.exit(1)
+
+  for (const candidate of unseen.slice(0, 12)) {
+    console.log(`Evaluating: "${candidate.title}" from ${candidate.source}`)
+
+    for (let attempt = 1; attempt <= 2; attempt++) {
+      try {
+        post = await generateNewsItem(candidate)
+        const issues = validateNewsPost(post, existingTitles)
+        if (issues.length > 0) {
+          throw new Error(`quality gate failed: ${issues.join('; ')}`)
+        }
+        article = candidate
+        console.log(`Groq generated: "${post.title}"`)
+        break
+      } catch (err) {
+        console.error(`Groq attempt ${attempt} failed: ${err.message}`)
+        if (attempt === 2) seen.push(candidate.url)
+      }
     }
+
+    if (post && article) break
+  }
+
+  if (!post || !article) {
+    saveSeen(TRACKER_PATH, seen)
+    console.log('No news article passed hospitality, regional, and quality gates. Exiting cleanly.')
+    process.exit(0)
   }
 
   let slug = post.slug
