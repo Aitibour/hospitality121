@@ -38,3 +38,12 @@ test('diamond feed and sitemap surface technology solution pages', () => {
   assert.match(sitemapSource, /changeFrequency: 'weekly'/)
   assert.match(sitemapSource, /priority: t\.slug === 'ai'/)
 })
+
+test('technology hub links to topic solution anchors', () => {
+  const hubSource = fs.readFileSync('app/technology/page.tsx', 'utf8')
+
+  assert.match(hubSource, /TECH_TOPICS\.map/)
+  assert.match(hubSource, /topic\.solutions\.map/)
+  assert.match(hubSource, /\/technology\/\$\{topic\.slug\}#solution-\$\{index \+ 1\}/)
+  assert.match(hubSource, /View diamond feed/)
+})

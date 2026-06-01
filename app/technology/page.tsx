@@ -3,6 +3,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { getAllContent } from '@/lib/content'
 import { DIAMOND_PILLARS, GEO_AUTHORITY_PAGES } from '@/lib/diamond-seo'
+import { TECH_TOPICS } from '@/lib/technology-topics'
 
 export const metadata: Metadata = {
   title: 'Hotel Technology News & Analysis',
@@ -16,13 +17,14 @@ export const metadata: Metadata = {
   },
 }
 
-const PILLARS = [
-  { label: 'Hospitality AI',     href: '/technology/ai',           description: 'Machine learning, predictive analytics, and AI-powered guest experience' },
-  { label: 'PMS & POS Systems',  href: '/technology/pms-pos',      description: 'Property management, point of sale, mobile ordering, and payments' },
-  { label: 'Key & Mobile Key',   href: '/technology/key-systems',  description: 'RFID locks, mobile key, NFC access, and access control' },
-  { label: 'IPTV & Signage',     href: '/technology/iptv-signage', description: 'In-room entertainment, casting, and digital property displays' },
-  { label: 'Cybersecurity',      href: '/technology/cybersecurity',description: 'Data protection, PCI compliance, and guest privacy' },
-]
+const FEATURED_TOPIC_SLUGS = ['ai', 'pms-pos', 'cybersecurity', 'smart-hotels', 'revenue-management', 'companies']
+const featuredTopics = FEATURED_TOPIC_SLUGS
+  .map(slug => TECH_TOPICS.find(topic => topic.slug === slug))
+  .filter((topic): topic is (typeof TECH_TOPICS)[number] => Boolean(topic))
+
+function getTopicSummary(topic: (typeof TECH_TOPICS)[number]) {
+  return topic.description.length > 128 ? `${topic.description.slice(0, 125)}...` : topic.description
+}
 
 export default function TechnologyPage() {
   const all = getAllContent()
@@ -47,18 +49,60 @@ export default function TechnologyPage() {
       </div>
 
       {/* Pillars */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 mb-14">
-        {PILLARS.map(p => (
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-14">
+        {featuredTopics.map(p => (
           <Link
-            key={p.label}
-            href={p.href}
-            className="bg-surface rounded-xl p-4 hover:ring-1 hover:ring-gold/40 transition group"
+            key={p.slug}
+            href={`/technology/${p.slug}`}
+            className="bg-surface rounded-xl p-5 hover:ring-1 hover:ring-gold/40 transition group"
           >
-            <p className="text-sm font-bold text-gray-800 group-hover:text-gold transition-colors mb-1">{p.label}</p>
-            <p className="text-xs text-muted leading-snug">{p.description}</p>
+            <p className="text-xs font-bold tracking-widest text-gold uppercase mb-2">{p.subtitle}</p>
+            <p className="text-base font-bold text-gray-800 group-hover:text-gold transition-colors mb-2">{p.title}</p>
+            <p className="text-xs text-muted leading-relaxed">{getTopicSummary(p)}</p>
           </Link>
         ))}
       </div>
+
+      <section className="mb-14">
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-3 mb-7">
+          <div>
+            <p className="text-xs font-bold tracking-widest text-gold uppercase mb-2">Solution Map</p>
+            <h2 className="font-serif text-3xl font-bold text-gray-900">Hospitality technology products and buying paths</h2>
+          </div>
+          <Link href="/seo-diamond.json" className="text-sm font-bold text-gold hover:underline">
+            View diamond feed
+          </Link>
+        </div>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+          {TECH_TOPICS.map(topic => (
+            <article key={topic.slug} className="rounded-lg border border-gray-100 bg-white p-5 shadow-sm">
+              <div className="flex items-start justify-between gap-4 mb-4">
+                <div>
+                  <p className="text-xs font-bold tracking-widest text-gold uppercase">{topic.subtitle}</p>
+                  <h3 className="font-serif text-xl font-bold text-gray-900 mt-1">{topic.title}</h3>
+                </div>
+                <Link
+                  href={`/technology/${topic.slug}`}
+                  className="shrink-0 rounded-full bg-gold/10 px-3 py-1 text-xs font-bold text-gold hover:bg-gold hover:text-gray-900 transition-colors"
+                >
+                  Pillar
+                </Link>
+              </div>
+              <div className="grid sm:grid-cols-2 gap-2">
+                {topic.solutions.map((solution, index) => (
+                  <Link
+                    key={solution.title}
+                    href={`/technology/${topic.slug}#solution-${index + 1}`}
+                    className="rounded-md bg-surface px-3 py-2 text-xs font-semibold text-gray-700 hover:text-gold hover:ring-1 hover:ring-gold/40 transition"
+                  >
+                    {solution.title}
+                  </Link>
+                ))}
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
 
       <section className="bg-surface rounded-xl p-6 mb-14">
         <p className="text-xs font-bold tracking-widest text-gold uppercase mb-4">Diamond Authority Links</p>
