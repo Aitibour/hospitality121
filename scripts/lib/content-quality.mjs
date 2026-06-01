@@ -221,7 +221,7 @@ export function validateNewsPost(post, existingTitles) {
   return issues
 }
 
-function findForbiddenStyleIssues(body, bodyLower = body.toLowerCase()) {
+export function findForbiddenStyleIssues(body, bodyLower = body.toLowerCase()) {
   const issues = []
 
   if (FORBIDDEN_PUNCTUATION.test(body)) {

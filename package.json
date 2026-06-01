@@ -8,6 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "test": "node --test scripts/test/*.mjs",
+    "content:audit": "node scripts/audit-content-quality.mjs",
+    "content:audit:strict": "node scripts/audit-content-quality.mjs --fail-on-issues",
     "optimize:images": "node scripts/optimize-images.mjs"
   },
   "dependencies": {
