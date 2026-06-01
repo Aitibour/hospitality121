@@ -6,13 +6,13 @@ import AdSlot from '@/components/AdSlot'
 import type { ContentItem } from '@/types/content'
 
 export const metadata: Metadata = {
-  title: 'Recent Hospitality Events & Technology Conferences',
+  title: 'Upcoming Hospitality Events & Technology Conferences',
   alternates: { canonical: 'https://hospitality121.com/events' },
-  description: 'Recent and near-term hospitality events, hotel technology conferences, summits, forums, and event coverage from Hospitality121.',
+  description: 'Next-month hospitality events, hotel technology conferences, summits, forums, and recent event coverage from Hospitality121.',
   keywords: 'hospitality events, hotel technology conference, hospitality summit, hospitality technology events, HITEC, hotel industry events',
   openGraph: {
-    title: 'Recent Hospitality Events | Hospitality121',
-    description: 'Near-term hospitality and hotel technology events, plus event coverage from the global hospitality RSS desk.',
+    title: 'Upcoming Hospitality Events | Hospitality121',
+    description: 'Next-month hospitality and hotel technology events, plus recent event coverage from the Hospitality121 RSS desk.',
     images: [{ url: 'https://hospitality121.com/images/linkedin-banner.jpg', width: 1200, height: 630 }],
   },
   twitter: { card: 'summary_large_image', images: ['https://hospitality121.com/images/linkedin-banner.jpg'] },
@@ -134,8 +134,14 @@ const PAST_EVENT_ARCHIVE = [
   },
 ]
 
+function parseEventDate(dateStr: string) {
+  const [year, month, day] = dateStr.split('-').map(Number)
+  if (!year || !month || !day) return new Date(dateStr)
+  return new Date(year, month - 1, day)
+}
+
 function formatEventDate(dateStr: string) {
-  return new Date(dateStr).toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' })
+  return parseEventDate(dateStr).toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' })
 }
 
 function isEventCoverage(item: ContentItem) {
@@ -150,22 +156,25 @@ function isTargetEventRegion(location: string) {
 
 export default function EventsPage() {
   const today = new Date()
+  const todayStart = new Date(today.getFullYear(), today.getMonth(), today.getDate())
+  const nextMonth = new Date(todayStart)
+  nextMonth.setMonth(nextMonth.getMonth() + 1)
   const lastMonth = new Date(today.getFullYear(), today.getMonth(), 0)
   const all = getAllContent()
 
   const upcoming = all
     .filter(item => item.type === 'event')
     .filter(item => {
-      const eventDate = new Date(item.eventDate || item.date)
-      return eventDate >= today && isTargetEventRegion(item.location)
+      const eventDate = parseEventDate(item.eventDate || item.date)
+      return eventDate >= todayStart && eventDate <= nextMonth && isTargetEventRegion(item.location)
     })
-    .sort((a, b) => new Date(a.eventDate).getTime() - new Date(b.eventDate).getTime())
+    .sort((a, b) => parseEventDate(a.eventDate).getTime() - parseEventDate(b.eventDate).getTime())
     .slice(0, 6)
 
   const pastEvents = PAST_EVENT_ARCHIVE
     .filter(item => {
-      const eventDate = new Date(item.date)
-      return eventDate >= new Date('2023-01-01') && eventDate <= lastMonth
+      const eventDate = parseEventDate(item.date)
+      return eventDate >= parseEventDate('2023-01-01') && eventDate <= lastMonth
     })
     .slice(0, 10)
 
@@ -178,10 +187,10 @@ export default function EventsPage() {
     <>
       <div className="bg-white border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-4 py-10">
-          <p className="text-xs font-bold tracking-widest text-gold uppercase mb-2">Recent Event Desk</p>
+          <p className="text-xs font-bold tracking-widest text-gold uppercase mb-2">Event Desk</p>
           <h1 className="font-serif text-4xl md:text-5xl font-bold text-gray-900 mb-3">Hospitality Events</h1>
           <p className="text-muted text-lg max-w-2xl">
-            Top upcoming hospitality, hotel technology, leadership, investment, and operations events across Canada, the United States, and Europe, plus a focused archive of major events since 2023.
+            Upcoming hospitality, hotel technology, leadership, investment, and operations events across Canada, the United States, and Europe for the next month, plus a focused archive of major events since 2023.
           </p>
         </div>
       </div>
@@ -190,8 +199,8 @@ export default function EventsPage() {
         <section>
           <div className="flex flex-wrap items-end justify-between gap-3 mb-8">
             <div>
-              <p className="text-xs font-bold tracking-widest text-gold uppercase">Top 6 Upcoming</p>
-              <h2 className="font-serif text-2xl font-bold text-gray-900">Canada, USA, and Europe</h2>
+              <p className="text-xs font-bold tracking-widest text-gold uppercase">Next Month</p>
+              <h2 className="font-serif text-2xl font-bold text-gray-900">Top 6 Upcoming Events</h2>
             </div>
             <span className="text-xs font-bold tracking-widest text-muted uppercase">{upcoming.length} events</span>
           </div>
@@ -230,7 +239,7 @@ export default function EventsPage() {
             </div>
           ) : (
             <div className="rounded-lg border border-dashed border-gray-200 p-8 text-sm text-muted">
-              No listed Canada, USA, or Europe hospitality events are currently upcoming. Recent event coverage appears below.
+              No listed Canada, USA, or Europe hospitality events are scheduled in the next month. Recent event coverage appears below.
             </div>
           )}
         </section>
