@@ -28,6 +28,8 @@ test('technology pages expose solution structured data', () => {
   assert.match(pageSource, /Product and solution grid/)
   assert.doesNotMatch(pageSource, /t\.sections\.map/)
   assert.doesNotMatch(pageSource, /Editorial sections/)
+  assert.doesNotMatch(pageSource, /Related Coverage/)
+  assert.doesNotMatch(pageSource, /getAllContent/)
 })
 
 test('diamond feed and sitemap surface technology solution pages', () => {

@@ -1,10 +1,8 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import Image from 'next/image'
 import { notFound } from 'next/navigation'
 import { TECH_TOPICS, getTechTopicBySlug } from '@/lib/technology-topics'
 import type { TechTopic } from '@/lib/technology-topics'
-import { getAllContent } from '@/lib/content'
 import { DIAMOND_PILLARS, GEO_AUTHORITY_PAGES } from '@/lib/diamond-seo'
 
 export const dynamic = 'force-static'
@@ -103,13 +101,6 @@ export default async function TechTopicPage({ params }: { params: Promise<{ topi
   const t = getTechTopicBySlug(topic)
   if (!t) notFound()
 
-  const all = getAllContent()
-  const related = all.filter(item =>
-    t.filterTerms.some(term => item.category.toUpperCase().includes(term))
-  ).slice(0, 9)
-
-  const featured = related.slice(0, 3)
-  const rest = related.slice(3)
   const solutionJsonLd = buildTechnologySolutionJsonLd(t)
   const breadcrumbJsonLd = buildTechnologyBreadcrumbJsonLd(t)
 
@@ -203,54 +194,6 @@ export default async function TechTopicPage({ params }: { params: Promise<{ topi
           ))}
         </div>
       </section>
-
-      {/* Related content */}
-      {featured.length > 0 && (
-        <div className="mb-14">
-          <h2 className="font-serif text-2xl font-bold mb-6">Related Coverage</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {featured.map(item => (
-              <Link
-                key={item.slug}
-                href={`/content/${item.slug}`}
-                className="group bg-surface rounded-xl overflow-hidden hover:ring-1 hover:ring-gold/40 transition"
-              >
-                <div className="relative h-48">
-                  <Image src={item.image} alt={item.title} fill className="object-cover group-hover:scale-105 transition-transform duration-300" />
-                </div>
-                <div className="p-4">
-                  <p className="text-xs font-bold text-gold tracking-widest mb-2">{item.category}</p>
-                  <h3 className="font-serif font-semibold text-gray-800 text-base leading-snug line-clamp-2 group-hover:text-gold transition-colors">
-                    {item.title}
-                  </h3>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {rest.length > 0 && (
-        <div className="mb-14">
-          <div className="flex flex-col gap-4">
-            {rest.map(item => (
-              <Link
-                key={item.slug}
-                href={`/content/${item.slug}`}
-                className="flex gap-4 group bg-surface rounded-lg p-4 hover:ring-1 hover:ring-gold/40 transition"
-              >
-                <div className="relative w-24 h-16 shrink-0 rounded overflow-hidden">
-                  <Image src={item.image} alt={item.title} fill className="object-cover" />
-                </div>
-                <div className="flex flex-col gap-1 min-w-0">
-                  <span className="text-xs font-bold text-gold tracking-widest">{item.category}</span>
-                  <span className="text-sm font-semibold text-gray-800 group-hover:text-gold transition-colors line-clamp-2">{item.title}</span>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-      )}
 
       {/* All topics nav */}
       <div className="border-t border-gray-200 pt-10">
