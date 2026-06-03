@@ -15,19 +15,19 @@ export const metadata: Metadata = {
 const TIERS = [
   {
     name: 'Newsletter Sponsor',
-    price: 'From £500/issue',
+    price: 'From $750/issue',
     description: 'Your brand reaches our weekly subscriber base of hospitality professionals and technology buyers. Includes a dedicated sponsor callout, logo placement, and a 60-word brand message.',
     features: ['Logo + brand message in weekly newsletter', 'Dedicated sponsor section above the fold', 'Click-through tracking', 'One-issue or multi-issue packages available'],
   },
   {
     name: 'Content Partnership',
-    price: 'From £1,500',
-    description: 'Branded editorial content written by our team and published on Hospitality121. Long-form articles, sponsored insights, or executive interview spotlights — positioned alongside our editorial coverage.',
+    price: 'From $2,000',
+    description: 'Branded editorial content written by our team and published on Hospitality121. Long-form articles, sponsored insights, or executive interview spotlights, positioned alongside our editorial coverage.',
     features: ['Original branded article or interview', 'Published in relevant section (News, Insights, Blog)', 'Included in newsletter and sitemap', 'Permanent indexed URL on hospitality121.com'],
   },
   {
     name: 'Podcast Sponsorship',
-    price: 'From £800/episode',
+    price: 'From $1,000/episode',
     description: 'Sponsor a Hospitality121 Podcast episode and reach engaged listeners who follow conversations with hotel CIOs, luxury executives, and hospitality innovators.',
     features: ['30-second sponsor mention at episode open', 'Brand included in episode show notes', 'Cross-promotion in newsletter that week', 'Episode page ad placement'],
   },
@@ -42,7 +42,7 @@ const TIERS = [
 const AUDIENCE = [
   { label: 'Job titles', value: 'Hotel GMs, CIOs, Revenue Managers, F&B Directors, Owners' },
   { label: 'Focus', value: 'Hospitality technology, AI, guest experience, luxury operations' },
-  { label: 'Geography', value: 'UK, Europe, Middle East, Asia Pacific, North America' },
+  { label: 'Geography', value: 'United States, Canada, Europe, Saudi Arabia, Qatar, and selected global markets' },
   { label: 'Content', value: '54+ articles, podcasts, news pieces, and event listings' },
 ]
 

@@ -1,10 +1,11 @@
 import type { Metadata } from 'next'
+import { buildStaticMetadata } from '@/lib/seo-metadata'
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildStaticMetadata({
   title: 'Privacy Policy | Hospitality121',
-  alternates: { canonical: 'https://hospitality121.com/privacy' },
   description: 'How Hospitality121 collects, uses, and protects your personal data.',
-}
+  path: '/privacy',
+})
 
 export default function PrivacyPage() {
   return (

@@ -18,7 +18,7 @@ const EDITORIAL = [
 ]
 
 const COMMERCIAL = [
-  { tag: 'Sponsorship', title: 'Sponsor Us', headline: 'In front of decision-makers', description: 'Reach hotel CIOs, revenue managers, GMs, and tech buyers through newsletter placements, branded content, and podcast sponsorships.', criteria: ['Newsletter slots from £500/issue', 'Branded content from £1,500', 'Podcast sponsorship from £800', 'Multi-channel packages available'], email: 'collab@hospitality121.com', cta: 'See packages' },
+  { tag: 'Sponsorship', title: 'Sponsor Us', headline: 'In front of decision-makers', description: 'Reach hotel CIOs, revenue managers, GMs, and tech buyers through newsletter placements, branded content, and podcast sponsorships.', criteria: ['Newsletter slots from $750/issue', 'Branded content from $2,000', 'Podcast sponsorship from $1,000', 'Multi-channel packages available'], email: 'collab@hospitality121.com', cta: 'See packages' },
   { tag: 'Partnership', title: 'Partner With Us', headline: 'Build something together', description: 'Event coverage, research publications, award programmes, and cross-promotional campaigns. We work with associations, event organisers, and media brands.', criteria: ['Event media partnerships', 'Joint research and white papers', 'Award sponsorship and campaigns', 'Cross-promotional newsletter deals'], email: 'collab@hospitality121.com', cta: 'Start a conversation' },
 ]
 
@@ -46,7 +46,7 @@ function Card({ opt }: { opt: Opt }) {
           </li>
         ))}
       </ul>
-      <a href={`mailto:${opt.email}?subject=${encodeURIComponent(opt.title + ' — Hospitality121')}`} className="inline-flex items-center gap-2 bg-gray-900 text-gray-50 text-sm font-bold px-6 py-3 rounded-xl hover:bg-gold transition-colors self-start">
+      <a href={`mailto:${opt.email}?subject=${encodeURIComponent(opt.title + ' - Hospitality121')}`} className="inline-flex items-center gap-2 bg-gray-900 text-gray-50 text-sm font-bold px-6 py-3 rounded-xl hover:bg-gold transition-colors self-start">
         {opt.cta}
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
       </a>
@@ -61,7 +61,7 @@ export default function CollaboratePage() {
         <div className="max-w-3xl mx-auto text-center">
           <span className="text-xs font-bold tracking-widest text-gold uppercase">Collaborate</span>
           <h1 className="font-serif text-5xl md:text-6xl font-bold text-gray-50 mt-4 mb-6 leading-tight">Work with<br />Hospitality121</h1>
-          <p className="text-gray-400 text-lg leading-relaxed max-w-xl mx-auto">Whether you have something to say, something to share, or something to sell — there is a place for you here.</p>
+          <p className="text-gray-400 text-lg leading-relaxed max-w-xl mx-auto">Whether you have something to say, something to share, or something to sell, there is a place for you here.</p>
         </div>
       </div>
       <div className="bg-white py-16 px-4">

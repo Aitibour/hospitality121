@@ -1,11 +1,12 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { buildStaticMetadata } from '@/lib/seo-metadata'
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildStaticMetadata({
   title: 'About',
-  alternates: { canonical: 'https://hospitality121.com/about' },
   description: 'Hospitality121 is a hospitality media platform based in New York, USA, covering leadership, news, events, podcasts, technology, guest experience, operations, recruitment, sustainability, and luxury hospitality.',
-}
+  path: '/about',
+})
 
 export default function AboutPage() {
   return (

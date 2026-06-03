@@ -1,10 +1,11 @@
 import type { Metadata } from 'next'
+import { buildStaticMetadata } from '@/lib/seo-metadata'
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildStaticMetadata({
   title: 'Resources',
   description: 'Hospitality121 resources: guides, reports, and tools for hotel operators and hospitality professionals navigating technology, AI, and industry change.',
-  alternates: { canonical: 'https://hospitality121.com/resources' },
-}
+  path: '/resources',
+})
 
 export default function ResourcesLayout({ children }: { children: React.ReactNode }) {
   return <>{children}</>
