@@ -1,36 +1,34 @@
-/**
- * Replace em dashes, en dashes, and double hyphens in MDX body text
- * with natural English phrasing. Only modifies content below the
- * closing frontmatter delimiter (second ---).
- *
- * Usage: node scripts/humanize-content.mjs
- */
-
-import fs from 'fs'
-import path from 'path'
+import fs from 'node:fs'
+import path from 'node:path'
 
 const ROOT = path.join(process.cwd(), 'content')
+const TARGET_DIRS = ['articles', 'blog', 'events', 'news', 'podcasts']
 
 function humanize(body) {
   return body
-    // Em dash with spaces — most common case: replace with comma or colon
-    .replace(/ — /g, ', ')
-    // En dash with spaces
-    .replace(/ – /g, ' to ')
-    // En dash used as range (e.g. 2020–2026)
-    .replace(/(\d)–(\d)/g, '$1 to $2')
-    // Double hyphen
+    .replace(/(\d)\u2013(\d)/g, '$1 to $2')
+    .replace(/ \u2014 /g, ', ')
+    .replace(/ \u2013 /g, ' to ')
+    .replace(/\u2014/g, ', ')
+    .replace(/\u2013/g, ' to ')
     .replace(/ -- /g, ', ')
-    // Em dash directly adjacent to words (no spaces)
-    .replace(/—/g, ', ')
-    // En dash directly adjacent to words
-    .replace(/–/g, ' to ')
-    // Stock AI-style conclusions and transitions
+    .replace(/\u00E2\u20AC\u201D/g, ', ')
+    .replace(/\u00E2\u20AC\u201C/g, ' to ')
+    .replace(/\u00E2\u20AC\u2122/g, "'")
+    .replace(/\u00E2\u20AC\u0153|\u00E2\u20AC\uFFFD/g, '"')
+    .replace(/\uFFFD/g, ', ')
     .replace(/\bIn conclusion,\s*/gi, '')
     .replace(/\bin conclusion\b/gi, 'overall')
     .replace(/\bAs the hospitality industry continues to evolve,?\s*/gi, 'As hotel operators adapt to new market conditions, ')
     .replace(/\bAs the travel industry continues to evolve,?\s*/gi, 'As travel companies adapt to new market conditions, ')
     .replace(/\bcannot be overstated\b/gi, 'is significant')
+    .replace(/\bEn conclusion,\s*/gi, '')
+    .replace(/\ben conclusion\b/gi, 'dans l’ensemble')
+    .replace(/À mesure que l'industrie continue d'évoluer,?\s*/gi, "À mesure que les opérateurs s'adaptent aux nouvelles conditions du marché, ")
+    .replace(/À mesure que l'industrie hôtelière continue d'évoluer(?: et de devenir de plus en plus concurrentielle)?,?\s*/gi, "À mesure que les hôteliers s'adaptent aux nouvelles conditions du marché, ")
+    .replace(/Alors que le paysage de l’hôtellerie de luxe continue d'évoluer,?\s*/gi, "À mesure que l'hôtellerie de luxe change, ")
+    .replace(/\bne peut être surestimée\b/gi, 'est significative')
+    .replace(/\brévolutionner\b/gi, 'transformer')
     .replace(/\brevolutionary\b/gi, 'material')
     .replace(/\bleveraging\b/gi, 'using')
     .replace(/\bleveraged\b/gi, 'used')
@@ -41,6 +39,8 @@ function humanize(body) {
     .replace(/\. the importance/g, '. The importance')
     .replace(/\. the luxury/g, '. The luxury')
     .replace(/\. the launch/g, '. The launch')
+    .replace(/\. l'industrie/g, ". L'industrie")
+    .replace(/\. le système/g, '. Le système')
     .split(/\r?\n/)
     .map(line => line.trimEnd())
     .join('\n')
@@ -50,46 +50,38 @@ function normalizeFile(raw) {
   return raw.replace(/^\uFEFF/, '')
 }
 
-async function processFile(filePath) {
+function processFile(filePath) {
   const original = fs.readFileSync(filePath, 'utf8')
   const raw = normalizeFile(original)
-
-  // Split on frontmatter: find second --- delimiter
   const fmEnd = raw.indexOf('---', 3)
   if (fmEnd === -1) return false
 
   const frontmatter = raw.slice(0, fmEnd + 3)
   const body = raw.slice(fmEnd + 3)
-
   const newBody = humanize(body)
+
   if (newBody === body && raw === original) return false
 
   fs.writeFileSync(filePath, frontmatter + newBody, 'utf8')
   return true
 }
 
-async function main() {
-  // Collect all MDX files across content subdirectories
-  const files = []
-  for (const dir of ['articles', 'blog', 'events', 'news', 'podcasts']) {
-    const dirPath = path.join(ROOT, dir)
-    if (!fs.existsSync(dirPath)) continue
-    for (const f of fs.readdirSync(dirPath)) {
-      if (f.endsWith('.mdx')) files.push(path.join(dirPath, f))
-    }
+const files = []
+for (const dir of TARGET_DIRS) {
+  const dirPath = path.join(ROOT, dir)
+  if (!fs.existsSync(dirPath)) continue
+  for (const file of fs.readdirSync(dirPath)) {
+    if (file.endsWith('.mdx')) files.push(path.join(dirPath, file))
   }
-
-  console.log(`Processing ${files.length} files...\n`)
-  let changed = 0
-
-  for (const file of files) {
-    const wasChanged = await processFile(file)
-    const label = path.relative(ROOT, file)
-    console.log(`${wasChanged ? '✓' : '–'} ${label}`)
-    if (wasChanged) changed++
-  }
-
-  console.log(`\nDone. ${changed}/${files.length} files updated.`)
 }
 
-main()
+console.log(`Processing ${files.length} files...`)
+let changed = 0
+for (const file of files) {
+  const wasChanged = processFile(file)
+  const label = path.relative(ROOT, file)
+  console.log(`${wasChanged ? 'updated' : 'clean'} ${label}`)
+  if (wasChanged) changed++
+}
+
+console.log(`Done. ${changed}/${files.length} files updated.`)

@@ -3,7 +3,7 @@ import path from 'node:path'
 import { findForbiddenStyleIssues } from './lib/content-quality.mjs'
 
 const CONTENT_ROOT = path.join(process.cwd(), 'content')
-const TARGET_DIRS = ['articles', 'blog', 'news', 'podcasts']
+const TARGET_DIRS = ['articles', 'blog', 'events', 'news', 'podcasts']
 const FAIL_ON_ISSUES = process.argv.includes('--fail-on-issues')
 
 function listMdxFiles() {
@@ -29,7 +29,7 @@ function stripFrontmatter(raw) {
 
 function auditFile(filePath) {
   const raw = fs.readFileSync(filePath, 'utf8')
-  const body = stripFrontmatter(raw).replace(/<!-- FR -->[\s\S]*$/u, '')
+  const body = stripFrontmatter(raw).replace(/<!--[\s\S]*?-->/g, '')
   const issues = findForbiddenStyleIssues(body)
 
   return {

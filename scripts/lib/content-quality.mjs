@@ -75,12 +75,19 @@ const BANNED_PHRASES = [
   'revolutionary',
   'cutting edge',
   'in conclusion',
+  'en conclusion',
   'as the hospitality industry continues to evolve',
   'as the travel industry continues to evolve',
+  "à mesure que l'industrie continue d'évoluer",
+  "à mesure que l'industrie hôtelière continue d'évoluer",
+  'alors que le paysage de l’hôtellerie',
   'cannot be overstated',
+  'ne peut être surestimée',
+  'révolutionner',
 ]
 
 const FORBIDDEN_PUNCTUATION = /[\u2013\u2014]|--/
+const FORBIDDEN_ENCODING_ARTIFACTS = /(?:\u00E2\u20AC[\u201D\u201C\u0153]|\u00E2\u20AC\u201C|\u00E2\u20AC\u201D|\u00E2\u20AC\u2122|\u00E2\u20AC\u0153|\u00E2\u20AC\uFFFD|\uFFFD)/
 
 const BLOCKED_REGION_TERMS = [
   'india',
@@ -214,6 +221,9 @@ export function findForbiddenStyleIssues(body, bodyLower = body.toLowerCase()) {
 
   if (FORBIDDEN_PUNCTUATION.test(body)) {
     issues.push('contains em dash, en dash, or double hyphen')
+  }
+  if (FORBIDDEN_ENCODING_ARTIFACTS.test(body)) {
+    issues.push('contains encoding artifact')
   }
   for (const phrase of BANNED_PHRASES) {
     if (bodyLower.includes(phrase)) issues.push(`contains banned phrase: ${phrase}`)
