@@ -1,13 +1,24 @@
 import { execFileSync } from 'node:child_process'
 
+function run(cmd, args) {
+  execFileSync(cmd, args, { stdio: 'inherit' })
+}
+
+export function verifyGeneratedContent() {
+  run('npm', ['run', 'content:audit:strict'])
+  run('npm', ['test'])
+  run('npm', ['run', 'build'])
+}
+
 /**
  * Commits the new MDX, image, and tracking file, then pushes to origin main.
- * Uses execFileSync with argument arrays — no shell interpolation.
+ * Uses execFileSync with argument arrays, no shell interpolation.
  * @param {{ slug: string, imageFile: string, contentType?: 'blog' | 'news' }} params
  */
 export function commitAndPush({ slug, imageFile, contentType = 'blog' }) {
-  const run = (cmd, args) => execFileSync(cmd, args, { stdio: 'inherit' })
   const scope = contentType === 'news' ? 'news' : 'blog'
+
+  verifyGeneratedContent()
 
   run('git', ['config', '--local', 'user.email', 'action@github.com'])
   run('git', ['config', '--local', 'user.name', 'H1H Auto Publisher'])
@@ -17,9 +28,10 @@ export function commitAndPush({ slug, imageFile, contentType = 'blog' }) {
     'scripts/seen-articles.json',
   ])
   run('git', ['commit', '-m', `feat(${scope}): auto-post ${slug}`])
+  run('git', ['pull', '--rebase', 'origin', 'main'])
   run('git', ['push', 'origin', 'HEAD:main'])
 
-  console.log(`✓ Pushed: ${slug}`)
+  console.log(`Pushed: ${slug}`)
 }
 
 /**
@@ -31,7 +43,7 @@ export async function pingIndexNow(slug) {
   const siteUrl = process.env.SITE_URL ?? 'https://hospitality121.com'
   const key = process.env.INDEXNOW_KEY
   if (!key) {
-    console.warn('⚠ INDEXNOW_KEY not set, skipping IndexNow ping')
+    console.warn('INDEXNOW_KEY not set, skipping IndexNow ping')
     return
   }
 
@@ -50,8 +62,8 @@ export async function pingIndexNow(slug) {
       body: JSON.stringify(payload),
       signal: AbortSignal.timeout(10000),
     })
-    console.log(`✓ IndexNow ping: ${res.status}`)
+    console.log(`IndexNow ping: ${res.status}`)
   } catch (err) {
-    console.warn(`⚠ IndexNow ping failed: ${err.message}`)
+    console.warn(`IndexNow ping failed: ${err.message}`)
   }
 }
