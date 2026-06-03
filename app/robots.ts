@@ -2,7 +2,7 @@ import type { MetadataRoute } from 'next'
 
 export const dynamic = 'force-static'
 
-const BASE = process.env.NEXT_PUBLIC_BASE_URL || 'https://hospitality121.com'
+const BASE = (process.env.NEXT_PUBLIC_BASE_URL || 'https://hospitality121.com').replace(/\/$/, '')
 
 export default function robots(): MetadataRoute.Robots {
   return {
@@ -19,5 +19,6 @@ export default function robots(): MetadataRoute.Robots {
       { userAgent: 'anthropic-ai', allow: '/' },
     ],
     sitemap: `${BASE}/sitemap.xml`,
+    host: BASE,
   }
 }

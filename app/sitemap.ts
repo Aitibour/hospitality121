@@ -7,7 +7,16 @@ import { DIAMOND_PILLARS, GEO_AUTHORITY_PAGES } from '@/lib/diamond-seo'
 
 export const dynamic = 'force-static'
 
-const BASE = process.env.NEXT_PUBLIC_BASE_URL || 'https://hospitality121.com'
+const BASE = (process.env.NEXT_PUBLIC_BASE_URL || 'https://hospitality121.com').replace(/\/$/, '')
+
+function dedupeRoutes(routes: MetadataRoute.Sitemap): MetadataRoute.Sitemap {
+  const seen = new Set<string>()
+  return routes.filter(route => {
+    if (seen.has(route.url)) return false
+    seen.add(route.url)
+    return true
+  })
+}
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const all = getAllContent()
@@ -94,5 +103,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     lastModified: now,
   }))
 
-  return [...staticRoutes, ...categoryRoutes, ...contentRoutes, ...authorRoutes, ...techTopicRoutes, ...sustainabilityTopicRoutes, ...diamondPillarRoutes, ...geoRoutes]
+  return dedupeRoutes([
+    ...staticRoutes,
+    ...categoryRoutes,
+    ...contentRoutes,
+    ...authorRoutes,
+    ...techTopicRoutes,
+    ...sustainabilityTopicRoutes,
+    ...diamondPillarRoutes,
+    ...geoRoutes,
+  ])
 }
