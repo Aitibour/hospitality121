@@ -7,10 +7,13 @@ import Fuse from 'fuse.js'
 
 type SearchItem = {
   slug: string
+  url: string
   title: string
   category: string
   type: string
   date: string
+  summary: string
+  timeLabel: string
   image: string
   author: string
 }
@@ -19,16 +22,47 @@ export default function SearchPage() {
   const [query, setQuery] = useState('')
   const [items, setItems] = useState<SearchItem[]>([])
   const [loading, setLoading] = useState(true)
+  const [loadError, setLoadError] = useState(false)
 
   useEffect(() => {
-    fetch('/search-index.json')
-      .then(r => r.json())
-      .then((data: SearchItem[]) => { setItems(data); setLoading(false) })
-      .catch(() => setLoading(false))
+    const controller = new AbortController()
+    const syncQueryFromUrl = () => {
+      setQuery(new URLSearchParams(window.location.search).get('q')?.slice(0, 100) || '')
+    }
+
+    syncQueryFromUrl()
+    window.addEventListener('popstate', syncQueryFromUrl)
+
+    fetch('/search-index.json', { signal: controller.signal })
+      .then(response => {
+        if (!response.ok) throw new Error(`Search index request failed: ${response.status}`)
+        return response.json()
+      })
+      .then((data: SearchItem[]) => {
+        setItems(data)
+        setLoadError(false)
+        setLoading(false)
+      })
+      .catch(error => {
+        if (error instanceof DOMException && error.name === 'AbortError') return
+        setLoadError(true)
+        setLoading(false)
+      })
+
+    return () => {
+      controller.abort()
+      window.removeEventListener('popstate', syncQueryFromUrl)
+    }
   }, [])
 
   const fuse = useMemo(() => new Fuse(items, {
-    keys: ['title', 'category', 'author', 'type'],
+    keys: [
+      { name: 'title', weight: 0.45 },
+      { name: 'summary', weight: 0.25 },
+      { name: 'category', weight: 0.15 },
+      { name: 'author', weight: 0.1 },
+      { name: 'type', weight: 0.05 },
+    ],
     threshold: 0.35,
     includeScore: true,
   }), [items])
@@ -37,6 +71,15 @@ export default function SearchPage() {
     if (!query.trim()) return []
     return fuse.search(query).map(r => r.item)
   }, [query, fuse])
+
+  function updateQuery(value: string) {
+    const nextQuery = value.slice(0, 100)
+    const url = new URL(window.location.href)
+    if (nextQuery.trim()) url.searchParams.set('q', nextQuery)
+    else url.searchParams.delete('q')
+    window.history.replaceState({}, '', `${url.pathname}${url.search}${url.hash}`)
+    setQuery(nextQuery)
+  }
 
   const typeLabel: Record<string, string> = {
     article: 'ARTICLE',
@@ -65,7 +108,7 @@ export default function SearchPage() {
           autoFocus
           placeholder="Search articles, podcasts, events…"
           value={query}
-          onChange={e => setQuery(e.target.value)}
+          onChange={e => updateQuery(e.target.value)}
           className="w-full pl-12 pr-4 py-3.5 bg-surface border border-muted/30 rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2 transition-colors"
         />
       </div>
@@ -74,14 +117,21 @@ export default function SearchPage() {
         <p className="text-muted text-center py-12" role="status">Loading…</p>
       )}
 
-      {!loading && query.trim() && results.length === 0 && (
+      {!loading && loadError && (
+        <div className="text-center py-16" role="alert">
+          <p className="text-gray-900 font-semibold mb-2">Search is temporarily unavailable.</p>
+          <p className="text-muted text-sm">Browse the latest coverage from the main navigation while we reconnect the index.</p>
+        </div>
+      )}
+
+      {!loading && !loadError && query.trim() && results.length === 0 && (
         <div className="text-center py-16" role="status">
           <p className="text-muted text-lg mb-2">No results for <strong>&ldquo;{query}&rdquo;</strong></p>
           <p className="text-muted text-sm">Try different keywords or browse by category.</p>
         </div>
       )}
 
-      {!loading && !query.trim() && (
+      {!loading && !loadError && !query.trim() && (
         <div className="text-center py-16 text-muted">
           <svg className="w-12 h-12 mx-auto mb-4 opacity-30" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z" />
@@ -90,13 +140,13 @@ export default function SearchPage() {
         </div>
       )}
 
-      {results.length > 0 && (
+      {!loadError && results.length > 0 && (
         <div className="flex flex-col gap-4">
           <p className="text-sm text-muted mb-2" role="status">{results.length} result{results.length !== 1 ? 's' : ''} for &ldquo;{query}&rdquo;</p>
           {results.map(item => (
             <Link
               key={item.slug}
-              href={`/content/${item.slug}`}
+              href={item.url}
               className="flex gap-4 group bg-surface rounded-lg p-4 hover:ring-1 hover:ring-gold/40 transition"
             >
               <div className="relative w-24 h-16 shrink-0 rounded overflow-hidden">
@@ -111,8 +161,9 @@ export default function SearchPage() {
                   {item.title}
                 </span>
                 {item.author && (
-                  <span className="text-xs text-muted">{item.author}</span>
+                  <span className="text-xs text-muted">{item.author} · {item.timeLabel}</span>
                 )}
+                {item.summary && <span className="text-xs text-muted line-clamp-2">{item.summary}</span>}
               </div>
             </Link>
           ))}

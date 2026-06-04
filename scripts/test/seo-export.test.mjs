@@ -43,9 +43,21 @@ test('search index exports canonical metadata for every content item', () => {
 
   assert.match(source, /const BASE = /)
   assert.match(source, /url: `\$\{BASE\}\/content\/\$\{item\.slug\}`/)
-  assert.match(source, /summary: getSummary\(item\)/)
+  assert.match(source, /summary: getContentSummary\(item, 240\)/)
   assert.match(source, /timeLabel: getTimeLabel\(item\)/)
   assert.match(source, /featured: item\.featured/)
   assert.match(source, /item\.type === 'podcast'/)
   assert.match(source, /item\.type === 'event'/)
+})
+
+test('search honors shareable query URLs and searches content summaries', () => {
+  const source = fs.readFileSync('app/search/page.tsx', 'utf8')
+  const headers = fs.readFileSync('netlify.toml', 'utf8')
+
+  assert.match(source, /new URLSearchParams\(window\.location\.search\)\.get\('q'\)/)
+  assert.match(source, /url\.searchParams\.set\('q', nextQuery\)/)
+  assert.match(source, /\{ name: 'summary', weight: 0\.25 \}/)
+  assert.match(source, /href=\{item\.url\}/)
+  assert.match(source, /role="alert"/)
+  assert.match(headers, /for = "\/search-index\.json"/)
 })

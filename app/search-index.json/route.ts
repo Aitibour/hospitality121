@@ -1,4 +1,5 @@
 import { getAllContent } from '@/lib/content'
+import { getContentSummary } from '@/lib/ai-discovery'
 import type { ContentItem } from '@/types/content'
 
 export const dynamic = 'force-static'
@@ -9,13 +10,6 @@ function getAuthor(item: ContentItem): string {
   if (item.type === 'article' || item.type === 'news' || item.type === 'blog') return item.author
   if (item.type === 'podcast') return item.guest
   if (item.type === 'event') return item.organizer
-  return ''
-}
-
-function getSummary(item: ContentItem): string {
-  if (item.type === 'blog') return item.excerpt || ''
-  if (item.type === 'podcast') return item.showNotes || item.guestBio || ''
-  if (item.type === 'event') return item.location
   return ''
 }
 
@@ -33,7 +27,7 @@ export function GET() {
     category: item.category,
     type: item.type,
     date: item.date,
-    summary: getSummary(item),
+    summary: getContentSummary(item, 240),
     timeLabel: getTimeLabel(item),
     image: item.image,
     author: getAuthor(item),

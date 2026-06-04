@@ -66,6 +66,12 @@
     Content-Type = "application/json; charset=utf-8"
 
 [[headers]]
+  for = "/search-index.json"
+  [headers.values]
+    Cache-Control = "public, max-age=3600"
+    Content-Type = "application/json; charset=utf-8"
+
+[[headers]]
   for = "/feed.xml"
   [headers.values]
     Cache-Control = "public, max-age=3600"
