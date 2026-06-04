@@ -12,7 +12,7 @@ export default function NewsletterPopup() {
   const [visible, setVisible] = useState(false)
   const [email, setEmail] = useState('')
   const [name, setName] = useState('')
-  const [status, setStatus] = useState<'idle' | 'submitting' | 'success'>('idle')
+  const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle')
   const closeButtonRef = useRef<HTMLButtonElement>(null)
 
   const dismiss = useCallback(() => {
@@ -62,17 +62,19 @@ export default function NewsletterPopup() {
     setStatus('submitting')
     try {
       const pubId = process.env.NEXT_PUBLIC_BEEHIIV_PUBLICATION_ID
-      if (pubId) {
-        const params = new URLSearchParams({ email: cleanEmail, publication_id: pubId, utm_source: 'website_popup' })
-        if (cleanName) params.set('custom_fields[first_name]', cleanName)
-        await fetch('https://embeds.beehiiv.com/v2/subscribe', {
-          method: 'POST',
-          mode: 'no-cors',
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          body: params.toString(),
-        })
-      }
-    } catch { /* silent fail, don't block success state */ }
+      if (!pubId) throw new Error('Newsletter provider is not configured')
+      const params = new URLSearchParams({ email: cleanEmail, publication_id: pubId, utm_source: 'website_popup' })
+      if (cleanName) params.set('custom_fields[first_name]', cleanName)
+      await fetch('https://embeds.beehiiv.com/v2/subscribe', {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: params.toString(),
+      })
+    } catch {
+      setStatus('error')
+      return
+    }
     setStatus('success')
     setTimeout(dismiss, 3000)
   }
@@ -166,6 +168,11 @@ export default function NewsletterPopup() {
                 >
                   {status === 'submitting' ? 'Subscribing...' : 'GET THE BRIEFING FREE'}
                 </button>
+                {status === 'error' && (
+                  <p className="text-sm text-red-600" role="alert">
+                    We could not complete your subscription. Please try again.
+                  </p>
+                )}
               </form>
 
               <p className="text-gray-400 text-xs text-center mt-4 leading-relaxed">

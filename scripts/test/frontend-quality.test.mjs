@@ -37,3 +37,28 @@ test('newsletter modal supports keyboard dismissal and focus restoration', () =>
   assert.match(source, /aria-describedby="newsletter-description"/)
   assert.match(source, /document\.body\.style\.overflow = 'hidden'/)
 })
+
+test('global navigation supports keyboard users', () => {
+  const navbar = fs.readFileSync('components/Navbar.tsx', 'utf8')
+  const layout = fs.readFileSync('app/layout.tsx', 'utf8')
+
+  assert.match(navbar, /event\.key !== 'Escape'/)
+  assert.match(navbar, /onFocus=\{\(\) => item\.dropdown && handleMouseEnter\(item\.key\)\}/)
+  assert.match(navbar, /aria-expanded=\{item\.dropdown \? activeDropdown === item\.key : undefined\}/)
+  assert.match(navbar, /aria-controls="mobile-navigation"/)
+  assert.match(navbar, /aria-pressed=\{locale === 'en'\}/)
+  assert.match(layout, /href="#main-content"/)
+  assert.match(layout, /<main id="main-content" tabIndex=\{-1\}>/)
+})
+
+test('newsletter forms report provider failures honestly', () => {
+  const subscribe = fs.readFileSync('app/subscribe/page.tsx', 'utf8')
+  const popup = fs.readFileSync('components/NewsletterPopup.tsx', 'utf8')
+  const resources = fs.readFileSync('app/resources/page.tsx', 'utf8')
+
+  assert.match(subscribe, /if \(!pubId\) throw new Error/)
+  assert.match(subscribe, /catch \{\s+setStatus\('error'\)/)
+  assert.match(popup, /if \(!pubId\) throw new Error/)
+  assert.match(popup, /role="alert"/)
+  assert.match(resources, /aria-pressed=\{selected === r\.id\}/)
+})

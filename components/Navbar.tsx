@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { useState, useRef } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { useLanguage } from '@/context/LanguageContext'
 
 type DropdownItem = { label: string; href: string; description?: string }
@@ -95,6 +95,17 @@ export default function Navbar() {
   const { locale, setLocale } = useLanguage()
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
 
+  useEffect(() => {
+    function handleEscape(event: KeyboardEvent) {
+      if (event.key !== 'Escape') return
+      setActiveDropdown(null)
+      setMobileExpanded(null)
+      setOpen(false)
+    }
+    document.addEventListener('keydown', handleEscape)
+    return () => document.removeEventListener('keydown', handleEscape)
+  }, [])
+
   function handleMouseEnter(key: string) {
     if (closeTimer.current) clearTimeout(closeTimer.current)
     setActiveDropdown(key)
@@ -124,9 +135,16 @@ export default function Navbar() {
               className="relative"
               onMouseEnter={() => handleMouseEnter(item.key)}
               onMouseLeave={handleMouseLeave}
+              onFocus={() => item.dropdown && handleMouseEnter(item.key)}
+              onBlur={event => {
+                if (!event.currentTarget.contains(event.relatedTarget)) handleMouseLeave()
+              }}
             >
               <Link
                 href={item.href}
+                aria-haspopup={item.dropdown ? 'true' : undefined}
+                aria-expanded={item.dropdown ? activeDropdown === item.key : undefined}
+                aria-controls={item.dropdown ? `desktop-${item.key}-menu` : undefined}
                 className={`flex items-center gap-1 px-2.5 py-2 text-sm font-semibold rounded transition-colors ${
                   activeDropdown === item.key ? 'text-gold' : 'text-gray-700 hover:text-gold'
                 }`}
@@ -141,6 +159,7 @@ export default function Navbar() {
 
               {item.dropdown && (
                 <div
+                  id={`desktop-${item.key}-menu`}
                   className={`absolute top-full left-1/2 -translate-x-1/2 mt-1 w-64 bg-white border border-gray-100 rounded-xl shadow-xl py-2 z-50 transition duration-150 ${
                     activeDropdown === item.key
                       ? 'visible opacity-100 translate-y-0 pointer-events-auto'
@@ -198,11 +217,13 @@ export default function Navbar() {
           <div className="hidden sm:flex items-center text-xs font-bold tracking-wider border border-gray-200 rounded overflow-hidden">
             <button
               onClick={() => setLocale('en')}
+              aria-pressed={locale === 'en'}
               className={`px-2 py-1 transition-colors ${locale === 'en' ? 'bg-gold text-gray-900' : 'text-gray-500 hover:text-gray-800'}`}
               aria-label="Switch to English"
             >EN</button>
             <button
               onClick={() => setLocale('fr')}
+              aria-pressed={locale === 'fr'}
               className={`px-2 py-1 transition-colors ${locale === 'fr' ? 'bg-gold text-gray-900' : 'text-gray-500 hover:text-gray-800'}`}
               aria-label="Passer en français"
             >FR</button>
@@ -219,6 +240,8 @@ export default function Navbar() {
           <button
             className="lg:hidden p-1.5 text-gray-600 hover:text-gold transition-colors"
             aria-label={open ? 'Close menu' : 'Open menu'}
+            aria-expanded={open}
+            aria-controls="mobile-navigation"
             onClick={() => setOpen(o => !o)}
           >
             {open ? (
@@ -236,7 +259,7 @@ export default function Navbar() {
 
       {/* Mobile menu */}
       {open && (
-        <div className="lg:hidden bg-white border-t border-gray-100 px-4 py-3 flex flex-col gap-1 max-h-[80vh] overflow-y-auto">
+        <div id="mobile-navigation" className="lg:hidden bg-white border-t border-gray-100 px-4 py-3 flex flex-col gap-1 max-h-[80vh] overflow-y-auto">
           {NAV.map(item => (
             <div key={item.key}>
               <div className="flex items-center justify-between">
@@ -252,6 +275,8 @@ export default function Navbar() {
                     onClick={() => setMobileExpanded(mobileExpanded === item.key ? null : item.key)}
                     className="p-2 text-gray-400 hover:text-gold transition-colors"
                     aria-label={`Toggle ${item.label} submenu`}
+                    aria-expanded={mobileExpanded === item.key}
+                    aria-controls={`mobile-${item.key}-menu`}
                   >
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className={`transition-transform ${mobileExpanded === item.key ? 'rotate-180' : ''}`}>
                       <polyline points="6 9 12 15 18 9" />
@@ -260,7 +285,7 @@ export default function Navbar() {
                 )}
               </div>
               {item.dropdown && mobileExpanded === item.key && (
-                <div className="pl-4 pb-2 flex flex-col gap-0.5">
+                <div id={`mobile-${item.key}-menu`} className="pl-4 pb-2 flex flex-col gap-0.5">
                   {item.dropdown.map(sub => (
                     <Link
                       key={sub.href + sub.label}
@@ -277,8 +302,8 @@ export default function Navbar() {
           ))}
           <div className="pt-3 border-t border-gray-100 flex items-center justify-between mt-1">
             <div className="flex items-center text-xs font-bold tracking-wider border border-gray-200 rounded overflow-hidden">
-              <button onClick={() => setLocale('en')} className={`px-2 py-1 ${locale === 'en' ? 'bg-gold text-gray-900' : 'text-gray-500'}`}>EN</button>
-              <button onClick={() => setLocale('fr')} className={`px-2 py-1 ${locale === 'fr' ? 'bg-gold text-gray-900' : 'text-gray-500'}`}>FR</button>
+              <button onClick={() => setLocale('en')} aria-pressed={locale === 'en'} aria-label="Switch to English" className={`px-2 py-1 ${locale === 'en' ? 'bg-gold text-gray-900' : 'text-gray-500'}`}>EN</button>
+              <button onClick={() => setLocale('fr')} aria-pressed={locale === 'fr'} aria-label="Passer en français" className={`px-2 py-1 ${locale === 'fr' ? 'bg-gold text-gray-900' : 'text-gray-500'}`}>FR</button>
             </div>
             <Link href="/subscribe" onClick={() => setOpen(false)} className="bg-gold text-gray-900 text-sm font-bold px-5 py-2 rounded-lg hover:opacity-90">
               Subscribe

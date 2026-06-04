@@ -30,20 +30,19 @@ export default function SubscribePage() {
     setStatus('submitting')
     try {
       const pubId = process.env.NEXT_PUBLIC_BEEHIIV_PUBLICATION_ID
-      if (pubId) {
-        const params = new URLSearchParams({ email, publication_id: pubId, utm_source: 'subscribe_page' })
-        if (firstName) params.set('custom_fields[first_name]', firstName)
-        if (company) params.set('custom_fields[company]', company)
-        await fetch('https://embeds.beehiiv.com/v2/subscribe', {
-          method: 'POST',
-          mode: 'no-cors',
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          body: params.toString(),
-        })
-      }
+      if (!pubId) throw new Error('Newsletter provider is not configured')
+      const params = new URLSearchParams({ email, publication_id: pubId, utm_source: 'subscribe_page' })
+      if (firstName) params.set('custom_fields[first_name]', firstName)
+      if (company) params.set('custom_fields[company]', company)
+      await fetch('https://embeds.beehiiv.com/v2/subscribe', {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: params.toString(),
+      })
       setStatus('success')
     } catch {
-      setStatus('success')
+      setStatus('error')
     }
   }
 

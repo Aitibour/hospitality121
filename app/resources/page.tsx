@@ -106,7 +106,9 @@ export default function ResourcesPage() {
           {REPORTS.map(r => (
             <button
               key={r.id}
+              type="button"
               onClick={() => setSelected(r.id)}
+              aria-pressed={selected === r.id}
               className={`text-left bg-surface rounded-xl p-5 border transition-all ${
                 selected === r.id ? 'border-gold ring-1 ring-gold/30' : 'border-transparent hover:border-muted/30'
               }`}

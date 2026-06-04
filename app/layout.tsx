@@ -126,9 +126,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         )}
       </head>
       <body className="bg-navy font-sans">
+        <a
+          href="#main-content"
+          className="fixed left-4 top-4 z-[100] -translate-y-24 bg-white px-4 py-2 text-sm font-bold text-gray-900 shadow-lg transition-transform focus:translate-y-0"
+        >
+          Skip to main content
+        </a>
         <LanguageProvider>
           <Navbar />
-          <main>{children}</main>
+          <main id="main-content" tabIndex={-1}>{children}</main>
           <Footer />
           <DeferredClientWidgets />
         </LanguageProvider>
