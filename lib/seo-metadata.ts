@@ -7,15 +7,17 @@ type StaticMetadataInput = {
   title: string
   description: string
   path: `/${string}`
+  robots?: Metadata['robots']
 }
 
-export function buildStaticMetadata({ title, description, path }: StaticMetadataInput): Metadata {
+export function buildStaticMetadata({ title, description, path, robots }: StaticMetadataInput): Metadata {
   const url = path === '/' ? BASE_URL : `${BASE_URL}${path}`
   const socialTitle = title.includes('Hospitality121') ? title : `${title} | Hospitality121`
 
   return {
     title,
     description,
+    robots,
     alternates: { canonical: url },
     openGraph: {
       title: socialTitle,

@@ -41,17 +41,15 @@ test('content pages expose answer-engine citation schema', () => {
   assert.match(source, /isAccessibleForFree: true/)
 })
 
-test('robots and sitemap advertise AI discovery access', () => {
+test('robots and document head advertise AI discovery access', () => {
   const robots = fs.readFileSync('app/robots.ts', 'utf8')
-  const sitemap = fs.readFileSync('app/sitemap.ts', 'utf8')
   const layout = fs.readFileSync('app/layout.tsx', 'utf8')
 
   for (const crawler of ['OAI-SearchBot', 'Claude-SearchBot', 'Perplexity-User', 'Applebot-Extended']) {
     assert.match(robots, new RegExp(crawler))
   }
-  assert.match(sitemap, /ai-index\.json/)
-  assert.match(sitemap, /llms-full\.txt/)
-  assert.match(sitemap, /llms\.txt/)
+  assert.match(robots, /allow: '\/'/)
   assert.match(layout, /type="application\/json" href="\/ai-index\.json"/)
+  assert.match(layout, /type="text\/plain" href="\/llms\.txt"/)
   assert.match(layout, /type="text\/plain" href="\/llms-full\.txt"/)
 })

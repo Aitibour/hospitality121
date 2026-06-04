@@ -12,6 +12,20 @@ test('sitemap export normalizes and deduplicates crawl URLs', () => {
   assert.match(source, /GEO_AUTHORITY_PAGES\.map/)
   assert.match(source, /TECH_TOPICS\.map/)
   assert.match(source, /SUSTAINABILITY_TOPICS\.map/)
+  assert.doesNotMatch(source, /`\$\{BASE\}\/search`/)
+  assert.doesNotMatch(source, /`\$\{BASE\}\/ai-index\.json`/)
+  assert.doesNotMatch(source, /`\$\{BASE\}\/llms/)
+  assert.doesNotMatch(source, /lastModified: now/)
+})
+
+test('internal search is accessible and excluded from search indexing', () => {
+  const layout = fs.readFileSync('app/search/layout.tsx', 'utf8')
+  const page = fs.readFileSync('app/search/page.tsx', 'utf8')
+
+  assert.match(layout, /robots: \{ index: false, follow: true \}/)
+  assert.match(page, /<label htmlFor="site-search"/)
+  assert.match(page, /id="site-search"/)
+  assert.match(page, /role="status"/)
 })
 
 test('robots export declares sitemap and canonical host', () => {
