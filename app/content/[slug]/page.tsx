@@ -33,6 +33,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     .slice(0, 155)
 
   const base = process.env.NEXT_PUBLIC_BASE_URL || 'https://hospitality121.com'
+  const authorName = 'author' in item ? item.author : item.type === 'podcast' ? item.guest : item.organizer
 
   const shortTitle = item.title.length > 60 ? item.title.slice(0, 57) + '…' : item.title
   return {
@@ -44,6 +45,10 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       description,
       images: [{ url: `${base}${item.image}` }],
       type: 'article',
+      url: `${base}/content/${item.slug}`,
+      publishedTime: item.date,
+      authors: [authorName],
+      section: item.category,
     },
     twitter: {
       card: 'summary_large_image',
@@ -146,9 +151,12 @@ function buildJsonLd(item: ContentItem, body: string) {
 
   const author = 'author' in item ? item.author : ''
   const wordCount = body.split(/\s+/).filter(Boolean).length
+  const authorRecord = AUTHORS_BY_NAME[author]
+  const pillar = getMatchingPillar(`${item.title} ${item.category} ${description}`)
+  const schemaType = item.type === 'news' ? 'NewsArticle' : item.type === 'blog' ? 'BlogPosting' : 'Article'
   return safeJsonLd({
     '@context': 'https://schema.org',
-    '@type': 'Article',
+    '@type': schemaType,
     headline: item.title,
     datePublished: item.date,
     dateModified: item.date,
@@ -156,9 +164,24 @@ function buildJsonLd(item: ContentItem, body: string) {
     url,
     wordCount,
     image: { '@type': 'ImageObject', url: `${base}${item.image}` },
-    author: { '@type': 'Person', name: author },
+    author: {
+      '@type': 'Person',
+      name: author,
+      url: `${base}/author/${nameToSlug(author)}`,
+      ...(authorRecord?.linkedin ? { sameAs: [authorRecord.linkedin] } : {}),
+    },
     publisher: { '@type': 'Organization', name: 'Hospitality121', url: base, logo: { '@type': 'ImageObject', url: `${base}/images/Logo.png` } },
     description,
+    articleSection: item.category,
+    keywords: pillar.keywords,
+    about: { '@type': 'Thing', name: pillar.title, url: pillar.canonical },
+    speakable: {
+      '@type': 'SpeakableSpecification',
+      cssSelector: ['article h1', 'article h2', 'article p'],
+    },
+    inLanguage: 'en',
+    isAccessibleForFree: true,
+    ...('sourceUrl' in item && item.sourceUrl ? { citation: item.sourceUrl, isBasedOn: item.sourceUrl } : {}),
     isPartOf: { '@type': 'WebSite', name: 'Hospitality121', url: base },
   })
 }

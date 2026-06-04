@@ -81,6 +81,21 @@ const ORG_SCHEMA = safeJsonLd({
     'https://x.com/hospitality121',
     'https://instagram.com/hospitality121',
   ],
+  knowsAbout: [
+    'Hospitality technology',
+    'AI in hospitality',
+    'Hotel operations',
+    'Guest experience',
+    'Hospitality leadership',
+    'Hospitality recruitment',
+    'Sustainable hospitality',
+    'Luxury hospitality',
+  ],
+  publishingPrinciples: 'https://hospitality121.com/editorial-standards',
+  subjectOf: [
+    'https://hospitality121.com/ai-index.json',
+    'https://hospitality121.com/seo-diamond.json',
+  ],
   contactPoint: [
     { '@type': 'ContactPoint', email: 'contact@hospitality121.com', contactType: 'customer support' },
     { '@type': 'ContactPoint', email: 'editorial@hospitality121.com', contactType: 'editorial' },
@@ -95,6 +110,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://www.googletagmanager.com" />
         <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com" />
+        <link rel="alternate" type="text/plain" href="/llms.txt" title="Hospitality121 AI discovery summary" />
+        <link rel="alternate" type="text/plain" href="/llms-full.txt" title="Hospitality121 full AI discovery index" />
+        <link rel="alternate" type="application/json" href="/ai-index.json" title="Hospitality121 structured AI index" />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: ORG_SCHEMA }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: WEBSITE_SCHEMA }} />
         {ADSENSE_CLIENT && (
