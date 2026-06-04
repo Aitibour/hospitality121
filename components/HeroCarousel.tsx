@@ -12,16 +12,17 @@ type Props = { items: ContentItem[] }
 
 export default function HeroCarousel({ items }: Props) {
   const [current, setCurrent] = useState(0)
+  const [paused, setPaused] = useState(false)
 
   const next = useCallback(() => setCurrent(c => (c + 1) % items.length), [items.length])
   const prev = useCallback(() => setCurrent(c => (c - 1 + items.length) % items.length), [items.length])
 
   useEffect(() => {
-    if (items.length <= 1) return
+    if (items.length <= 1 || paused) return
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
-    const timer = setInterval(next, 3000)
+    const timer = setInterval(next, 6000)
     return () => clearInterval(timer)
-  }, [items.length, next])
+  }, [items.length, next, paused])
 
   if (items.length === 0) return null
 
@@ -42,6 +43,23 @@ export default function HeroCarousel({ items }: Props) {
     <div
       aria-roledescription="carousel"
       aria-label="Featured content"
+      tabIndex={0}
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+      onFocusCapture={() => setPaused(true)}
+      onBlurCapture={event => {
+        if (!event.currentTarget.contains(event.relatedTarget)) setPaused(false)
+      }}
+      onKeyDown={event => {
+        if (event.key === 'ArrowLeft') {
+          event.preventDefault()
+          prev()
+        }
+        if (event.key === 'ArrowRight') {
+          event.preventDefault()
+          next()
+        }
+      }}
       className="relative w-full h-[72svh] min-h-[420px] max-h-[760px] overflow-hidden md:h-[calc(100vh-64px)] md:min-h-[520px]"
     >
       <Image
@@ -51,7 +69,8 @@ export default function HeroCarousel({ items }: Props) {
         sizes="100vw"
         quality={76}
         className="object-cover"
-        priority
+        loading="eager"
+        fetchPriority="high"
       />
       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
 
@@ -60,7 +79,7 @@ export default function HeroCarousel({ items }: Props) {
         role="group"
         aria-roledescription="slide"
         aria-label={`${current + 1} of ${items.length}: ${item.title}`}
-        aria-live="polite"
+        aria-live={paused ? 'polite' : 'off'}
         className="absolute bottom-0 left-0 right-0 max-w-3xl p-4 pb-12 sm:p-6 md:p-10"
       >
         <div className="flex flex-wrap items-center gap-2 mb-3">
@@ -89,7 +108,7 @@ export default function HeroCarousel({ items }: Props) {
       </div>
 
       <div className="absolute bottom-4 right-4 flex items-center gap-3 md:bottom-6 md:right-6">
-        <button onClick={prev} aria-label="Previous slide" className="hidden sm:block text-gray-200/80 hover:text-gray-50 text-2xl leading-none">‹</button>
+        <button onClick={prev} aria-label="Previous slide" className="hidden sm:grid h-10 w-10 place-items-center rounded-full bg-black/35 text-gray-100 hover:bg-black/60 hover:text-gray-50 text-2xl leading-none">‹</button>
         <div role="tablist" aria-label="Carousel slides">
           <div className="flex gap-1.5">
             {items.map((it, i) => (
@@ -100,12 +119,14 @@ export default function HeroCarousel({ items }: Props) {
                 aria-selected={i === current}
                 aria-controls={slideId}
                 aria-label={`Slide ${i + 1}`}
-                className={`w-2 h-2 rounded-full transition-colors ${i === current ? 'bg-gold' : 'bg-gray-300'}`}
+                className={`h-8 w-8 rounded-full grid place-items-center transition-colors before:block before:h-2 before:w-2 before:rounded-full ${
+                  i === current ? 'before:bg-gold' : 'before:bg-gray-300'
+                }`}
               />
             ))}
           </div>
         </div>
-        <button onClick={next} aria-label="Next slide" className="hidden sm:block text-gray-200/80 hover:text-gray-50 text-2xl leading-none">›</button>
+        <button onClick={next} aria-label="Next slide" className="hidden sm:grid h-10 w-10 place-items-center rounded-full bg-black/35 text-gray-100 hover:bg-black/60 hover:text-gray-50 text-2xl leading-none">›</button>
       </div>
     </div>
   )

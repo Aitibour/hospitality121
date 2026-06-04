@@ -256,7 +256,7 @@ export default async function ContentDetailPage({ params }: { params: Promise<{ 
             alt={item.title}
             fill
             className="object-cover"
-            priority
+            preload
           />
         </div>
 

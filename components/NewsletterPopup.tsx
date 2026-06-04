@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 
 const STORAGE_KEY = 'h1h_newsletter_dismissed'
 
@@ -13,6 +13,12 @@ export default function NewsletterPopup() {
   const [email, setEmail] = useState('')
   const [name, setName] = useState('')
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success'>('idle')
+  const closeButtonRef = useRef<HTMLButtonElement>(null)
+
+  const dismiss = useCallback(() => {
+    localStorage.setItem(STORAGE_KEY, '1')
+    setVisible(false)
+  }, [])
 
   useEffect(() => {
     if (typeof window === 'undefined') return
@@ -22,10 +28,25 @@ export default function NewsletterPopup() {
     return () => clearTimeout(timer)
   }, [])
 
-  function dismiss() {
-    localStorage.setItem(STORAGE_KEY, '1')
-    setVisible(false)
-  }
+  useEffect(() => {
+    if (!visible) return
+
+    const previousFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null
+    const previousOverflow = document.body.style.overflow
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') dismiss()
+    }
+
+    document.body.style.overflow = 'hidden'
+    document.addEventListener('keydown', handleKeyDown)
+    closeButtonRef.current?.focus()
+
+    return () => {
+      document.body.style.overflow = previousOverflow
+      document.removeEventListener('keydown', handleKeyDown)
+      previousFocus?.focus()
+    }
+  }, [dismiss, visible])
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -72,6 +93,7 @@ export default function NewsletterPopup() {
         role="dialog"
         aria-modal="true"
         aria-labelledby="newsletter-title"
+        aria-describedby="newsletter-description"
         className="fixed z-50 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[92vw] max-w-md bg-white rounded-2xl shadow-2xl overflow-hidden"
       >
         {/* Gold accent bar */}
@@ -79,6 +101,7 @@ export default function NewsletterPopup() {
 
         <div className="p-8">
           <button
+            ref={closeButtonRef}
             onClick={dismiss}
             aria-label="Close newsletter popup"
             className="absolute top-5 right-5 text-gray-400 hover:text-gray-700 transition-colors"
@@ -105,7 +128,7 @@ export default function NewsletterPopup() {
                 <h2 id="newsletter-title" className="font-serif text-2xl font-bold text-gray-900 mt-2 mb-2">
                   The hospitality intelligence briefing.
                 </h2>
-                <p className="text-gray-500 text-sm leading-relaxed">
+                <p id="newsletter-description" className="text-gray-500 text-sm leading-relaxed">
                   Join 4,000+ hotel leaders. Get the sharpest insights on technology, sustainability, and leadership every week.
                 </p>
               </div>
@@ -116,6 +139,7 @@ export default function NewsletterPopup() {
                 <input
                   type="text"
                   name="name"
+                  aria-label="First name"
                   placeholder="First name"
                   maxLength={80}
                   autoComplete="given-name"
@@ -126,6 +150,7 @@ export default function NewsletterPopup() {
                 <input
                   type="email"
                   name="email"
+                  aria-label="Work email address"
                   placeholder="Work email address"
                   required
                   maxLength={254}

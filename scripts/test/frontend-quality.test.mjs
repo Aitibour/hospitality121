@@ -1,0 +1,39 @@
+import { test } from 'node:test'
+import assert from 'node:assert/strict'
+import fs from 'node:fs'
+
+test('hero carousel respects interaction and reduced motion', () => {
+  const source = fs.readFileSync('components/HeroCarousel.tsx', 'utf8')
+
+  assert.match(source, /prefers-reduced-motion: reduce/)
+  assert.match(source, /items\.length <= 1 \|\| paused/)
+  assert.match(source, /setInterval\(next, 6000\)/)
+  assert.match(source, /onMouseEnter=\{\(\) => setPaused\(true\)\}/)
+  assert.match(source, /event\.key === 'ArrowLeft'/)
+  assert.match(source, /event\.key === 'ArrowRight'/)
+  assert.match(source, /aria-live=\{paused \? 'polite' : 'off'\}/)
+})
+
+test('shared images follow the Next 16 loading API', () => {
+  const files = [
+    'components/HeroCarousel.tsx',
+    'components/EditorsPick.tsx',
+    'app/content/[slug]/page.tsx',
+  ]
+  const combined = files.map(file => fs.readFileSync(file, 'utf8')).join('\n')
+
+  assert.doesNotMatch(combined, /\bpriority(?:=\{[^}]+\})?\b/)
+  assert.match(fs.readFileSync('components/HeroCarousel.tsx', 'utf8'), /fetchPriority="high"/)
+  assert.match(fs.readFileSync('app/content/[slug]/page.tsx', 'utf8'), /\bpreload\b/)
+})
+
+test('newsletter modal supports keyboard dismissal and focus restoration', () => {
+  const source = fs.readFileSync('components/NewsletterPopup.tsx', 'utf8')
+
+  assert.match(source, /event\.key === 'Escape'/)
+  assert.match(source, /closeButtonRef\.current\?\.focus\(\)/)
+  assert.match(source, /previousFocus\?\.focus\(\)/)
+  assert.match(source, /aria-modal="true"/)
+  assert.match(source, /aria-describedby="newsletter-description"/)
+  assert.match(source, /document\.body\.style\.overflow = 'hidden'/)
+})
