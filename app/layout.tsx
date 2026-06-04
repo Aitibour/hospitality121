@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
 import { Lato, Cormorant_Garamond } from 'next/font/google'
-import Script from 'next/script'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import DeferredClientWidgets from '@/components/DeferredClientWidgets'
@@ -9,8 +8,6 @@ import './globals.css'
 
 const lato = Lato({ subsets: ['latin'], weight: ['400', '700'], variable: '--font-lato' })
 const cormorant = Cormorant_Garamond({ subsets: ['latin'], weight: ['600', '700'], variable: '--font-cormorant' })
-const ADSENSE_CLIENT = process.env.NEXT_PUBLIC_ADSENSE_CLIENT
-
 function safeJsonLd(obj: Record<string, unknown>) {
   return JSON.stringify(obj)
     .replace(/</g, '\\u003c')
@@ -106,24 +103,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${lato.variable} ${cormorant.variable}`}>
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link rel="preconnect" href="https://www.googletagmanager.com" />
-        <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com" />
         <link rel="alternate" type="text/plain" href="/llms.txt" title="Hospitality121 AI discovery summary" />
         <link rel="alternate" type="text/plain" href="/llms-full.txt" title="Hospitality121 full AI discovery index" />
         <link rel="alternate" type="application/json" href="/ai-index.json" title="Hospitality121 structured AI index" />
         <link rel="alternate" type="application/rss+xml" href="/feed.xml" title="Hospitality121 RSS feed" />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: ORG_SCHEMA }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: WEBSITE_SCHEMA }} />
-        {ADSENSE_CLIENT && (
-          <Script
-            async
-            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_CLIENT}`}
-            crossOrigin="anonymous"
-            strategy="lazyOnload"
-          />
-        )}
       </head>
       <body className="bg-navy font-sans">
         <a

@@ -1,5 +1,5 @@
 'use client'
-import { useEffect } from 'react'
+import { useEffect, useSyncExternalStore } from 'react'
 
 type Zone = 'hero-banner' | 'mid-grid' | 'footer-banner'
 
@@ -10,6 +10,20 @@ const ADSENSE_SLOTS: Record<Zone, string> = {
 }
 
 const ADSENSE_CLIENT = process.env.NEXT_PUBLIC_ADSENSE_CLIENT
+const COOKIE_KEY = 'h1h_cookie_consent'
+
+function subscribeToConsent(callback: () => void) {
+  window.addEventListener('cookie-consent', callback)
+  window.addEventListener('storage', callback)
+  return () => {
+    window.removeEventListener('cookie-consent', callback)
+    window.removeEventListener('storage', callback)
+  }
+}
+
+function getConsentSnapshot() {
+  return localStorage.getItem(COOKIE_KEY) === 'accepted'
+}
 
 type Props = {
   zone: Zone
@@ -17,14 +31,16 @@ type Props = {
 }
 
 export default function AdSlot({ zone, className = '' }: Props) {
-  useEffect(() => {
-    if (!ADSENSE_CLIENT) return
-    try {
-      window.adsbygoogle.push({})
-    } catch {}
-  }, [])
+  const consented = useSyncExternalStore(subscribeToConsent, getConsentSnapshot, () => false)
 
-  if (!ADSENSE_CLIENT) return null
+  useEffect(() => {
+    if (!ADSENSE_CLIENT || !consented) return
+    try {
+      ;(window.adsbygoogle = window.adsbygoogle || []).push({})
+    } catch {}
+  }, [consented])
+
+  if (!ADSENSE_CLIENT || !consented) return null
 
   return (
     <div className={`flex justify-center my-4 ${className}`}>

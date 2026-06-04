@@ -62,3 +62,26 @@ test('newsletter forms report provider failures honestly', () => {
   assert.match(popup, /role="alert"/)
   assert.match(resources, /aria-pressed=\{selected === r\.id\}/)
 })
+
+test('third-party scripts wait for cookie consent', () => {
+  const layout = fs.readFileSync('app/layout.tsx', 'utf8')
+  const analytics = fs.readFileSync('components/GoogleAnalytics.tsx', 'utf8')
+  const adSlot = fs.readFileSync('components/AdSlot.tsx', 'utf8')
+
+  assert.doesNotMatch(layout, /googletagmanager\.com/)
+  assert.doesNotMatch(layout, /pagead2\.googlesyndication\.com/)
+  assert.match(analytics, /function loadAdsense\(\)/)
+  assert.match(analytics, /detail !== 'accepted'/)
+  assert.match(analytics, /sendPageView\(\)/)
+  assert.match(adSlot, /useSyncExternalStore\(subscribeToConsent, getConsentSnapshot, \(\) => false\)/)
+  assert.match(adSlot, /if \(!ADSENSE_CLIENT \|\| !consented\) return null/)
+})
+
+test('newsletter modal traps keyboard focus', () => {
+  const source = fs.readFileSync('components/NewsletterPopup.tsx', 'utf8')
+
+  assert.match(source, /const dialogRef = useRef<HTMLDivElement>\(null\)/)
+  assert.match(source, /if \(event\.key !== 'Tab'\) return/)
+  assert.match(source, /event\.shiftKey && document\.activeElement === first/)
+  assert.match(source, /ref=\{dialogRef\}/)
+})
