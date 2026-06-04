@@ -113,6 +113,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="alternate" type="text/plain" href="/llms.txt" title="Hospitality121 AI discovery summary" />
         <link rel="alternate" type="text/plain" href="/llms-full.txt" title="Hospitality121 full AI discovery index" />
         <link rel="alternate" type="application/json" href="/ai-index.json" title="Hospitality121 structured AI index" />
+        <link rel="alternate" type="application/rss+xml" href="/feed.xml" title="Hospitality121 RSS feed" />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: ORG_SCHEMA }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: WEBSITE_SCHEMA }} />
         {ADSENSE_CLIENT && (

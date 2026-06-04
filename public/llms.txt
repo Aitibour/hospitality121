@@ -9,6 +9,8 @@
 - [Diamond authority network](https://hospitality121.com/seo-diamond.json): Hospitality121 pillar, cluster, GEO, technology solution, and automation relationships
 - [Search index](https://hospitality121.com/search-index.json): Concise searchable content metadata
 - [XML sitemap](https://hospitality121.com/sitemap.xml): Canonical crawl URLs
+- [Google News sitemap](https://hospitality121.com/news-sitemap.xml): Recent Hospitality121 news URLs
+- [RSS feed](https://hospitality121.com/feed.xml): Latest Hospitality121 publications for syndication
 - [Editorial standards](https://hospitality121.com/editorial-standards): Sourcing, verification, corrections, and editorial independence
 - [About Hospitality121](https://hospitality121.com/about): Publisher identity and company information
 

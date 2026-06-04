@@ -76,6 +76,14 @@ function formatDate(dateStr: string) {
   return new Date(dateStr).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })
 }
 
+function getSourceLabel(sourceUrl: string): string {
+  try {
+    return new URL(sourceUrl).hostname.replace(/^www\./, '')
+  } catch {
+    return 'Original source'
+  }
+}
+
 function safeJsonLd(obj: Record<string, unknown>): string {
   return JSON.stringify(obj)
     .replace(/</g, '\\u003c')
@@ -197,6 +205,7 @@ export default async function ContentDetailPage({ params }: { params: Promise<{ 
 
   const [bodyEn, bodyFr] = body.split('\n<!-- FR -->\n')
   const titleFr = 'titleFr' in item ? (item as { titleFr?: string }).titleFr : undefined
+  const sourceUrl = 'sourceUrl' in item && typeof item.sourceUrl === 'string' ? item.sourceUrl : null
 
   const base = process.env.NEXT_PUBLIC_BASE_URL || 'https://hospitality121.com'
   const jsonLdString = buildJsonLd(item, body)
@@ -245,6 +254,16 @@ export default async function ContentDetailPage({ params }: { params: Promise<{ 
           bodyEn={bodyEn}
           bodyFr={bodyFr}
         />
+
+        {sourceUrl && (
+          <aside className="mb-8 rounded-lg border border-gray-200 bg-surface px-4 py-3 text-sm text-muted" aria-label="Source attribution">
+            <span className="font-semibold text-gray-800">Source reporting: </span>
+            <a href={sourceUrl} target="_blank" rel="noopener noreferrer" className="text-gold hover:underline">
+              {getSourceLabel(sourceUrl)}
+            </a>
+            <span>. Hospitality121 adds editorial context and links to the original reporting for verification.</span>
+          </aside>
+        )}
 
         {/* Author row */}
         <div className="flex items-center gap-3 mb-8 text-sm text-muted">

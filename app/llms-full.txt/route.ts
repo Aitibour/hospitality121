@@ -17,6 +17,8 @@ export function GET() {
     `- Editorial standards: ${SITE_URL}/editorial-standards`,
     `- Machine-readable AI index: ${SITE_URL}/ai-index.json`,
     `- Sitemap: ${SITE_URL}/sitemap.xml`,
+    `- Google News sitemap: ${SITE_URL}/news-sitemap.xml`,
+    `- RSS feed: ${SITE_URL}/feed.xml`,
     '',
     '## Authority Pillars',
     '',

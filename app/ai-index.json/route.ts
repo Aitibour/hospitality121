@@ -19,6 +19,8 @@ export function GET() {
       llms: `${SITE_URL}/llms.txt`,
       llmsFull: `${SITE_URL}/llms-full.txt`,
       sitemap: `${SITE_URL}/sitemap.xml`,
+      newsSitemap: `${SITE_URL}/news-sitemap.xml`,
+      rss: `${SITE_URL}/feed.xml`,
       searchIndex: `${SITE_URL}/search-index.json`,
       diamondNetwork: `${SITE_URL}/seo-diamond.json`,
     },

@@ -18,7 +18,7 @@ test('robots export declares sitemap and canonical host', () => {
   const source = fs.readFileSync('app/robots.ts', 'utf8')
 
   assert.match(source, /replace\(\/\\\/\$\/, ''\)/)
-  assert.match(source, /sitemap: `\$\{BASE\}\/sitemap\.xml`/)
+  assert.match(source, /sitemap: \[`\$\{BASE\}\/sitemap\.xml`, `\$\{BASE\}\/news-sitemap\.xml`\]/)
   assert.match(source, /host: BASE/)
   assert.match(source, /Googlebot/)
   assert.match(source, /GPTBot/)

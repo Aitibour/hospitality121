@@ -64,3 +64,15 @@
   [headers.values]
     Cache-Control = "public, max-age=3600"
     Content-Type = "application/json; charset=utf-8"
+
+[[headers]]
+  for = "/feed.xml"
+  [headers.values]
+    Cache-Control = "public, max-age=3600"
+    Content-Type = "application/rss+xml; charset=utf-8"
+
+[[headers]]
+  for = "/news-sitemap.xml"
+  [headers.values]
+    Cache-Control = "public, max-age=1800"
+    Content-Type = "application/xml; charset=utf-8"
