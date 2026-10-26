@@ -70,14 +70,14 @@ export const FEEDS = [...INDUSTRY_FEEDS, ...HOTEL_BRAND_FEEDS]
  * Defaults to articles published in the last 24 hours.
  * @returns {Promise<Array<{title, url, excerpt, pubDate, source}>>}
  */
-export async function fetchAllArticles({ maxAgeHours = 24 } = {}) {
+export async function fetchAllArticles({ maxAgeHours = 24, feeds = FEEDS } = {}) {
   const results = await Promise.allSettled(
-    FEEDS.map(({ url, source }) => fetchFeed(url, source, maxAgeHours))
+    feeds.map(({ url, source }) => fetchFeed(url, source, maxAgeHours))
   )
 
   const succeeded = results.filter(r => r.status === 'fulfilled')
   if (succeeded.length === 0) {
-    results.forEach((r, i) => console.warn(`⚠ Feed failed: ${FEEDS[i].url} — ${r.reason?.message}`))
+    results.forEach((r, i) => console.warn(`⚠ Feed failed: ${feeds[i].url} — ${r.reason?.message}`))
   }
 
   return succeeded
@@ -110,6 +110,8 @@ export function parseFeed(xml, source, maxAgeHours = 24) {
       excerpt: stripHtml(decodeXml(readTag(item, 'description'))).slice(0, 400),
       pubDate: new Date(readTag(item, 'pubDate') || readTag(item, 'dc:date') || 0),
       source,
+      image: decodeXml(item.match(/<(?:media:content|media:thumbnail)\b[^>]*\burl=["']([^"']+)["']/i)?.[1]
+        || decodeXml(readTag(item, 'description') || readTag(item, 'content:encoded')).match(/<img\b[^>]*\bsrc=["']([^"']+)["']/i)?.[1] || ''),
     }))
     .filter(a => a.title && a.url && a.pubDate > cutoff)
 }
@@ -131,4 +133,7 @@ function decodeXml(value) {
     .replace(/&amp;/g, '&')
     .replace(/&quot;/g, '"')
     .replace(/&#39;/g, "'")
+    .replace(/&apos;/g, "'")
+    .replace(/&#(\d+);/g, (_, code) => { const point = Number(code); return point > 0 && point <= 0x10ffff ? String.fromCodePoint(point) : '' })
+    .replace(/&#x([0-9a-f]+);/gi, (_, code) => { const point = parseInt(code, 16); return point > 0 && point <= 0x10ffff ? String.fromCodePoint(point) : '' })
 }

@@ -4,6 +4,7 @@ import type { ContentItem } from '@/types/content'
 import CategoryLabel from './CategoryLabel'
 import AuthorLine from './AuthorLine'
 import { formatDate } from '@/lib/formatDate'
+import { shortHeadline } from '@/lib/headlines.mjs'
 
 type Props = {
   items: ContentItem[]
@@ -61,9 +62,9 @@ export default function ContentGrid({ items, showEpisodeNumbers = false, contain
               <div className="p-4 flex flex-col gap-2">
                 <AuthorLine name={name} avatar={avatar} date={formattedDate} />
                 <CategoryLabel label={item.category} />
-                <h3 id={cardId} className="font-serif text-gray-900 font-semibold text-base leading-snug line-clamp-3 group-hover:text-gold transition-colors">
+                <h3 id={cardId} title={item.title} className="font-serif text-gray-900 font-semibold text-base leading-snug truncate group-hover:text-gold transition-colors">
                   {showEpisodeNumbers && item.type === 'podcast' ? `Episode ${index + 1}: ` : ''}
-                  {item.title}
+                  {shortHeadline(item.title)}
                 </h3>
                 <p className="text-muted text-xs">{meta}</p>
               </div>

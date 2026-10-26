@@ -2,7 +2,8 @@ import type { Metadata } from 'next'
 import { getAllContent } from '@/lib/content'
 import { limitByAuthor, pickEditorItems } from '@/lib/dedup'
 import type { Article, Podcast } from '@/types/content'
-import HeroCarousel from '@/components/HeroCarousel'
+import DailyHero from '@/components/DailyHero'
+import { loadDailyHero, classifyHeroTopic } from '@/scripts/lib/daily-hero.mjs'
 import ContentGrid from '@/components/ContentGrid'
 import EditorsPick from '@/components/EditorsPick'
 import TopContent from '@/components/TopContent'
@@ -21,14 +22,13 @@ function isGeneratedPost(item: { type: string; sourceUrl?: string; author?: stri
   return (item.type === 'blog' || item.type === 'news') && (!!item.sourceUrl || item.author === 'H1H Newsfeed')
 }
 
-export default function HomePage() {
+export default async function HomePage() {
   const all = getAllContent()
   const editorial     = all.filter(item => item.type !== 'event')
   const generatedItems = editorial.filter(isGeneratedPost)
-  const heroItems     = [
-    ...generatedItems,
-    ...limitByAuthor(editorial.filter(item => !isGeneratedPost(item)), 2),
-  ].filter((item, index, items) => items.findIndex(candidate => candidate.slug === item.slug) === index).slice(0, 10)
+  const heroItems = limitByAuthor(editorial.filter(item => classifyHeroTopic(`${item.title} ${item.category}`)), 2)
+    .filter((item, index, items) => items.findIndex(candidate => candidate.image === item.image || candidate.title === item.title) === index).slice(0, 8)
+  const initialFeed = await loadDailyHero().catch(() => ({ updatedAt: new Date().toISOString(), items: [] }))
   const heroSlugs     = new Set(heroItems.map(item => item.slug))
   const gridItems     = limitByAuthor(editorial.filter(item => !heroSlugs.has(item.slug)), 2).slice(0, 10)
   const featuredItems = pickEditorItems(all.filter(item => item.featured), 10)
@@ -50,7 +50,7 @@ export default function HomePage() {
       </form>
 
       <h1 className="sr-only">Hospitality Technology News & Insights</h1>
-      <HeroCarousel items={heroItems} />
+      <DailyHero initialFeed={initialFeed} fallbackItems={heroItems} />
       <AdSlot zone="hero-banner" />
       <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-8 items-start">
         <ContentGrid items={gridItems} contained={false} />

@@ -3,6 +3,8 @@ import Groq from 'groq-sdk'
 const VALID_BLOG_CATEGORIES = ['TECHNOLOGY', 'TRENDS', 'OPERATIONS', 'LUXURY', 'SUSTAINABILITY', 'WELLNESS', 'F&B']
 const VALID_NEWS_CATEGORIES = ['INVESTMENT', 'TECHNOLOGY', 'SUSTAINABILITY', 'WORKFORCE', 'BRANDS', 'OPERATIONS', 'DEVELOPMENT', 'LUXURY', 'DISTRIBUTION', 'PARTNERSHIPS']
 
+const EDITORIAL_STYLE = `Write as an experienced hospitality technology journalist. Lead with the specific development and why a hotel operator should care. Use active verbs, clear explanations and short, varied paragraphs. Explain the effect on front-desk workflows, integration, guest data, costs or service, only where relevant. Distinguish reported facts, vendor claims and your own analysis. Attribute the reporting to the named source. Never invent quotes, interviews, statistics, product capabilities, dates or results. If the excerpt cannot support a detail, omit it. Include one practical question or action for the reader and a meaningful limitation or trade-off. Avoid hype, generic introductions, clickbait and repeated stock conclusions. Headlines must be specific, informative and no more than 48 characters in either language. End with a concise invitation to discuss the implications on Hospitality121's LinkedIn (https://www.linkedin.com/company/hospitality121) and X (https://x.com/hospitality121) pages.`
+
 /**
  * Calls Groq to generate a bilingual EN/FR hospitality article.
  * @param {{ title: string, url: string, excerpt: string, source: string }} article
@@ -36,8 +38,8 @@ Rotate the editorial angle across the Hospitality121 navigation sections: articl
 Return ONLY a JSON object with exactly these keys:
 {
   "slug": "kebab-case-max-60-chars",
-  "titleEn": "Engaging English title, max 60 chars",
-  "titleFr": "Titre en francais accrocheur, max 60 chars",
+  "titleEn": "Specific, engaging English headline, max 48 chars",
+  "titleFr": "Titre francais precis et accrocheur, max 48 chars",
   "excerptEn": "One sentence English summary, max 155 chars",
   "excerptFr": "Resume en une phrase en francais, max 155 chars",
   "category": "exactly one of: TECHNOLOGY, TRENDS, OPERATIONS, LUXURY, SUSTAINABILITY, WELLNESS, F&B",
@@ -56,7 +58,7 @@ Return ONLY a JSON object with exactly these keys:
   const response = await client.chat.completions.create({
     model: 'llama-3.3-70b-versatile',
     messages: [
-      { role: 'system', content: systemPrompt },
+      { role: 'system', content: `${systemPrompt}\n${EDITORIAL_STYLE}` },
       { role: 'user', content: userPrompt },
     ],
     response_format: { type: 'json_object' },
@@ -65,6 +67,7 @@ Return ONLY a JSON object with exactly these keys:
   })
 
   const parsed = JSON.parse(response.choices[0].message.content)
+  if (parsed.titleEn?.length > 48 || parsed.titleFr?.length > 48) throw new Error('Headline exceeds 48 characters')
 
   const required = ['slug', 'titleEn', 'titleFr', 'excerptEn', 'excerptFr', 'category', 'primaryKeyword', 'bodyEn', 'bodyFr', 'keywords', 'imageConcept', 'editorialFormat', 'linkedinCaption', 'facebookCaption', 'xCaption', 'newsletterTeaser']
   for (const key of required) {
@@ -101,7 +104,7 @@ Source: ${article.source}
 Write an original news brief inspired by this article. Return ONLY a JSON object with exactly these keys:
 {
   "slug": "kebab-case-max-60-chars",
-  "title": "Clear English news headline, max 72 chars",
+  "title": "Specific, informative English headline, max 48 chars",
   "description": "One sentence meta description, max 155 chars",
   "category": "exactly one of: INVESTMENT, TECHNOLOGY, SUSTAINABILITY, WORKFORCE, BRANDS, OPERATIONS, DEVELOPMENT, LUXURY, DISTRIBUTION, PARTNERSHIPS",
   "body": "350-500 words. 5-7 short paragraphs. Factual news tone. Include concrete hospitality implications. Do NOT mention the source URL.",
@@ -111,7 +114,7 @@ Write an original news brief inspired by this article. Return ONLY a JSON object
   const response = await client.chat.completions.create({
     model: 'llama-3.3-70b-versatile',
     messages: [
-      { role: 'system', content: systemPrompt },
+      { role: 'system', content: `${systemPrompt}\n${EDITORIAL_STYLE}` },
       { role: 'user', content: userPrompt },
     ],
     response_format: { type: 'json_object' },
@@ -120,6 +123,7 @@ Write an original news brief inspired by this article. Return ONLY a JSON object
   })
 
   const parsed = JSON.parse(response.choices[0].message.content)
+  if (parsed.title?.length > 48) throw new Error('Headline exceeds 48 characters')
 
   const required = ['slug', 'title', 'description', 'category', 'body', 'keywords']
   for (const key of required) {

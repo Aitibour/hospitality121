@@ -9,6 +9,7 @@ import { nameToSlug, AUTHORS_BY_NAME } from '@/lib/authors'
 import type { ContentItem } from '@/types/content'
 import BilingualContent from '@/components/BilingualContent'
 import ShareButtons from '@/components/ShareButtons'
+import FollowCTA from '@/components/FollowCTA'
 import { GEO_AUTHORITY_PAGES, getMatchingGeoPage, getMatchingPillar } from '@/lib/diamond-seo'
 
 export const revalidate = 3600
@@ -355,6 +356,7 @@ export default async function ContentDetailPage({ params }: { params: Promise<{ 
         )}
 
         {/* Share buttons */}
+        <FollowCTA />
         <ShareButtons
           title={item.title}
           url={`https://hospitality121.com/content/${item.slug}`}
@@ -433,7 +435,7 @@ export default async function ContentDetailPage({ params }: { params: Promise<{ 
                   </div>
                   <div className="flex flex-col gap-1 min-w-0">
                     <span className="text-xs font-bold text-gold tracking-widest">{rel.category}</span>
-                    <span className="text-sm font-semibold text-gray-800 group-hover:text-gold transition-colors line-clamp-2">{rel.title}</span>
+                    <span title={rel.title} className="text-sm font-semibold text-gray-800 group-hover:text-gold transition-colors truncate">{rel.title}</span>
                   </div>
                 </Link>
               ))}

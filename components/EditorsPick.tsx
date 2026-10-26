@@ -4,6 +4,7 @@ import type { ContentItem } from '@/types/content'
 import CategoryLabel from './CategoryLabel'
 import AuthorLine from './AuthorLine'
 import { formatDate } from '@/lib/formatDate'
+import { shortHeadline } from '@/lib/headlines.mjs'
 
 type Props = { items: ContentItem[] }
 
@@ -45,8 +46,8 @@ function PickCard({ item, featured = false }: { item: ContentItem; featured?: bo
           {featured && (
             <div className="absolute bottom-0 left-0 right-0 p-5">
               <AuthorLine name={name} avatar={avatar} date={formatDate(item.date)} nameColor="text-gray-50" dateColor="text-gray-300" />
-              <h3 id={titleId} className="font-serif text-2xl font-bold leading-snug text-gray-50 mt-3">
-                {item.title}
+              <h3 id={titleId} title={item.title} className="font-serif text-2xl font-bold leading-snug text-gray-50 mt-3 truncate">
+                {shortHeadline(item.title)}
               </h3>
               <div className="mt-3 flex items-center gap-2">
                 <CategoryLabel label={item.category} />
@@ -59,8 +60,8 @@ function PickCard({ item, featured = false }: { item: ContentItem; featured?: bo
         {!featured && (
           <div className="p-4">
             <AuthorLine name={name} avatar={avatar} date={formatDate(item.date)} nameColor="text-gray-900" />
-            <h3 id={titleId} className="mt-3 font-serif text-base font-semibold leading-snug text-gray-900 line-clamp-2 group-hover:text-gold transition-colors">
-              {item.title}
+            <h3 id={titleId} title={item.title} className="mt-3 font-serif text-base font-semibold leading-snug text-gray-900 truncate group-hover:text-gold transition-colors">
+              {shortHeadline(item.title)}
             </h3>
             <div className="mt-3 flex items-center gap-2">
               <CategoryLabel label={item.category} />

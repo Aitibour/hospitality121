@@ -2,6 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import type { ContentItem } from '@/types/content'
 import { formatDate } from '@/lib/formatDate'
+import { shortHeadline } from '@/lib/headlines.mjs'
 
 type Props = {
   items: ContentItem[]
@@ -42,8 +43,8 @@ export default function DiamondAuthoritySection({ items }: Props) {
               <p className="text-[10px] font-bold tracking-widest text-gold uppercase">
                 {item.category}
               </p>
-              <h3 className="mt-1 text-sm font-bold leading-snug text-gray-900 line-clamp-2 group-hover:text-gold transition-colors">
-                {item.title}
+              <h3 title={item.title} className="mt-1 text-sm font-bold leading-snug text-gray-900 truncate group-hover:text-gold transition-colors">
+                {shortHeadline(item.title)}
               </h3>
               <p className="mt-1 text-[11px] text-muted">{formatDate(item.date)}</p>
             </div>

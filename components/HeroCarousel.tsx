@@ -7,8 +7,11 @@ import type { ContentItem } from '@/types/content'
 import CategoryLabel from './CategoryLabel'
 import AuthorLine from './AuthorLine'
 import { formatDate } from '@/lib/formatDate'
+import FollowCTA from './FollowCTA'
+import { shortHeadline } from '@/lib/headlines.mjs'
 
-type Props = { items: ContentItem[] }
+export type HeroItem = ContentItem & { href?: string; rss?: boolean; imageAlt?: string; excerpt?: string }
+type Props = { items: HeroItem[] }
 
 export default function HeroCarousel({ items }: Props) {
   const [current, setCurrent] = useState(0)
@@ -64,7 +67,7 @@ export default function HeroCarousel({ items }: Props) {
     >
       <Image
         src={item.image}
-        alt={item.title}
+        alt={item.imageAlt || item.title}
         fill
         sizes="100vw"
         quality={76}
@@ -88,23 +91,25 @@ export default function HeroCarousel({ items }: Props) {
           <span className="text-gray-300 text-xs sm:text-sm">{publishedAgo}</span>
           {item.type !== 'event' && (
             <span className="text-xs bg-surface text-gold border border-gold/30 px-2 py-0.5 rounded">
-              {item.type === 'podcast' ? 'PODCAST' : 'ARTICLE'}
+              {item.rss ? 'RSS · DAILY SELECTION' : item.type === 'podcast' ? 'PODCAST' : 'ARTICLE'}
             </span>
           )}
         </div>
-        <Link href={`/content/${item.slug}`} className="group/title inline-block max-w-full">
-          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-gray-50 leading-tight mb-3 group-hover/title:text-gold transition-colors">
-            {item.title}
+        <Link href={item.href || `/content/${item.slug}`} prefetch={item.rss ? false : undefined} className="group/title block w-full min-w-0" title={item.title}>
+          <h2 className="font-serif text-xl sm:text-3xl md:text-4xl font-bold text-gray-50 leading-tight mb-3 truncate group-hover/title:text-gold transition-colors">
+            {shortHeadline(item.title)}
           </h2>
           <span className="inline-flex items-center gap-2 rounded-full bg-gold px-4 py-2 text-xs font-bold uppercase tracking-widest text-gray-950 shadow-sm transition-transform group-hover/title:translate-x-1">
-            Read now
+            {item.rss ? 'Read at source' : 'Read now'}
             <span aria-hidden="true">-&gt;</span>
           </span>
         </Link>
+        {item.excerpt && <p className="mb-3 mt-3 max-w-2xl text-sm leading-relaxed text-gray-200 line-clamp-2">{item.excerpt}</p>}
         <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
           <AuthorLine name={name} avatar={avatar} date={publishedAgo} nameColor="text-gray-100" dateColor="text-gray-300" />
           <span className="text-gray-300 text-sm">{meta}</span>
         </div>
+        <FollowCTA compact />
       </div>
 
       <div className="absolute bottom-4 right-4 flex items-center gap-3 md:bottom-6 md:right-6">

@@ -2,6 +2,7 @@
 
 import { useLanguage } from '@/context/LanguageContext'
 import type { ReactNode } from 'react'
+import { shortHeadline } from '@/lib/headlines.mjs'
 
 type Props = {
   titleEn: string
@@ -24,7 +25,7 @@ export default function BilingualContent({ titleEn, titleFr, bodyEn, bodyFr }: P
 
   return (
     <>
-      <h1 className="font-serif text-3xl md:text-5xl font-bold leading-tight mb-6">{title}</h1>
+      <h1 title={title} aria-label={title} className="font-serif text-xl sm:text-2xl md:text-3xl font-bold leading-tight mb-6 truncate">{shortHeadline(title)}</h1>
       {paragraphs.length > 0 ? (
         <div className="prose prose-lg max-w-none">
           {paragraphs.map((para, i) => renderBlock(para, i))}
