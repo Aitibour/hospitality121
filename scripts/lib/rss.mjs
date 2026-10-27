@@ -111,7 +111,7 @@ export function parseFeed(xml, source, maxAgeHours = 24) {
       pubDate: new Date(readTag(item, 'pubDate') || readTag(item, 'dc:date') || 0),
       source,
       image: decodeXml(item.match(/<(?:media:content|media:thumbnail)\b[^>]*\burl=["']([^"']+)["']/i)?.[1]
-        || decodeXml(readTag(item, 'description') || readTag(item, 'content:encoded')).match(/<img\b[^>]*\bsrc=["']([^"']+)["']/i)?.[1] || ''),
+        || decodeXml(`${readTag(item, 'description')} ${readTag(item, 'content:encoded')}`).match(/<img\b[^>]*\bsrc=["']([^"']+)["']/i)?.[1] || ''),
     }))
     .filter(a => a.title && a.url && a.pubDate > cutoff)
 }

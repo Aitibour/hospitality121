@@ -67,6 +67,11 @@ test('parseFeed handles single item (XML gives object not array)', () => {
   assert.equal(articles[0].title, 'Single Item')
 })
 
+test('RSS images in full content are found when the short description has no image', () => {
+  const xml = `<rss><channel><item><title>Hotel AI</title><link>https://example.com/story</link><description>A short summary</description><content:encoded><![CDATA[<p><img src="https://example.com/story-image.jpg" /></p>]]></content:encoded><pubDate>${RECENT}</pubDate></item></channel></rss>`
+  assert.equal(parseFeed(xml, 'example.com')[0].image, 'https://example.com/story-image.jpg')
+})
+
 test('parseFeed returns empty array for feed with no items', () => {
   const articles = parseFeed(EMPTY_RSS, 'example.com')
   assert.equal(articles.length, 0)
