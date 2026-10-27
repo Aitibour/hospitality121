@@ -76,4 +76,12 @@ export type BlogPost = {
   sourceUrl?: string
 }
 
-export type ContentItem = Article | Podcast | NewsItem | EventItem | BlogPost
+export type ContentItem = (Article | Podcast | NewsItem | EventItem | BlogPost) & {
+  status?: 'draft' | 'review' | 'published'
+  description?: string
+  imageAlt?: string
+  imageCredit?: string
+  imageSource?: string
+  imageLicense?: string
+  dateModified?: string
+}

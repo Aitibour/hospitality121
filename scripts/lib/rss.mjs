@@ -1,3 +1,5 @@
+import { isPublicHttpsUrl } from '../../lib/editorial-policy.mjs'
+
 export const TOP_HOTEL_BRANDS = [
   'Marriott International',
   'Hilton',
@@ -113,7 +115,7 @@ export function parseFeed(xml, source, maxAgeHours = 24) {
       image: decodeXml(item.match(/<(?:media:content|media:thumbnail)\b[^>]*\burl=["']([^"']+)["']/i)?.[1]
         || decodeXml(`${readTag(item, 'description')} ${readTag(item, 'content:encoded')}`).match(/<img\b[^>]*\bsrc=["']([^"']+)["']/i)?.[1] || ''),
     }))
-    .filter(a => a.title && a.url && a.pubDate > cutoff)
+    .filter(a => a.title && isPublicHttpsUrl(a.url) && a.pubDate > cutoff && +a.pubDate <= Date.now())
 }
 
 function readTag(xml, tagName) {

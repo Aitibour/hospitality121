@@ -3,7 +3,7 @@ import Groq from 'groq-sdk'
 const VALID_BLOG_CATEGORIES = ['TECHNOLOGY', 'TRENDS', 'OPERATIONS', 'LUXURY', 'SUSTAINABILITY', 'WELLNESS', 'F&B']
 const VALID_NEWS_CATEGORIES = ['INVESTMENT', 'TECHNOLOGY', 'SUSTAINABILITY', 'WORKFORCE', 'BRANDS', 'OPERATIONS', 'DEVELOPMENT', 'LUXURY', 'DISTRIBUTION', 'PARTNERSHIPS']
 
-const EDITORIAL_STYLE = `Write as an experienced hospitality technology journalist. Lead with the specific development and why a hotel operator should care. Use active verbs, clear explanations and short, varied paragraphs. Explain the effect on front-desk workflows, integration, guest data, costs or service, only where relevant. Distinguish reported facts, vendor claims and your own analysis. Attribute the reporting to the named source. Never invent quotes, interviews, statistics, product capabilities, dates or results. If the excerpt cannot support a detail, omit it. Include one practical question or action for the reader and a meaningful limitation or trade-off. Avoid hype, generic introductions, clickbait and repeated stock conclusions. Headlines must be specific, informative and no more than 48 characters in either language. End with a concise invitation to discuss the implications on Hospitality121's LinkedIn (https://www.linkedin.com/company/hospitality121) and X (https://x.com/hospitality121) pages.`
+const EDITORIAL_STYLE = `Prepare an editorial REVIEW DRAFT in the voice of an experienced hospitality technology journalist. The RSS excerpt is incomplete evidence, not a licence to fill gaps. Attribute every reported development to the named publisher. Separate what the excerpt reports from operational analysis and unanswered questions. Never invent quotes, interviews, statistics, product capabilities, research findings, dates, experience or results. Do not claim to have interviewed anyone or inspected the original article. Omit details the excerpt cannot support; say what needs confirmation. Match depth to evidence, without padding or a minimum word count. Explain a relevant workflow, decision or trade-off in clear English and natural French. Headlines must be specific and complete, at most 90 characters, with no clickbait. Social captions are drafts only. End with one useful reader question; the website supplies the follow CTA separately.`
 
 /**
  * Calls Groq to generate a bilingual EN/FR hospitality article.
@@ -14,7 +14,7 @@ const EDITORIAL_STYLE = `Write as an experienced hospitality technology journali
 export async function generatePost(article, context = {}) {
   const client = new Groq({ apiKey: process.env.GROQ_API_KEY })
 
-  const systemPrompt = `You are a senior hospitality editor writing for Hospitality121, a hospitality media platform based in New York, USA. Write for hotel owners, operators, executives, event leaders, recruiters, investors, technology vendors, and guest experience teams. The article must feel human written: natural rhythm, varied sentence length, specific operational observations, and premium editorial judgement. Do not use em dashes. Avoid robotic phrasing, generic transitions, "in today's rapidly evolving world", "it is important to note", "delve", "game changer", "revolutionary", and repeated "cutting edge". Respond with valid JSON only - no markdown, no code fences, no extra text.`
+  const systemPrompt = `You are preparing a hospitality technology editorial draft for Hospitality121. Write for hotel operators and IT leaders. Use clear, natural language. Do not use em dashes. Avoid hype, generic transitions and keyword stuffing. Respond with valid JSON only.`
 
   const userPrompt = `Source article:
 Title: ${article.title}
@@ -33,13 +33,13 @@ ${context.targetFormat || 'articles-and-editorials'}
 
 Write an original hospitality article inspired by this source. It must target a primary hospitality keyword and use related terms naturally. Make the angle distinct from existing coverage. Do not copy the source. Do not repeat existing title patterns, introductions, image concepts, CTAs, or article structures.
 
-Rotate the editorial angle across the Hospitality121 navigation sections: articles and editorials, hospitality news analysis, events and conferences, podcasts and interview-style insights, leadership, hotel operations, recruitment and workforce, guest experience, luxury hospitality, sustainability, hospitality technology, AI, revenue, distribution, and hotel investment. Do not make every article about technology.
+Choose a source-supported angle about hotel technology, AI, cybersecurity or technology in hotel operations. Never manufacture an interview or podcast from an RSS excerpt.
 
 Return ONLY a JSON object with exactly these keys:
 {
   "slug": "kebab-case-max-60-chars",
-  "titleEn": "Specific, engaging English headline, max 48 chars",
-  "titleFr": "Titre francais precis et accrocheur, max 48 chars",
+  "titleEn": "Specific, complete English headline, max 90 chars",
+  "titleFr": "Titre francais precis et complet, max 90 chars",
   "excerptEn": "One sentence English summary, max 155 chars",
   "excerptFr": "Resume en une phrase en francais, max 155 chars",
   "category": "exactly one of: TECHNOLOGY, TRENDS, OPERATIONS, LUXURY, SUSTAINABILITY, WELLNESS, F&B",
@@ -51,7 +51,7 @@ Return ONLY a JSON object with exactly these keys:
   "facebookCaption": "Warm professional Facebook caption, 35-65 words",
   "xCaption": "Short X/Twitter version under 240 characters",
   "newsletterTeaser": "Newsletter teaser, 25-45 words",
-  "bodyEn": "650-850 words. Use 5-8 paragraphs with natural variation. No headers. Include realistic hospitality operating context. Use the primary keyword naturally, not repetitively. Do NOT mention the source URL.",
+  "bodyEn": "Write only as much as the available evidence supports. Attribute the publisher, explain the development, distinguish operational analysis, and identify what remains unknown. Use Markdown paragraphs and useful headings. Do not imply original reporting.",
   "bodyFr": "Full French translation of bodyEn. Same editorial meaning and natural French flow."
 }`
 
@@ -67,7 +67,7 @@ Return ONLY a JSON object with exactly these keys:
   })
 
   const parsed = JSON.parse(response.choices[0].message.content)
-  if (parsed.titleEn?.length > 48 || parsed.titleFr?.length > 48) throw new Error('Headline exceeds 48 characters')
+  if (parsed.titleEn?.length > 90 || parsed.titleFr?.length > 90) throw new Error('Headline exceeds 90 characters')
 
   const required = ['slug', 'titleEn', 'titleFr', 'excerptEn', 'excerptFr', 'category', 'primaryKeyword', 'bodyEn', 'bodyFr', 'keywords', 'imageConcept', 'editorialFormat', 'linkedinCaption', 'facebookCaption', 'xCaption', 'newsletterTeaser']
   for (const key of required) {
@@ -104,10 +104,10 @@ Source: ${article.source}
 Write an original news brief inspired by this article. Return ONLY a JSON object with exactly these keys:
 {
   "slug": "kebab-case-max-60-chars",
-  "title": "Specific, informative English headline, max 48 chars",
+  "title": "Specific, complete English headline, max 90 chars",
   "description": "One sentence meta description, max 155 chars",
   "category": "exactly one of: INVESTMENT, TECHNOLOGY, SUSTAINABILITY, WORKFORCE, BRANDS, OPERATIONS, DEVELOPMENT, LUXURY, DISTRIBUTION, PARTNERSHIPS",
-  "body": "350-500 words. 5-7 short paragraphs. Factual news tone. Include concrete hospitality implications. Do NOT mention the source URL.",
+  "body": "A short, attributed news draft limited to what the excerpt supports. No minimum word count. Explain the operational question and what needs confirmation. Never invent details to lengthen the brief.",
   "keywords": ["keyword1", "keyword2", "keyword3"]
 }`
 
@@ -123,7 +123,7 @@ Write an original news brief inspired by this article. Return ONLY a JSON object
   })
 
   const parsed = JSON.parse(response.choices[0].message.content)
-  if (parsed.title?.length > 48) throw new Error('Headline exceeds 48 characters')
+  if (parsed.title?.length > 90) throw new Error('Headline exceeds 90 characters')
 
   const required = ['slug', 'title', 'description', 'category', 'body', 'keywords']
   for (const key of required) {

@@ -1,4 +1,5 @@
 import { createHash } from 'node:crypto'
+import { isPublicHttpsUrl } from '../../lib/editorial-policy.mjs'
 import { fetchAllArticles } from './rss.mjs'
 import { isAllowedRegionalArticle } from './content-quality.mjs'
 
@@ -30,7 +31,7 @@ export function classifyHeroTopic(text) {
 export function canonicalUrl(value) {
   try {
     const url = new URL(value)
-    if (url.protocol !== 'https:') return null
+    if (!isPublicHttpsUrl(value)) return null
     url.hash = ''
     for (const key of [...url.searchParams.keys()]) {
       if (/^(utm_|fbclid|gclid)/i.test(key)) url.searchParams.delete(key)
@@ -91,7 +92,8 @@ export function toHeroItems(articles) {
       title: article.title, category: article.topic, date: new Date(article.pubDate).toISOString(),
       excerpt: article.excerpt,
       author: article.source, authorAvatar: '/images/Logo.png', image,
-      imageAlt: `${article.topic.toLowerCase()} — editorial illustration`,
+      imageAlt: image === supplied ? '' : `${article.topic.toLowerCase()} topic illustration`,
+      imageCaption: image === supplied ? `Image supplied in ${article.source}'s RSS feed.` : image.includes('/hero-') ? 'AI-generated topic illustration; does not depict the reported event.' : 'Topic illustration; does not depict the reported event.',
       featured: false, readTime: 'Read at source', href: article.url, rss: true,
     }]
   })

@@ -4,12 +4,14 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "prebuild": "npm run content:audit:strict",
+    "prebuild": "npm run content:audit:strict && npm run content:validate",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
     "test": "node --test scripts/test/*.mjs",
     "content:audit": "node scripts/audit-content-quality.mjs",
+    "content:validate": "node scripts/validate-publication.mjs",
+    "editorial:inventory": "node scripts/editorial-inventory.mjs",
     "content:audit:strict": "node scripts/audit-content-quality.mjs --fail-on-issues",
     "verify": "npm run content:audit:strict && npm run lint && npm test && npm run build",
     "optimize:images": "node scripts/optimize-images.mjs"
@@ -21,7 +23,7 @@
     "gray-matter": "^4.0.3",
     "isomorphic-dompurify": "^2.23.0",
     "marked": "^18.0.3",
-    "next": "16.2.6",
+    "next": "16.4.3",
     "next-themes": "^0.4.6",
     "react": "19.2.4",
     "react-dom": "19.2.4"
@@ -34,15 +36,16 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
-    "eslint-config-next": "16.2.6",
+    "eslint-config-next": "16.4.3",
     "groq-sdk": "^0.9.1",
-    "sharp": "^0.34.5",
+    "sharp": "^0.35.5",
     "tailwindcss": "^4",
     "typescript": "^5"
   },
   "overrides": {
     "next": {
-      "postcss": "8.5.10"
-    }
+      "postcss": "8.5.32"
+    },
+    "postcss-selector-parser": "^6.1.5"
   }
 }

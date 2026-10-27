@@ -5,8 +5,7 @@ import { fetchAllArticles } from './lib/rss.mjs'
 import { generateNewsItem } from './lib/groq.mjs'
 import { fetchImage } from './lib/unsplash.mjs'
 import { calcReadTime, generateSlug, renderNewsMdx } from './lib/mdx.mjs'
-import { commitAndPush, pingIndexNow } from './lib/publish.mjs'
-import { publishToLinkedIn } from './lib/linkedin.mjs'
+import { commitAndPush } from './lib/publish.mjs'
 import { buildSeoLinks } from './lib/seo-links.mjs'
 import { collectExistingSourceUrls, collectExistingTitles, countGeneratedToday, loadSeen, saveSeen, todayIso } from './lib/content-history.mjs'
 import { isHospitalitySource, validateNewsPost } from './lib/content-quality.mjs'
@@ -89,6 +88,8 @@ async function main() {
     imageFile,
     sourceDomain: article.source,
     sourceUrl: article.url,
+    sourceExcerpt: article.excerpt,
+    sourcePublishedAt: new Date(article.pubDate).toISOString(),
     body: post.body,
     seoLinks: buildSeoLinks({
       contentType: 'news',
@@ -108,19 +109,7 @@ async function main() {
   saveSeen(TRACKER_PATH, seen)
 
   commitAndPush({ slug, imageFile, contentType: 'news' })
-  await pingIndexNow(slug)
-
-  // Publish to LinkedIn company page (non-fatal).
-  await publishToLinkedIn({
-    slug,
-    titleEn: post.title,
-    excerptEn: post.description,
-    category: post.category,
-    imageFile,
-    contentType: 'news',
-  })
-
-  console.log(`Done! News item live at /news/${slug}`)
+  console.log(`Draft ready for editorial review: content/news/${slug}.mdx`)
 }
 
 main().catch(err => {

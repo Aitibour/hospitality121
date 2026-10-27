@@ -9,6 +9,7 @@ import EditorsPick from '@/components/EditorsPick'
 import TopContent from '@/components/TopContent'
 import AdSlot from '@/components/AdSlot'
 import DiamondAuthoritySection from '@/components/DiamondAuthoritySection'
+import { createHomeSelection } from '@/lib/home-selection'
 
 export const metadata: Metadata = {
   title: { absolute: 'Hospitality121 - Hotel Tech News, Insights & Podcasts 2026' },
@@ -24,16 +25,16 @@ function isGeneratedPost(item: { type: string; sourceUrl?: string; author?: stri
 
 export default async function HomePage() {
   const all = getAllContent()
+  const select = createHomeSelection()
   const editorial     = all.filter(item => item.type !== 'event')
-  const generatedItems = editorial.filter(isGeneratedPost)
-  const heroItems = limitByAuthor(editorial.filter(item => classifyHeroTopic(`${item.title} ${item.category}`)), 2)
-    .filter((item, index, items) => items.findIndex(candidate => candidate.image === item.image || candidate.title === item.title) === index).slice(0, 8)
+  const heroItems = select(limitByAuthor(editorial.filter(item => classifyHeroTopic(`${item.title} ${item.category}`)), 2), 8)
   const initialFeed = await loadDailyHero().catch(() => ({ updatedAt: new Date().toISOString(), items: [] }))
   const heroSlugs     = new Set(heroItems.map(item => item.slug))
-  const gridItems     = limitByAuthor(editorial.filter(item => !heroSlugs.has(item.slug)), 2).slice(0, 10)
-  const featuredItems = pickEditorItems(all.filter(item => item.featured), 10)
-  const articles      = all.filter((item): item is Article => item.type === 'article')
-  const podcasts      = all.filter((item): item is Podcast => item.type === 'podcast')
+  const gridItems     = select(limitByAuthor(editorial.filter(item => !heroSlugs.has(item.slug)), 2), 10)
+  const generatedItems = select(editorial.filter(isGeneratedPost), 8)
+  const featuredItems = select(pickEditorItems(all.filter(item => item.featured), 10), 10)
+  const articles      = select(all.filter((item): item is Article => item.type === 'article'), 5)
+  const podcasts      = select(all.filter((item): item is Podcast => item.type === 'podcast'), 5)
 
   return (
     <>

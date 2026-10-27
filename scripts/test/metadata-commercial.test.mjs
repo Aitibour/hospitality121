@@ -29,7 +29,7 @@ test('utility pages use the shared static metadata helper', () => {
   }
 })
 
-test('commercial pages use New York aligned USD pricing', () => {
+test('commercial pages retain their established USD pricing', () => {
   const advertise = fs.readFileSync('app/advertise/page.tsx', 'utf8')
   const collaborate = fs.readFileSync('app/collaborate/page.tsx', 'utf8')
   const combined = `${advertise}\n${collaborate}`

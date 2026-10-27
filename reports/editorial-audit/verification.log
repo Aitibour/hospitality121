@@ -1,0 +1,211 @@
+
+> hospitality121@0.1.0 verify
+> npm run content:audit:strict && npm run lint && npm test && npm run build
+
+
+> hospitality121@0.1.0 content:audit:strict
+> node scripts/audit-content-quality.mjs --fail-on-issues
+
+Content quality audit passed. No forbidden style issues found.
+
+> hospitality121@0.1.0 lint
+> eslint
+
+
+> hospitality121@0.1.0 test
+> node --test scripts/test/*.mjs
+
+✔ AI discovery endpoints expose publisher and canonical content data (37.1093ms)
+✔ short llms file points answer engines to full discovery resources (1.3064ms)
+✔ content pages expose answer-engine citation schema (2.0274ms)
+✔ robots and document head advertise AI discovery access (7.0233ms)
+✔ blog automation publishes once per day (10.1652ms)
+✔ news automation publishes twice per day (4.9226ms)
+✔ isHospitalitySource accepts broad hospitality sources (63.7101ms)
+✔ regional filter blocks India and disallowed Arab-market stories (0.9392ms)
+✔ regional filter allows Saudi Arabia and Qatar stories (50.1699ms)
+✔ isDuplicateTitle catches close title repetition (2.8833ms)
+✔ validateHumanizedPost flags banned AI patterns (5.7219ms)
+✔ validateHumanizedPost flags forbidden punctuation and leverage repetition (1.7145ms)
+✔ validateNewsPost flags stock closing language (2.7981ms)
+✔ validateNewsPost blocks duplicate and regional news (1.9925ms)
+✔ validateNewsPost accepts clean hospitality news (3.1351ms)
+✔ daily hero filters old, future, unsafe and unrelated stories (10.7496ms)
+✔ tracking URLs and syndicated headlines do not repeat (1.9196ms)
+✔ available AI, cybersecurity, operations and technology get representation (34.2413ms)
+✔ hero images are distinct, real assets and match the selected topic (19.1475ms)
+✔ all curated topic photos are distinct by their actual bytes (46.4ms)
+✔ topics match whole AI words and daily cache expires at UTC midnight (0.5641ms)
+✔ daily RSS endpoint rejects writes (78.3641ms)
+✔ all external sources failing yields an empty feed rather than a page error (3.3953ms)
+✔ article subjects beyond the summary remain searchable (10.5976ms)
+✔ duplicate legacy file names retain the established news URL and expose the blog separately (0.5571ms)
+✔ legacy URLs stay published while drafts and unreviewed AI content are excluded (2.1688ms)
+✔ generated frontmatter cannot escape quoted YAML and always starts in review (11.9505ms)
+✔ Markdown supports real headings, emphasis, lists and tables without executing HTML (129.1933ms)
+✔ descriptions use editorial summaries and strip Markdown link syntax (0.7033ms)
+✔ display headlines stay compact and preserve meaningful words (3.8585ms)
+✔ missing image credentials cannot silently publish a repeated brand banner (2.8156ms)
+✔ hero carousel respects interaction and reduced motion (11.8195ms)
+✔ shared images follow the Next 16 loading API (27.526ms)
+✔ newsletter modal supports keyboard dismissal and focus restoration (3.6269ms)
+✔ global navigation supports keyboard users (2.1749ms)
+✔ newsletter forms report provider failures honestly (2.9845ms)
+✔ third-party scripts wait for cookie consent (3.6475ms)
+✔ newsletter modal traps keyboard focus (1.123ms)
+✔ generateSlug converts title to kebab case (3.4541ms)
+✔ generateSlug strips special characters (0.6731ms)
+✔ generateSlug truncates to 60 chars (4.4598ms)
+✔ generateSlug does not end with a dash (1.2792ms)
+✔ calcReadTime returns 1 min read for short text (0.9146ms)
+✔ calcReadTime rounds up to next minute (0.468ms)
+✔ renderMdx produces valid MDX with frontmatter and bilingual body (6.1785ms)
+✔ renderMdx escapes double quotes in titles (0.571ms)
+✔ renderMdx includes pillar and cluster links when supplied (32.8785ms)
+✔ renderNewsMdx produces news frontmatter with source URL (0.9981ms)
+✔ shared static metadata includes canonical and social previews (5.7214ms)
+✔ utility pages use the shared static metadata helper (11.8225ms)
+✔ commercial pages retain their established USD pricing (6.6052ms)
+✔ auto publisher verifies generated content before committing (3.2544ms)
+✔ generated content is isolated on review branches without indexing or social posts (1.5864ms)
+✔ RSS rejects future dates, credentials and non-public destination URLs (13.9552ms)
+✔ parseFeed returns only articles within the recent window (0.8995ms)
+✔ parseFeed sets correct url from link element (0.7075ms)
+✔ parseFeed strips HTML tags from excerpt (0.8722ms)
+✔ parseFeed tags articles with source domain (0.8599ms)
+✔ parseFeed handles single item (XML gives object not array) (0.5351ms)
+✔ RSS images in full content are found when the short description has no image (0.5759ms)
+✔ parseFeed returns empty array for feed with no items (0.4509ms)
+✔ RSS source list includes official hotel brand feeds (1.4381ms)
+✔ top hotel brand keyword set covers 20 brands (0.6167ms)
+✔ sitemap export normalizes and deduplicates crawl URLs (5.3305ms)
+✔ internal search is accessible and excluded from search indexing (8.8229ms)
+✔ robots export declares sitemap and canonical host (6.7703ms)
+✔ search index exports canonical metadata for every content item (3.9502ms)
+✔ search honors shareable query URLs and searches content summaries (2.2867ms)
+✔ buildSeoLinks points blog items to the blog pillar (2.881ms)
+✔ buildSeoLinks points news items to the news pillar (0.5973ms)
+✔ RSS and Google News routes expose static XML feeds (30.2168ms)
+✔ site discovery exposes RSS and Google News sitemap (13.6596ms)
+✔ generated stories visibly attribute source reporting (2.0477ms)
+✔ technology topics include product and solution SEO blocks (3.5531ms)
+✔ technology pages expose solution structured data (7.5113ms)
+✔ diamond feed and sitemap surface technology solution pages (4.7884ms)
+✔ technology hub links to topic solution anchors (7.5788ms)
+✔ navbar exposes all technology solution topic pages (1.5234ms)
+ℹ tests 78
+ℹ suites 0
+ℹ pass 78
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 7463.4105
+
+> hospitality121@0.1.0 prebuild
+> npm run content:audit:strict && npm run content:validate
+
+
+> hospitality121@0.1.0 content:audit:strict
+> node scripts/audit-content-quality.mjs --fail-on-issues
+
+Content quality audit passed. No forbidden style issues found.
+
+> hospitality121@0.1.0 content:validate
+> node scripts/validate-publication.mjs
+
+Structural publication validation passed for 284 content files. Factual accuracy and image rights require human review.
+
+> hospitality121@0.1.0 build
+> next build
+
+▲ Next.js 16.4.3 (Turbopack)
+- Environments: .env.local
+✓ Running next.config.ts took 324ms
+- Experiments (use with caution):
+  · staticGenerationMaxConcurrency: 2
+  · staticGenerationMinPagesPerWorker: 128
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 21.6s
+  Running TypeScript ...
+  Finished TypeScript in 10.4s ...
+  Collecting page data using 7 workers ...
+  Generating static pages using 7 workers (0/364) ...
+  Generating static pages using 7 workers (91/364) 
+  Generating static pages using 7 workers (182/364) 
+  Generating static pages using 7 workers (273/364) 
+✓ Generating static pages using 7 workers (364/364) in 29.1s
+  Finalizing page optimization ...
+
+Route (app)                                   Revalidate  Expire
+┌ ○ /                                                 1h      1y
+├ ○ /_not-found
+├ ○ /about
+├ ○ /advertise
+├ ○ /ai-index.json
+├   /author/[slug]
+│ ├ ● /author/sumaya-oneill
+│ ├ ● /author/marcus-webb
+│ ├ ● /author/claire-fontaine
+│ └ ● [+11 more paths]
+├ ○ /blog                                             1h      1y
+├   /category/[slug]
+│ ├ ● /category/ai
+│ ├ ● /category/technology
+│ ├ ● /category/guest-experience
+│ └ ● [+2 more paths]
+├ ○ /collaborate
+├ ○ /contact
+├   /content/[slug]
+│ ├ ● /content/ai-in-guest-experience                 1h      1y
+│ ├ ● /content/ai-revenue-management-2026             1h      1y
+│ ├ ● /content/architecture-guest-experience          1h      1y
+│ └ ● [+281 more paths]
+├ ○ /editorial-standards
+├ ○ /events                                           1h      1y
+├ ○ /feed.xml
+├   /geo/[slug]
+│ ├ ● /geo/hospitality-technology-toronto
+│ ├ ● /geo/hospitality-leadership-vancouver
+│ ├ ● /geo/luxury-hotels-montreal
+│ └ ● [+7 more paths]
+├ ○ /guest-experience
+├ ○ /hospitality-leadership
+├ ○ /hospitality-recruitment
+├ ○ /hospitality-trends
+├ ○ /hotel-operations
+├ ○ /icon.png
+├ ○ /insights                                         1h      1y
+├ ○ /interviews                                       1h      1y
+├ ○ /llms-full.txt
+├ ○ /luxury-hospitality
+├ ○ /media
+├ ○ /news                                             1h      1y
+├ ○ /news-sitemap.xml
+├ ○ /podcasts                                         1h      1y
+├ ○ /privacy
+├ ○ /resources
+├ ○ /robots.txt
+├ ○ /search
+├ ○ /search-index.json
+├ ○ /seo-diamond.json
+├ ○ /sitemap.xml
+├ ○ /subscribe
+├ ○ /sustainability
+├   /sustainability/[topic]
+│ ├ ● /sustainability/sustainable-operations
+│ ├ ● /sustainability/smart-operations
+│ ├ ● /sustainability/green-technologies
+│ └ ● /sustainability/esg-reporting
+├ ○ /technology
+└   /technology/[topic]
+  ├ ● /technology/ai
+  ├ ● /technology/pms-pos
+  ├ ● /technology/key-systems
+  └ ● [+7 more paths]
+
+
+○  (Static)  prerendered as static content
+●  (SSG)     prerendered as static HTML (uses generateStaticParams)
+

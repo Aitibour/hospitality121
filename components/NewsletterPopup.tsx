@@ -23,6 +23,7 @@ export default function NewsletterPopup() {
 
   useEffect(() => {
     if (typeof window === 'undefined') return
+    if (!process.env.NEXT_PUBLIC_BEEHIIV_PUBLICATION_ID) return
     if (localStorage.getItem(STORAGE_KEY)) return
     if (window.matchMedia('(max-width: 767px)').matches) return
     const timer = setTimeout(() => setVisible(true), 12000)
@@ -92,7 +93,6 @@ export default function NewsletterPopup() {
       return
     }
     setStatus('success')
-    setTimeout(dismiss, 3000)
   }
 
   if (!visible) return null
@@ -137,8 +137,8 @@ export default function NewsletterPopup() {
                   <polyline points="20 6 9 17 4 12" />
                 </svg>
               </div>
-              <p className="font-serif text-2xl font-bold text-gray-900 mb-2">Welcome aboard.</p>
-              <p className="text-gray-500 text-sm">Your first issue of Hospitality121 is on its way.</p>
+              <p className="font-serif text-2xl font-bold text-gray-900 mb-2">Request sent</p>
+              <p className="text-gray-500 text-sm">Check your inbox for confirmation. We cannot confirm your subscription from this page.</p>
             </div>
           ) : (
             <>
@@ -148,7 +148,7 @@ export default function NewsletterPopup() {
                   The hospitality intelligence briefing.
                 </h2>
                 <p id="newsletter-description" className="text-gray-500 text-sm leading-relaxed">
-                  Join 4,000+ hotel leaders. Get the sharpest insights on technology, sustainability, and leadership every week.
+                  Get practical insights on hotel technology, sustainability, and leadership.
                 </p>
               </div>
 

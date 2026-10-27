@@ -5,8 +5,7 @@ import { fetchAllArticles } from './lib/rss.mjs'
 import { generatePost } from './lib/groq.mjs'
 import { fetchImage } from './lib/unsplash.mjs'
 import { calcReadTime, generateSlug, renderMdx } from './lib/mdx.mjs'
-import { commitAndPush, pingIndexNow } from './lib/publish.mjs'
-import { publishToLinkedIn } from './lib/linkedin.mjs'
+import { commitAndPush } from './lib/publish.mjs'
 import { buildSeoLinks } from './lib/seo-links.mjs'
 import { collectExistingKeywordSets, collectExistingSourceUrls, collectExistingTitles, countGeneratedToday, loadSeen, saveSeen, todayIso } from './lib/content-history.mjs'
 import { isHospitalitySource, validateHumanizedPost } from './lib/content-quality.mjs'
@@ -115,6 +114,8 @@ async function main() {
     imageFile,
     sourceDomain: article.source,
     sourceUrl: article.url,
+    sourceExcerpt: article.excerpt,
+    sourcePublishedAt: new Date(article.pubDate).toISOString(),
     bodyEn: post.bodyEn,
     bodyFr: post.bodyFr,
     primaryKeyword: post.primaryKeyword,
@@ -143,23 +144,10 @@ async function main() {
   seen.push(article.url)
   saveSeen(TRACKER_PATH, seen)
 
-  // 8. Commit and push, which triggers Netlify auto-deploy.
+  // Save to an isolated review branch; no indexing or social publication of drafts.
   commitAndPush({ slug, imageFile, contentType: 'blog' })
 
-  // 9. Ping IndexNow (non-fatal).
-  await pingIndexNow(slug)
-
-  // 10. Publish to LinkedIn company page (non-fatal).
-  await publishToLinkedIn({
-    slug,
-    titleEn: post.titleEn,
-    excerptEn: post.excerptEn,
-    category: post.category,
-    imageFile,
-    contentType: 'blog',
-  })
-
-  console.log(`Done! Post live at /blog/${slug}`)
+  console.log(`Draft ready for editorial review: content/blog/${slug}.mdx`)
 }
 
 main().catch(err => {

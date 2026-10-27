@@ -2,7 +2,6 @@ import Image from 'next/image'
 import Link from 'next/link'
 import type { Article, Podcast } from '@/types/content'
 import { formatDate } from '@/lib/formatDate'
-import { shortHeadline } from '@/lib/headlines.mjs'
 
 type ArticleRowProps = { items: Article[]; rank: number }
 type PodcastRowProps = { items: Podcast[]; rank: number }
@@ -19,8 +18,8 @@ function ArticleRow({ items, rank }: ArticleRowProps) {
         </div>
         <div className="min-w-0 flex-1">
           <p className="text-xs text-gold font-semibold tracking-wider mb-1">{items[0]?.category}</p>
-          <h4 title={items[0]?.title} className="font-serif text-sm font-semibold leading-snug truncate group-hover:text-gold transition-colors">
-            {shortHeadline(items[0].title)}
+          <h4 className="font-serif text-sm font-semibold leading-snug break-words group-hover:text-gold transition-colors">
+            {items[0].title}
           </h4>
           <p className="text-muted text-xs mt-1">{formatDate(items[0]?.date)} · {items[0]?.readTime}</p>
         </div>
@@ -41,8 +40,8 @@ function PodcastRow({ items, rank }: PodcastRowProps) {
         </div>
         <div className="min-w-0 flex-1">
           <p className="text-xs text-gold font-semibold tracking-wider mb-1">{items[0]?.category}</p>
-          <h4 title={items[0]?.title} className="font-serif text-sm font-semibold leading-snug truncate group-hover:text-gold transition-colors">
-            {shortHeadline(items[0].title)}
+          <h4 className="font-serif text-sm font-semibold leading-snug break-words group-hover:text-gold transition-colors">
+            {items[0].title}
           </h4>
           <p className="text-muted text-xs mt-1">{formatDate(items[0]?.date)} · {items[0]?.duration}</p>
         </div>

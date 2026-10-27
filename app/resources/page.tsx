@@ -7,15 +7,15 @@ const REPORTS = [
   {
     id: 'state-of-hospitality-tech-2026',
     title: 'State of Hospitality Technology 2026',
-    description: 'Our flagship annual report covering AI adoption, digital transformation benchmarks, guest experience technology investment, and the key priorities of senior hospitality leaders across 40 markets.',
-    pages: '28 pages',
+    description: 'Request information on hotel technology adoption, guest experience investment and operational priorities. Availability and scope require confirmation.',
+    pages: 'Availability on request',
     topics: ['AI and machine learning adoption rates', 'Top technology investment priorities', 'Guest experience platform benchmarks', 'Revenue management technology trends', 'Cybersecurity and data governance'],
   },
   {
     id: 'luxury-guest-experience-guide',
     title: 'The Luxury Guest Experience Playbook',
     description: 'A practical guide to designing personalised, technology-enabled guest experiences at luxury properties. Covers pre-arrival, in-stay, and post-stay touchpoints with case study examples.',
-    pages: '18 pages',
+    pages: 'Availability on request',
     topics: ['Pre-arrival personalisation frameworks', 'In-stay technology touchpoints', 'Loyalty programme design', 'Staff empowerment and service culture', 'Measuring guest experience ROI'],
   },
 ]
@@ -76,13 +76,13 @@ export default function ResourcesPage() {
   if (status === 'success') {
     return (
       <div className="max-w-lg mx-auto px-4 py-24 text-center">
-        <p className="text-xs font-bold tracking-widest text-gold uppercase mb-3">Download Ready</p>
-        <h1 className="font-serif text-3xl font-bold mb-4">Check your inbox.</h1>
+        <p className="text-xs font-bold tracking-widest text-gold uppercase mb-3">Request received</p>
+        <h1 className="font-serif text-3xl font-bold mb-4">Thank you for your interest.</h1>
         <p className="text-muted leading-relaxed">
-          We have sent <strong>{downloadedTitle}</strong> to your email address. It may take a minute to arrive.
+          Your request for <strong>{downloadedTitle}</strong> was submitted. This page does not confirm availability or email delivery.
         </p>
         <p className="text-muted text-sm mt-4">
-          While you wait, explore the latest <a href="/insights" className="text-gold hover:underline">Insights</a> on Hospitality121.
+          Explore <a href="/insights" className="text-gold hover:underline">Insights</a> on Hospitality121.
         </p>
       </div>
     )
@@ -96,7 +96,7 @@ export default function ResourcesPage() {
           Industry Reports & Guides
         </h1>
         <p className="text-muted text-lg leading-relaxed max-w-2xl mx-auto">
-          Original research and practical guides for hospitality professionals. Free to download.
+          Request information about hospitality reports and guides. Confirm availability with our team before relying on a download.
         </p>
       </div>
 
@@ -132,8 +132,8 @@ export default function ResourcesPage() {
 
         {/* Download form */}
         <div className="bg-surface rounded-xl p-6">
-          <h2 className="font-serif text-xl font-bold mb-1">Get your free copy</h2>
-          <p className="text-muted text-sm mb-6">Enter your details and we will send it straight to your inbox.</p>
+          <h2 className="font-serif text-xl font-bold mb-1">Request availability</h2>
+          <p className="text-muted text-sm mb-6">Send an enquiry about the selected resource.</p>
 
           <form
             name="resource-download"
@@ -208,7 +208,7 @@ export default function ResourcesPage() {
               disabled={status === 'submitting'}
               className="bg-gold text-navy font-bold py-3 rounded hover:opacity-90 transition-opacity disabled:opacity-50 mt-1"
             >
-              {status === 'submitting' ? 'Sending…' : 'Download Free Report'}
+              {status === 'submitting' ? 'Sending…' : 'Request resource information'}
             </button>
 
             {status === 'error' && (
@@ -216,7 +216,7 @@ export default function ResourcesPage() {
             )}
 
             <p className="text-xs text-muted text-center">
-              By downloading you agree to receive the Hospitality121 newsletter. Unsubscribe any time.
+              We use your details to respond to this request. This form does not subscribe you to the newsletter.
             </p>
           </form>
         </div>

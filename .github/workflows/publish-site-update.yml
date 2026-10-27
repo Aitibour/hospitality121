@@ -1,0 +1,32 @@
+name: Publish site update
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: hospitality121-site-update-2026-10
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  linkedin:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Publish the authorised website update
+        env:
+          LINKEDIN_ACCESS_TOKEN: ${{ secrets.LINKEDIN_ACCESS_TOKEN }}
+          LINKEDIN_ORG_URN: ${{ secrets.LINKEDIN_ORG_URN }}
+        run: node scripts/publish-site-update.mjs
+      - name: Save publication receipt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: site-update-publication-receipt
+          path: publication-receipt.json
+          if-no-files-found: ignore

@@ -72,7 +72,7 @@ export default function Footer() {
               </div>
             </Link>
             <p className="text-xs text-gray-500 leading-relaxed mb-1">
-              Hospitality media platform based in New York, USA.
+              Hospitality media platform based in Vancouver, Canada.
             </p>
             <p className="text-xs text-gray-500 leading-relaxed mb-4">
               Covering news, articles, podcasts, events, leadership, technology, sustainability, operations, recruitment, luxury, and guest experience globally.
@@ -102,7 +102,7 @@ export default function Footer() {
 
         <div className="border-t border-gray-200 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-xs text-gray-400">
-            © {new Date().getFullYear()} Hospitality One 2 One. New York, NY, USA. All rights reserved.
+            © {new Date().getFullYear()} Hospitality One 2 One. Vancouver, Canada. All rights reserved.
           </p>
           <div className="flex gap-5">
             {LEGAL.map(l => (

@@ -4,6 +4,12 @@ import { FEEDS, TOP_HOTEL_BRANDS, parseFeed } from '../lib/rss.mjs'
 
 const RECENT = new Date(Date.now() - 12 * 60 * 60 * 1000).toUTCString()
 
+test('RSS rejects future dates, credentials and non-public destination URLs', () => {
+  const item = (url, date = RECENT) => `<item><title>Hotel systems</title><link>${url}</link><pubDate>${date}</pubDate></item>`
+  const xml = `<rss><channel>${item('javascript:alert(1)')}${item('https://localhost/private')}${item('https://127.0.0.1/private')}${item('https://user:secret@example.com/private')}${item('https://example.com/future', 'Thu, 01 Jan 2099 00:00:00 GMT')}${item('https://example.com/valid')}</channel></rss>`
+  assert.deepEqual(parseFeed(xml, 'Example').map(article => article.url), ['https://example.com/valid'])
+})
+
 const SAMPLE_RSS = `<?xml version="1.0"?>
 <rss version="2.0">
   <channel>

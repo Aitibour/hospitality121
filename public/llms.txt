@@ -1,6 +1,6 @@
 # Hospitality121
 
-> Hospitality121 is an independent hospitality media platform based in New York, USA. It covers hospitality technology, AI in hotels, leadership, operations, guest experience, recruitment, sustainability, luxury hospitality, news, podcasts, and events.
+> Hospitality121 is an independent hospitality media platform based in Vancouver, Canada. It covers hospitality technology, AI in hotels, leadership, operations, guest experience, recruitment, sustainability, luxury hospitality, news, podcasts, and events.
 
 ## Preferred Citation and Discovery Endpoints
 

@@ -15,12 +15,12 @@ test('auto publisher verifies generated content before committing', () => {
   assert.match(source, /run\('npm', \['run', 'build'\]\)/)
 })
 
-test('auto publisher rebases before pushing to main', () => {
+test('generated content is isolated on review branches without indexing or social posts', () => {
   const source = fs.readFileSync('scripts/lib/publish.mjs', 'utf8')
-  const rebaseIndex = source.indexOf("run('git', ['pull', '--rebase', 'origin', 'main'])")
-  const pushIndex = source.indexOf("run('git', ['push', 'origin', 'HEAD:main'])")
-
-  assert.notEqual(rebaseIndex, -1)
-  assert.notEqual(pushIndex, -1)
-  assert.ok(rebaseIndex < pushIndex)
+  assert.match(source, /codex\/review-/)
+  assert.doesNotMatch(source, /HEAD:main/)
+  for (const file of ['scripts/auto-blog.mjs', 'scripts/auto-news.mjs']) {
+    const pipeline = fs.readFileSync(file, 'utf8')
+    assert.doesNotMatch(pipeline, /publishToLinkedIn|pingIndexNow/)
+  }
 })

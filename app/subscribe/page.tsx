@@ -9,6 +9,7 @@ function isValidEmail(email: string) {
 
 export default function SubscribePage() {
   const [status, setStatus] = useState<Status>('idle')
+  const newsletterAvailable = !!process.env.NEXT_PUBLIC_BEEHIIV_PUBLICATION_ID
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -49,8 +50,8 @@ export default function SubscribePage() {
   if (status === 'success') {
     return (
       <div className="max-w-lg mx-auto px-4 py-24 text-center">
-        <h1 autoFocus className="font-serif text-3xl font-bold text-gold mb-4">You&apos;re in.</h1>
-        <p className="text-muted">Welcome to the Hospitality121 community. Your first issue arrives shortly.</p>
+        <h1 className="font-serif text-3xl font-bold text-gold mb-4">Request sent</h1>
+        <p className="text-muted">Check your inbox for confirmation from our newsletter provider. We cannot confirm your subscription from this page.</p>
       </div>
     )
   }
@@ -142,11 +143,12 @@ export default function SubscribePage() {
 
         <button
           type="submit"
-          disabled={status === 'submitting'}
+          disabled={status === 'submitting' || !newsletterAvailable}
           className="bg-gold text-navy font-bold py-3 rounded hover:opacity-90 transition-opacity disabled:opacity-50 mt-2"
         >
           {status === 'submitting' ? 'Subscribing…' : 'SUBSCRIBE FREE'}
         </button>
+        {!newsletterAvailable && <p role="status" className="text-sm text-muted">Online subscriptions are currently unavailable. Please <a href="/contact" className="text-gold underline">contact us</a> for newsletter information.</p>}
 
         {status === 'error' && (
           <p className="text-red-400 text-sm text-center" role="alert">

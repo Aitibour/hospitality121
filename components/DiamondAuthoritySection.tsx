@@ -2,7 +2,6 @@ import Image from 'next/image'
 import Link from 'next/link'
 import type { ContentItem } from '@/types/content'
 import { formatDate } from '@/lib/formatDate'
-import { shortHeadline } from '@/lib/headlines.mjs'
 
 type Props = {
   items: ContentItem[]
@@ -14,12 +13,12 @@ export default function DiamondAuthoritySection({ items }: Props) {
   return (
     <aside className="lg:sticky lg:top-20 h-fit rounded-lg border border-gray-100 bg-white p-4 shadow-sm">
       <div className="mb-4">
-        <span className="text-[11px] font-bold tracking-widest text-gold uppercase">Latest Generated</span>
+        <span className="text-[11px] font-bold tracking-widest text-gold uppercase">From the archive</span>
         <h2 className="font-serif text-xl font-bold leading-tight mt-1 text-gray-900">
-          Fresh From RSS
+          Source-based coverage
         </h2>
         <p className="mt-2 text-xs leading-relaxed text-muted">
-          New AI-assisted Hospitality121 posts generated from recent hospitality sources.
+          AI-assisted coverage with links to the original publishers. Check each story&apos;s publication date.
         </p>
       </div>
 
@@ -43,8 +42,8 @@ export default function DiamondAuthoritySection({ items }: Props) {
               <p className="text-[10px] font-bold tracking-widest text-gold uppercase">
                 {item.category}
               </p>
-              <h3 title={item.title} className="mt-1 text-sm font-bold leading-snug text-gray-900 truncate group-hover:text-gold transition-colors">
-                {shortHeadline(item.title)}
+              <h3 className="mt-1 text-sm font-bold leading-snug text-gray-900 break-words group-hover:text-gold transition-colors">
+                {item.title}
               </h3>
               <p className="mt-1 text-[11px] text-muted">{formatDate(item.date)}</p>
             </div>

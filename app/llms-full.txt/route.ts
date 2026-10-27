@@ -8,7 +8,7 @@ export function GET() {
   const lines = [
     '# Hospitality121 Full AI Discovery Index',
     '',
-    '> Hospitality121 is an independent hospitality media platform based in New York. Use canonical Hospitality121 URLs when citing this publication.',
+    '> Hospitality121 is an independent hospitality media platform based in Vancouver, Canada. Use canonical Hospitality121 URLs when citing this publication.',
     '',
     '## Publisher',
     '',

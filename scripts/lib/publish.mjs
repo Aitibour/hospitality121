@@ -11,7 +11,7 @@ export function verifyGeneratedContent() {
 }
 
 /**
- * Commits the new MDX, image, and tracking file, then pushes to origin main.
+ * Save generated drafts on a review branch. Never push generated work to main.
  * Uses execFileSync with argument arrays, no shell interpolation.
  * @param {{ slug: string, imageFile: string, contentType?: 'blog' | 'news' }} params
  */
@@ -20,6 +20,9 @@ export function commitAndPush({ slug, imageFile, contentType = 'blog' }) {
 
   verifyGeneratedContent()
 
+  const reviewBranch = `codex/review-${scope}-${slug}`
+  run('git', ['switch', '-c', reviewBranch])
+
   run('git', ['config', '--local', 'user.email', 'action@github.com'])
   run('git', ['config', '--local', 'user.name', 'H1H Auto Publisher'])
   run('git', ['add',
@@ -27,11 +30,10 @@ export function commitAndPush({ slug, imageFile, contentType = 'blog' }) {
     `public/images/content/${imageFile}`,
     'scripts/seen-articles.json',
   ])
-  run('git', ['commit', '-m', `feat(${scope}): auto-post ${slug}`])
-  run('git', ['pull', '--rebase', 'origin', 'main'])
-  run('git', ['push', 'origin', 'HEAD:main'])
+  run('git', ['commit', '-m', `draft(${scope}): editorial review ${slug}`])
+  run('git', ['push', '-u', 'origin', reviewBranch])
 
-  console.log(`Pushed: ${slug}`)
+  console.log(`Draft saved for review: ${reviewBranch}`)
 }
 
 /**

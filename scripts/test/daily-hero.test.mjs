@@ -1,9 +1,10 @@
-import { test } from 'node:test'
+import { test, mock } from 'node:test'
 import assert from 'node:assert/strict'
 import fs from 'node:fs'
 import { createHash } from 'node:crypto'
 import { classifyHeroTopic, selectHeroArticles, toHeroItems, secondsUntilTomorrow, TOPIC_IMAGES } from '../lib/daily-hero.mjs'
 import handler from '../../netlify/functions/daily-hero.mjs'
+import { fetchAllArticles } from '../lib/rss.mjs'
 
 const now = new Date('2026-10-26T12:00:00Z')
 const article = (title, hours = 1, url = `https://example.com/${encodeURIComponent(title)}`) => ({ title, excerpt: 'Hotel hospitality news', url, pubDate: new Date(+now - hours * 3600000), source: 'example.com' })
@@ -61,4 +62,12 @@ test('topics match whole AI words and daily cache expires at UTC midnight', () =
 
 test('daily RSS endpoint rejects writes', async () => {
   assert.equal((await handler(new Request('https://example.com', { method: 'POST' }))).status, 405)
+})
+
+test('all external sources failing yields an empty feed rather than a page error', async () => {
+  const fetchMock = mock.method(globalThis, 'fetch', async () => { throw new Error('Upstream unavailable') })
+  const warning = mock.method(console, 'warn', () => {})
+  try {
+    assert.deepEqual(await fetchAllArticles({ feeds: [{ url: 'https://example.com/feed', source: 'Example' }] }), [])
+  } finally { fetchMock.mock.restore(); warning.mock.restore() }
 })

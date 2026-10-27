@@ -29,24 +29,29 @@ export function calcReadTime(text) {
  * @param {{ titleEn, titleFr, excerptEn, excerptFr, category, date, readTime, imageFile, sourceDomain, sourceUrl, bodyEn, bodyFr, seoLinks, primaryKeyword?, keywords?, imageConcept?, editorialFormat?, linkedinCaption?, facebookCaption?, xCaption?, newsletterTeaser? }} params
  * @returns {string}
  */
-export function renderMdx({ titleEn, titleFr, excerptEn, excerptFr, category, date, readTime, imageFile, sourceDomain, sourceUrl, bodyEn, bodyFr, seoLinks = '', primaryKeyword = '', keywords = [], imageConcept = '', editorialFormat = '', linkedinCaption = '', facebookCaption = '', xCaption = '', newsletterTeaser = '' }) {
-  const esc = s => s.replace(/"/g, '\\"')
+export function renderMdx({ titleEn, titleFr, excerptEn, excerptFr, category, date, readTime, imageFile, sourceDomain, sourceUrl, sourceExcerpt = '', sourcePublishedAt = '', bodyEn, bodyFr, seoLinks = '', primaryKeyword = '', keywords = [], imageConcept = '', editorialFormat = '', linkedinCaption = '', facebookCaption = '', xCaption = '', newsletterTeaser = '' }) {
+  const esc = s => JSON.stringify(String(s ?? '')).slice(1, -1)
   const keywordLine = Array.isArray(keywords) ? keywords.join(', ') : String(keywords || '')
   return `---
 title: "${esc(titleEn)}"
 titleFr: "${esc(titleFr)}"
 excerpt: "${esc(excerptEn)}"
 excerptFr: "${esc(excerptFr)}"
-category: "${category}"
+category: "${esc(category)}"
 author: "H1H Newsfeed"
 authorAvatar: "/images/Logo.png"
-date: "${date}"
-readTime: "${readTime}"
-image: "/images/content/${imageFile}"
+date: "${esc(date)}"
+readTime: "${esc(readTime)}"
+image: "/images/content/${esc(imageFile)}"
 featured: false
 type: "blog"
-source: "${sourceDomain}"
-sourceUrl: "${sourceUrl}"
+status: "review"
+aiGenerated: true
+editorialReview: null
+source: "${esc(sourceDomain)}"
+sourceUrl: "${esc(sourceUrl)}"
+sourceExcerpt: "${esc(sourceExcerpt)}"
+sourcePublishedAt: "${esc(sourcePublishedAt)}"
 primaryKeyword: "${esc(primaryKeyword)}"
 keywords: "${esc(keywordLine)}"
 imageConcept: "${esc(imageConcept)}"
@@ -72,21 +77,26 @@ ${bodyFr}
  * @param {{ title, description, category, date, readTime, imageFile, sourceDomain, sourceUrl, body, seoLinks }} params
  * @returns {string}
  */
-export function renderNewsMdx({ title, description, category, date, readTime, imageFile, sourceDomain, sourceUrl, body, seoLinks = '' }) {
-  const esc = s => s.replace(/"/g, '\\"')
+export function renderNewsMdx({ title, description, category, date, readTime, imageFile, sourceDomain, sourceUrl, sourceExcerpt = '', sourcePublishedAt = '', body, seoLinks = '' }) {
+  const esc = s => JSON.stringify(String(s ?? '')).slice(1, -1)
   return `---
 title: "${esc(title)}"
-category: "${category}"
+category: "${esc(category)}"
 author: "H1H Newsfeed"
 authorAvatar: "/images/Logo.png"
-date: "${date}"
-readTime: "${readTime}"
-image: "/images/content/${imageFile}"
+date: "${esc(date)}"
+readTime: "${esc(readTime)}"
+image: "/images/content/${esc(imageFile)}"
 featured: false
 type: "news"
+status: "review"
+aiGenerated: true
+editorialReview: null
 description: "${esc(description)}"
-source: "${sourceDomain}"
-sourceUrl: "${sourceUrl}"
+source: "${esc(sourceDomain)}"
+sourceUrl: "${esc(sourceUrl)}"
+sourceExcerpt: "${esc(sourceExcerpt)}"
+sourcePublishedAt: "${esc(sourcePublishedAt)}"
 ---
 
 ${body}

@@ -4,7 +4,7 @@ import { buildStaticMetadata } from '@/lib/seo-metadata'
 
 export const metadata: Metadata = buildStaticMetadata({
   title: 'About',
-  description: 'Hospitality121 is a hospitality media platform based in New York, USA, covering leadership, news, events, podcasts, technology, guest experience, operations, recruitment, sustainability, and luxury hospitality.',
+  description: 'Hospitality121 is a hospitality media platform based in Vancouver, Canada, covering leadership, news, events, podcasts, technology, guest experience, operations, recruitment, sustainability, and luxury hospitality.',
   path: '/about',
 })
 
@@ -17,7 +17,7 @@ export default function AboutPage() {
           The Future of Hospitality,<br />One Connection at a Time
         </h1>
         <p className="text-muted text-lg leading-relaxed">
-          Hospitality121 is a hospitality media platform based in New York, USA, exploring the
+          Hospitality121 is a hospitality media platform based in Vancouver, Canada, exploring the
           people, ideas, technology, operations, events, and market shifts shaping the next
           generation of hospitality for operators, executives, investors, and emerging leaders.
         </p>
@@ -27,14 +27,14 @@ export default function AboutPage() {
         <section>
           <h2 className="font-serif text-2xl font-bold mb-3">Who We Are</h2>
           <p className="text-muted leading-relaxed mb-4">
-            Founded and operated from New York, Hospitality121 is an independent media company
+            Based in Vancouver, Hospitality121 is an independent media company
             serving the US and global hospitality industry. Our editorial lens spans the United
             States, Canada, Europe, the Middle East, Africa, and Asia Pacific.
           </p>
           <p className="text-muted leading-relaxed">
             We operate as a bilingual-capable platform, publishing primary coverage in English
             with a readership of hotel executives, technology leaders, revenue managers, operators,
-            recruiters, event organizers, and hospitality professionals across more than 40 countries.
+            recruiters, event organizers, and hospitality professionals.
           </p>
         </section>
 
@@ -71,8 +71,7 @@ export default function AboutPage() {
             The Hospitality121 Podcast brings together conversations at the intersection of
             hospitality, leadership, operations, technology, recruitment, and innovation. We speak
             with hotel executives, founders, operators, event leaders, and guest experience pioneers.
-            Episodes are produced from our New York base and distributed globally across all major
-            podcast platforms.
+            Check each episode page for audio availability and supporting notes.
           </p>
         </section>
 
@@ -90,19 +89,19 @@ export default function AboutPage() {
           <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4 text-sm">
             <div>
               <dt className="text-xs font-bold tracking-widest text-gold uppercase mb-1">Headquarters</dt>
-              <dd className="text-muted">New York, NY, United States</dd>
+              <dd className="text-muted">Vancouver, British Columbia, Canada</dd>
             </div>
             <div>
               <dt className="text-xs font-bold tracking-widest text-gold uppercase mb-1">Markets Served</dt>
-              <dd className="text-muted">USA &amp; Global</dd>
+              <dd className="text-muted">Global hospitality</dd>
             </div>
             <div>
-              <dt className="text-xs font-bold tracking-widest text-gold uppercase mb-1">Founded</dt>
-              <dd className="text-muted">2024</dd>
+              <dt className="text-xs font-bold tracking-widest text-gold uppercase mb-1">Primary language</dt>
+              <dd className="text-muted">English</dd>
             </div>
             <div>
               <dt className="text-xs font-bold tracking-widest text-gold uppercase mb-1">Coverage</dt>
-              <dd className="text-muted">40+ countries</dd>
+              <dd className="text-muted">Hospitality technology and operations</dd>
             </div>
             <div>
               <dt className="text-xs font-bold tracking-widest text-gold uppercase mb-1">Publication Type</dt>

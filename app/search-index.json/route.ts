@@ -1,4 +1,5 @@
-import { getAllContent } from '@/lib/content'
+import { getAllContent, getContentBySlug } from '@/lib/content'
+import { buildSearchText } from '@/lib/search-text.mjs'
 import { getContentSummary } from '@/lib/ai-discovery'
 import type { ContentItem } from '@/types/content'
 
@@ -28,6 +29,7 @@ export function GET() {
     type: item.type,
     date: item.date,
     summary: getContentSummary(item, 240),
+    searchText: buildSearchText(getContentBySlug(item.slug)?.body),
     timeLabel: getTimeLabel(item),
     image: item.image,
     author: getAuthor(item),

@@ -13,6 +13,7 @@ type SearchItem = {
   type: string
   date: string
   summary: string
+  searchText: string
   timeLabel: string
   image: string
   author: string
@@ -59,11 +60,13 @@ export default function SearchPage() {
     keys: [
       { name: 'title', weight: 0.45 },
       { name: 'summary', weight: 0.25 },
+      { name: 'searchText', weight: 0.1 },
       { name: 'category', weight: 0.15 },
       { name: 'author', weight: 0.1 },
       { name: 'type', weight: 0.05 },
     ],
     threshold: 0.35,
+    ignoreLocation: true,
     includeScore: true,
   }), [items])
 

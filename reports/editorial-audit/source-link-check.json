@@ -1,0 +1,1150 @@
+{
+  "checkedAt": "2026-10-27T00:44:07.627Z",
+  "method": "HEAD only, no redirects followed; reachability is not factual verification",
+  "results": [
+    {
+      "url": "https://marriott.gcs-web.com/news-releases/news-release-details/marriott-international-declares-quarterly-cash-dividend-16",
+      "status": "not checked: outside trusted publisher hosts"
+    },
+    {
+      "url": "https://media.choicehotels.com/2026-06-01-Choice-Hotels-International-Strengthens-Extended-Stay-Leadership-with-30th-Everhome-Suites-Opening",
+      "status": 200,
+      "redirect": null,
+      "meaning": "Reachable; claims NOT verified"
+    },
+    {
+      "url": "https://media.choicehotels.com/2026-06-22-Choice-Hotels-International-Launches-Detours-Worth-Taking-Guide-to-Help-Travelers-Explore-More-on-Their-Summer-Road-Trip",
+      "status": 200,
+      "redirect": null,
+      "meaning": "Reachable; claims NOT verified"
+    },
+    {
+      "url": "https://media.choicehotels.com/2026-08-05-CHOICE-HOTELS-INTERNATIONAL-REPORTS-SECOND-QUARTER-2026-RESULTS",
+      "status": 200,
+      "redirect": null,
+      "meaning": "Reachable; claims NOT verified"
+    },
+    {
+      "url": "https://newsroom.hyatt.com/atlanticsuiteshotel",
+      "status": 200,
+      "redirect": null,
+      "meaning": "Reachable; claims NOT verified"
+    },
+    {
+      "url": "https://newsroom.hyatt.com/hyattregencypalaceberlin",
+      "status": 200,
+      "redirect": null,
+      "meaning": "Reachable; claims NOT verified"
+    },
+    {
+      "url": "https://newsroom.hyatt.com/May-28-2026-Investor-Day-Release",
+      "status": 200,
+      "redirect": null,
+      "meaning": "Reachable; claims NOT verified"
+    },
+    {
+      "url": "https://newsroom.hyatt.com/MiravalTheRedSea",
+      "status": 200,
+      "redirect": null,
+      "meaning": "Reachable; claims NOT verified"
+    },
+    {
+      "url": "https://newsroom.hyatt.com/PremierLacrosseLeague",
+      "status": 200,
+      "redirect": null,
+      "meaning": "Reachable; claims NOT verified"
+    },
+    {
+      "url": "https://skift.com/2026/05/19/expedia-pushes-meta-uber-and-clear-partnerships-to-own-more-of-the-trip/",
+      "status": 200,
+      "redirect": null,
+      "meaning": "Reachable; claims NOT verified"
+    },
+    {
+      "url": "https://skift.com/2026/05/20/capital-a-clears-path-to-u-s-and-hong-kong-listings-with-pn17-exit/",
+      "status": 301,
+      "redirect": "https://skift.com/2026/05/20/capital-a-clears-path-to-u-s-and-hong-kong-listings-with-successful-restructure/",
+      "meaning": "Needs manual review"
+    },
+    {
+      "url": "https://skift.com/2026/05/20/choice-hotels-patrick-pacious-is-out-as-ceo/",
+      "status": 200,
+      "redirect": null,
+      "meaning": "Reachable; claims NOT verified"
+    },
+    {
+      "url": "https://skift.com/2026/05/22/b2a-ai-agents-are-travels-new-audience-and-they-dont-care-about-brands/",
+      "status": 200,
+      "redirect": null,
+      "meaning": "Reachable; claims NOT verified"
+    },
+    {
+      "url": "https://skift.com/2026/05/22/cbp-social-media-vetting-proposal-revisions/",
+      "status": 200,
+      "redirect": null,
+      "meaning": "Reachable; claims NOT verified"
+    },
+    {
+      "url": "https://skift.com/2026/05/22/spains-top-court-voids-national-short-term-rental-registry/",
+      "status": 200,
+      "redirect": null,
+      "meaning": "Reachable; claims NOT verified"
+    },
+    {
+      "url": "https://skift.com/2026/05/25/airlines-expect-another-record-summer-despite-high-fuel-price/",
+      "status": 200,
+      "redirect": null,
+      "meaning": "Reachable; claims NOT verified"
+    },
+    {
+      "url": "https://skift.com/2026/05/26/airbnb-names-booking-com-veteran-in-hotel-leadership-shakeup/",
+      "status": 200,
+      "redirect": null,
+      "meaning": "Reachable; claims NOT verified"
+    },
+    {
+      "url": "https://skift.com/2026/05/26/waldorf-astoria-aman-and-auberge-invest-in-texas-hill-country/",
+      "status": 200,
+      "redirect": null,
+      "meaning": "Reachable; claims NOT verified"
+    },
+    {
+      "url": "https://skift.com/2026/05/27/direct-booking-tug-of-war-hotels-long-bid-to-take-back-power/",
+      "status": 200,
+      "redirect": null,
+      "meaning": "Reachable; claims NOT verified"
+    },
+    {
+      "url": "https://skift.com/2026/05/28/empty-calories-hyatt-tells-investors-to-stop-counting-rooms/",
+      "status": 200,
+      "redirect": null,
+      "meaning": "Reachable; claims NOT verified"
+    },
+    {
+      "url": "https://skift.com/2026/05/28/singapores-youtrip-launches-a-childrens-travel-card-into-a-gap-asias-fintechs-left-open/",
+      "status": 200,
+      "redirect": null,
+      "meaning": "Reachable; claims NOT verified"
+    },
+    {
+      "url": "https://skift.com/2026/05/29/saudi-tourism-chief-hamidaddin-to-leave-role-as-kingdom-rewrites-its-tourism-ambitions/",
+      "status": 200,
+      "redirect": null,
+      "meaning": "Reachable; claims NOT verified"
+    },
+    {
+      "url": "https://skift.com/2026/05/29/travel-industry-warns-against-dhs-threat-to-halt-customs-at-sanctuary-cities/",
+      "status": 200,
+      "redirect": null,
+      "meaning": "Reachable; claims NOT verified"
+    },
+    {
+      "url": "https://skift.com/2026/05/29/why-the-travel-industry-pays-attention-to-idea-awards-winners/",
+      "status": 200,
+      "redirect": null,
+      "meaning": "Reachable; claims NOT verified"
+    },
+    {
+      "url": "https://skift.com/2026/05/30/why-the-hotel-business-is-entering-an-owner-first-era/",
+      "status": 200,
+      "redirect": null,
+      "meaning": "Reachable; claims NOT verified"
+    },
+    {
+      "url": "https://skift.com/2026/06/01/ai-impact-travel-search-costs/",
+      "status": 200,
+      "redirect": null,
+      "meaning": "Reachable; claims NOT verified"
+    },
+    {
+      "url": "https://skift.com/2026/06/02/after-sonders-collapse-francis-davidson-returns-with-an-ai-travel-agent/",
+      "status": 200,
+      "redirect": null,
+      "meaning": "Reachable; claims NOT verified"
+    },
+    {
+      "url": "https://skift.com/2026/06/03/ihg-evolve-skift-data-ai-summit-2026/",
+      "status": 200,
+      "redirect": null,
+      "meaning": "Reachable; claims NOT verified"
+    },
+    {
+      "url": "https://skift.com/2026/06/04/world-cup-travel-demand-expectations-deflated/",
+      "status": 200,
+      "redirect": null,
+      "meaning": "Reachable; claims NOT verified"
+    },
+    {
+      "url": "https://skift.com/2026/06/05/hospitality-leisure-job-gains-may-2026/",
+      "status": 200,
+      "redirect": null,
+      "meaning": "Reachable; claims NOT verified"
+    },
+    {
+      "url": "https://skift.com/2026/06/06/air-new-zealand-ceo-economy-bunk-beds-are-not-a-vanity-project/",
+      "status": 200,
+      "redirect": null,
+      "meaning": "Reachable; claims NOT verified"
+    },
+    {
+      "url": "https://skift.com/2026/06/08/750-visa-appointment-fee/",
+      "status": 200,
+      "redirect": null,
+      "meaning": "Reachable; claims NOT verified"
+    },
+    {
+      "url": "https://skift.com/2026/06/08/global-travel-growth-has-turned-negative-for-first-time-this-year/",
+      "status": 200,
+      "redirect": null,
+      "meaning": "Reachable; claims NOT verified"
+    },
+    {
+      "url": "https://skift.com/2026/06/09/aviations-2050-net-zero-target-could-slip-the-more-likely-outcome/",
+      "status": 200,
+      "redirect": null,
+      "meaning": "Reachable; claims NOT verified"
+    },
+    {
+      "url": "https://skift.com/2026/06/10/the-world-cup-promised-to-go-green-this-one-could-be-the-most-carbon-heavy-ever/",
+      "status": 200,
+      "redirect": null,
+      "meaning": "Reachable; claims NOT verified"
+    },
+    {
+      "url": "https://skift.com/2026/06/11/hotels-hope-last-minute-world-cup-bookings/",
+      "status": 200,
+      "redirect": null,
+      "meaning": "Reachable; claims NOT verified"
+    },
+    {
+      "url": "https://skift.com/2026/06/12/world-cup-tourism-campaign-videos/",
+      "status": 200,
+      "redirect": null,
+      "meaning": "Reachable; claims NOT verified"
+    },
+    {
+      "url": "https://skift.com/2026/06/15/overseas-travel-united-states-may-decline/",
+      "status": 200,
+      "redirect": null,
+      "meaning": "Reachable; claims NOT verified"
+    },
+    {
+      "url": "https://skift.com/2026/06/16/marriott-hotel-owners-want-a-bigger-cut-of-loyalty-income/",
+      "status": 200,
+      "redirect": null,
+      "meaning": "Reachable; claims NOT verified"
+    },
+    {
+      "url": "https://skift.com/2026/06/17/adobe-data-ai-travel-traffic-airlines-hotels-car/",
+      "status": 200,
+      "redirect": null,
+      "meaning": "Reachable; claims NOT verified"
+    },
+    {
+      "url": "https://skift.com/2026/06/22/the-saudization-of-saudi-tourism/",
+      "status": 200,
+      "redirect": null,
+      "meaning": "Reachable; claims NOT verified"
+    },
+    {
+      "url": "https://skift.com/2026/06/23/amadeus-has-an-answer-for-ais-infinite-search-problem/",
+      "status": 200,
+      "redirect": null,
+      "meaning": "Reachable; claims NOT verified"
+    },
+    {
+      "url": "https://skift.com/2026/06/25/u-s-hotel-demand-is-rebounding-and-its-no-longer-just-a-luxury-story/",
+      "status": 200,
+      "redirect": null,
+      "meaning": "Reachable; claims NOT verified"
+    },
+    {
+      "url": "https://skift.com/2026/06/26/delta-makes-moves-to-close-the-pacific-gap-with-united/",
+      "status": 200,
+      "redirect": null,
+      "meaning": "Reachable; claims NOT verified"
+    },
+    {
+      "url": "https://skift.com/2026/06/26/dubais-rove-hotels-targets-saudi-arabias-mid-scale-gap-before-the-events-crunch-hits/",
+      "status": 200,
+      "redirect": null,
+      "meaning": "Reachable; claims NOT verified"
+    },
+    {
+      "url": "https://skift.com/2026/06/26/visit-california-julie-coker-ceo/",
+      "status": 200,
+      "redirect": null,
+      "meaning": "Reachable; claims NOT verified"
+    },
+    {
+      "url": "https://skift.com/2026/06/29/destination-canada-marsha-walden-ceo-departure/",
+      "status": 200,
+      "redirect": null,
+      "meaning": "Reachable; claims NOT verified"
+    },
+    {
+      "url": "https://skift.com/2026/06/30/not-for-sale-sandals-ceo-shuts-down-deal-rumors/",
+      "status": 200,
+      "redirect": null,
+      "meaning": "Reachable; claims NOT verified"
+    },
+    {
+      "url": "https://skift.com/2026/07/01/why-travel-industry-needs-conversations-like-skift-global-forum/",
+      "status": 200,
+      "redirect": null,
+      "meaning": "Reachable; claims NOT verified"
+    },
+    {
+      "url": "https://skift.com/2026/07/03/cabo-verde-world-cup-tourism-surge/",
+      "status": 200,
+      "redirect": null,
+      "meaning": "Reachable; claims NOT verified"
+    },
+    {
+      "url": "https://skift.com/2026/07/04/airlines-are-turning-live-entertainment-into-a-loyalty-strategy/",
+      "status": 200,
+      "redirect": null,
+      "meaning": "Reachable; claims NOT verified"
+    },
+    {
+      "url": "https://skift.com/2026/07/06/how-an-airline-pilot-built-one-of-portugals-most-distinctive-hotels/",
+      "status": 200,
+      "redirect": null,
+      "meaning": "Reachable; claims NOT verified"
+    },
+    {
+      "url": "https://skift.com/2026/07/08/fattal-buys-its-first-u-s-hotel-testing-an-asset-heavy-model-against-the-giants/",
+      "status": 200,
+      "redirect": null,
+      "meaning": "Reachable; claims NOT verified"
+    },
+    {
+      "url": "https://skift.com/2026/07/09/airbnb-paid-81-million-for-a-building-in-nyc-the-only-one-it-now-owns/",
+      "status": 200,
+      "redirect": null,
+      "meaning": "Reachable; claims NOT verified"
+    },
+    {
+      "url": "https://skift.com/2026/07/10/booking-holdings-is-forming-a-new-b2b-unit-agoda-ceo-is-overseeing-it-scoop/",
+      "status": 200,
+      "redirect": null,
+      "meaning": "Reachable; claims NOT verified"
+    },
+    {
+      "url": "https://skift.com/2026/07/10/delta-expects-to-meet-original-2026-profit-outlook/",
+      "status": 200,
+      "redirect": null,
+      "meaning": "Reachable; claims NOT verified"
+    },
+    {
+      "url": "https://skift.com/2026/07/10/what-haaland-mania-wont-do-for-norway-tourism/",
+      "status": 200,
+      "redirect": null,
+      "meaning": "Reachable; claims NOT verified"
+    },
+    {
+      "url": "https://skift.com/2026/07/17/europe-eu-ets-international-flights/",
+      "status": 200,
+      "redirect": null,
+      "meaning": "Reachable; claims NOT verified"
+    },
+    {
+      "url": "https://skift.com/2026/07/17/world-cup-impact-on-travel-industry/",
+      "status": 200,
+      "redirect": null,
+      "meaning": "Reachable; claims NOT verified"
+    },
+    {
+      "url": "https://skift.com/2026/07/18/ari-emanuel-is-assembling-a-live-tourism-conglomerate/",
+      "status": 200,
+      "redirect": null,
+      "meaning": "Reachable; claims NOT verified"
+    },
+    {
+      "url": "https://skift.com/2026/07/21/sabre-hackathon-ai-agentic-voice/",
+      "status": 200,
+      "redirect": null,
+      "meaning": "Reachable; claims NOT verified"
+    },
+    {
+      "url": "https://skift.com/2026/07/22/behind-travel-leisures-343-million-bet-and-why-more-timeshare-deals-are-coming/",
+      "status": 200,
+      "redirect": null,
+      "meaning": "Reachable; claims NOT verified"
+    },
+    {
+      "url": "https://skift.com/2026/07/22/claritypay-loyalty-financing/",
+      "status": 200,
+      "redirect": null,
+      "meaning": "Reachable; claims NOT verified"
+    },
+    {
+      "url": "https://skift.com/2026/07/23/iata-makes-surprise-pick-for-new-leader-skips-airline-veterans/",
+      "status": 200,
+      "redirect": null,
+      "meaning": "Reachable; claims NOT verified"
+    },
+    {
+      "url": "https://skift.com/2026/07/24/wildfire-risk-is-increasing-rising-insurance-costs-are-pushing-hotels-to-prepare/",
+      "status": 200,
+      "redirect": null,
+      "meaning": "Reachable; claims NOT verified"
+    },
+    {
+      "url": "https://skift.com/2026/07/26/united-chased-delta-and-american-now-airline-m-and-a-has-stalled/",
+      "status": 200,
+      "redirect": null,
+      "meaning": "Reachable; claims NOT verified"
+    },
+    {
+      "url": "https://skift.com/2026/07/27/why-american-express-wants-to-buy-thefork-new-cardmembers/",
+      "status": 200,
+      "redirect": null,
+      "meaning": "Reachable; claims NOT verified"
+    },
+    {
+      "url": "https://skift.com/2026/07/28/jay-carney-to-exit-airbnb-lime-veteran-appointed-policy-chief/",
+      "status": 200,
+      "redirect": null,
+      "meaning": "Reachable; claims NOT verified"
+    },
+    {
+      "url": "https://skift.com/2026/07/29/europes-airline-supergroups-brace-for-a-crucial-earnings-week/",
+      "status": 200,
+      "redirect": null,
+      "meaning": "Reachable; claims NOT verified"
+    },
+    {
+      "url": "https://skift.com/2026/07/30/mgm-resorts-looks-to-luxury-and-live-tourism-given-tourist-shortfall/",
+      "status": 200,
+      "redirect": null,
+      "meaning": "Reachable; claims NOT verified"
+    },
+    {
+      "url": "https://skift.com/2026/07/31/uk-pubs-and-clubs-get-tax-cuts-hotels-get-left-out-again/",
+      "status": 200,
+      "redirect": null,
+      "meaning": "Reachable; claims NOT verified"
+    },
+    {
+      "url": "https://skift.com/2026/08/03/u-s-clears-smallest-boeing-737-max-to-fly/",
+      "status": 200,
+      "redirect": null,
+      "meaning": "Reachable; claims NOT verified"
+    },
+    {
+      "url": "https://skift.com/2026/08/04/one-airline-is-carrying-the-lufthansa-group-it-isnt-lufthansa/",
+      "status": 200,
+      "redirect": null,
+      "meaning": "Reachable; claims NOT verified"
+    },
+    {
+      "url": "https://skift.com/2026/08/05/disney-parks-domestic-asia-q3/",
+      "status": 200,
+      "redirect": null,
+      "meaning": "Reachable; claims NOT verified"
+    },
+    {
+      "url": "https://skift.com/2026/08/07/google-brings-agentic-ai-to-ask-maps-hotel-search/",
+      "status": 200,
+      "redirect": null,
+      "meaning": "Reachable; claims NOT verified"
+    },
+    {
+      "url": "https://skift.com/2026/08/08/aman-threatened-to-call-the-police-on-a-creator-why-the-whole-industry-should-pay-attention/",
+      "status": 200,
+      "redirect": null,
+      "meaning": "Reachable; claims NOT verified"
+    },
+    {
+      "url": "https://skift.com/2026/08/10/perk-is-in-no-rush-to-ipo-as-revenue-nears-400-million/",
+      "status": 200,
+      "redirect": null,
+      "meaning": "Reachable; claims NOT verified"
+    },
+    {
+      "url": "https://skift.com/2026/08/11/canadian-travel-to-the-u-s-ticks-up-again-but-still-far-from-a-full-recovery/",
+      "status": 200,
+      "redirect": null,
+      "meaning": "Reachable; claims NOT verified"
+    },
+    {
+      "url": "https://skift.com/2026/08/12/tui-q3-earnings-iran-war/",
+      "status": 200,
+      "redirect": null,
+      "meaning": "Reachable; claims NOT verified"
+    },
+    {
+      "url": "https://skift.com/2026/08/14/how-net-unit-growth-ate-the-hotel-industry/",
+      "status": 200,
+      "redirect": null,
+      "meaning": "Reachable; claims NOT verified"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/casestudy/4133334/how-hilton-garden-inn-cancun-airport-uses-technology-to-personalize-the-guest-experience",
+      "status": 429,
+      "redirect": null,
+      "meaning": "Needs manual review"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/editorial/4133464/ai-is-confidently-wrong-about-your-hotel-and-the-guest-arrives-believing-it-the-org-chart-is-a-revenue-problem-ai-shifts-hotels-from-pricing-to-personalization",
+      "status": 429,
+      "redirect": null,
+      "meaning": "Needs manual review"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/editorial/4133758/most-hotel-sales-teams-can-only-harvest-demand-us-revpar-forecast-at-45-for-2026-world-cup-reviews-reveal-what-guests-actually-noticed",
+      "status": 429,
+      "redirect": null,
+      "meaning": "Needs manual review"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/editorial/4133823/ai-travel-efficiency-is-rising-but-bookings-are-not-converting-travel-agencies-grew-hotel-bookings-twice-as-fast-as-otas-ai-containment-failures-are-already-happening",
+      "status": 403,
+      "redirect": null,
+      "meaning": "Access denied; not evidence of a broken link"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/explainer/4133454/wellness-tourism-trends-whats-shaping-travel-and-wellness-in-2026",
+      "status": 403,
+      "redirect": null,
+      "meaning": "Access denied; not evidence of a broken link"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/explainer/4133701/how-to-tell-if-youre-ready-to-upgrade-from-basic-rate-shopping-to-a-complete-pricing-platform",
+      "status": 403,
+      "redirect": null,
+      "meaning": "Access denied; not evidence of a broken link"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/interview/4133130/agilysys-frank-pitsikalis-fix-the-data-before-you-fix-the-ai",
+      "status": 429,
+      "redirect": null,
+      "meaning": "Needs manual review"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/interview/4133665/the-more-connected-hotels-become-the-more-human-they-must-be",
+      "status": 429,
+      "redirect": null,
+      "meaning": "Needs manual review"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/news/4132521/lighthouse-acquires-hotelrankai-adding-ai-visibility-intelligence-to-connect-ai",
+      "status": 403,
+      "redirect": null,
+      "meaning": "Access denied; not evidence of a broken link"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/news/4132566/how-gen-z-and-millennials-are-reshaping-sustainable-travel",
+      "status": 403,
+      "redirect": null,
+      "meaning": "Access denied; not evidence of a broken link"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/news/4132634/mews-unveils-the-operating-system-for-hospitality",
+      "status": 403,
+      "redirect": null,
+      "meaning": "Access denied; not evidence of a broken link"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/news/4132637/witt-expands-across-asia-as-wellness-tourism-momentum-accelerates",
+      "status": 403,
+      "redirect": null,
+      "meaning": "Access denied; not evidence of a broken link"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/news/4132733/international-tourism-up-2-in-q1-2026-amid-growing-uncertainty",
+      "status": 403,
+      "redirect": null,
+      "meaning": "Access denied; not evidence of a broken link"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/news/4132805/melia-strengthens-its-commitment-to-argentina-with-two-new-hotels-in-mendoza-one-of-south-americas-most-fascinating-destinations",
+      "status": 403,
+      "redirect": null,
+      "meaning": "Access denied; not evidence of a broken link"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/news/4132834/pope-leo-xivs-visit-to-spain-expected-to-spark-tourism-surge-and-economic-boost",
+      "status": 429,
+      "redirect": null,
+      "meaning": "Needs manual review"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/news/4132844/ai-hospitality-alliance-announces-founding-advisory-board-of-global-hospitality-technology-ai-and-academic-leaders-to-help-shape-the-future-of-ai-in-hospitality",
+      "status": 429,
+      "redirect": null,
+      "meaning": "Needs manual review"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/news/4132848/mexican-hospitality-summit-2026-closes-with-more-than-400-industry-professionals-and-announces-expansion-across-latin-america",
+      "status": 403,
+      "redirect": null,
+      "meaning": "Access denied; not evidence of a broken link"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/news/4132876/siteminder-mid-year-report-global-hotel-demand-to-hold-firm-peak-in-september",
+      "status": 429,
+      "redirect": null,
+      "meaning": "Needs manual review"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/news/4132906/solar-eclipse-drives-sharp-surge-in-bookings-across-spain-and-iceland",
+      "status": 403,
+      "redirect": null,
+      "meaning": "Access denied; not evidence of a broken link"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/news/4132924/accor-and-yavu-collective-sign-landmark-multi-hotel-deal-in-fiji",
+      "status": 403,
+      "redirect": null,
+      "meaning": "Access denied; not evidence of a broken link"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/news/4132940/travel-media-group-launches-tmg-ai-signal-report-giving-hotels-visibility-into-how-ai-search-engines-represent-their-properties",
+      "status": 429,
+      "redirect": null,
+      "meaning": "Needs manual review"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/news/4132962/wttc-brings-global-tourism-leaders-to-valletta-as-maltas-travel-tourism-sector-continues-to-thrive",
+      "status": 429,
+      "redirect": null,
+      "meaning": "Needs manual review"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/news/4132968/canary-technologies-launches-agentic-sales-coordinator-for-hotel-group-and-event-sales",
+      "status": 429,
+      "redirect": null,
+      "meaning": "Needs manual review"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/news/4132972/calltek-strengthens-global-hospitality-technology-expansion",
+      "status": 429,
+      "redirect": null,
+      "meaning": "Needs manual review"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/news/4133011/rategain-accelerates-european-expansion-with-a-doubled-commercial-team-as-the-region-contributes-316-of-total-revenue",
+      "status": 403,
+      "redirect": null,
+      "meaning": "Access denied; not evidence of a broken link"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/news/4133012/hotelschool-the-hague-earns-qs-5-star-rating",
+      "status": 403,
+      "redirect": null,
+      "meaning": "Access denied; not evidence of a broken link"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/news/4133059/shiji-unifies-housekeeping-workflows-with-tasks-per-room-in-daylight-pms-mobile-app",
+      "status": 429,
+      "redirect": null,
+      "meaning": "Needs manual review"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/news/4133085/otherwander-soho-selects-apaleo-to-power-fully-digital-pod-hotel-concept",
+      "status": 429,
+      "redirect": null,
+      "meaning": "Needs manual review"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/news/4133090/fhs-saudi-arabia-to-take-the-stage-in-riyadh-tomorrow",
+      "status": 429,
+      "redirect": null,
+      "meaning": "Needs manual review"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/news/4133099/hyatt-strengthens-italy-presence-announces-three-openings-and-debut-of-hyatt-regency-and-thompson-hotel-brands",
+      "status": 403,
+      "redirect": null,
+      "meaning": "Access denied; not evidence of a broken link"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/news/4133127/langham-launches-cookery-school-led-by-michelin-starred-chef-michel-roux-jr",
+      "status": 403,
+      "redirect": null,
+      "meaning": "Access denied; not evidence of a broken link"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/news/4133168/a-new-chapter-for-faraway-brand-debuts-in-sag-harbor-and-jackson-hole",
+      "status": 429,
+      "redirect": null,
+      "meaning": "Needs manual review"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/news/4133189/gain-advisors-and-crowdpowder-partner-to-bring-community-based-equity-financing-to-travel-and-hospitality-startups",
+      "status": 429,
+      "redirect": null,
+      "meaning": "Needs manual review"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/news/4133214/research-three-quarters-of-dutch-people-trade-luxury-hotel-amenities-for-a-lower-room-price",
+      "status": 429,
+      "redirect": null,
+      "meaning": "Needs manual review"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/news/4133226/world-cup-wanderlust-and-a-wait-and-see-world-whats-shaping-global-summer-travel-in-2026",
+      "status": 403,
+      "redirect": null,
+      "meaning": "Access denied; not evidence of a broken link"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/news/4133272/premier-inn-introduces-alliants-room-keys-in-digital-wallets",
+      "status": 403,
+      "redirect": null,
+      "meaning": "Access denied; not evidence of a broken link"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/news/4133302/doug-kennedys-next-staff-training-webcast-proactive-polite-and-productive-hotel-sales-prospecting",
+      "status": 429,
+      "redirect": null,
+      "meaning": "Needs manual review"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/news/4133306/rbh-hospitality-expands-presence-in-london-through-first-hyatt-hotels-signing",
+      "status": 403,
+      "redirect": null,
+      "meaning": "Access denied; not evidence of a broken link"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/news/4133321/travel-demand-remains-strong-as-safety-and-value-shape-europeans-holiday-choices",
+      "status": 403,
+      "redirect": null,
+      "meaning": "Access denied; not evidence of a broken link"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/news/4133335/us-hotel-results-for-week-ending-27-june",
+      "status": 403,
+      "redirect": null,
+      "meaning": "Access denied; not evidence of a broken link"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/news/4133365/asia-pacific-hospitality-newsletter-week-ending-3-july-2026",
+      "status": 403,
+      "redirect": null,
+      "meaning": "Access denied; not evidence of a broken link"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/news/4133374/ihcl-clocks-20-signings-and-11-hotel-openings-in-q1-fy2027",
+      "status": 403,
+      "redirect": null,
+      "meaning": "Access denied; not evidence of a broken link"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/news/4133392/hotel-indigo-bali-seminyak-beach-taps-canary-to-elevate-the-guest-experience-with-ai",
+      "status": 429,
+      "redirect": null,
+      "meaning": "Needs manual review"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/news/4133416/european-tourism-holds-firm-despite-rising-uncertainty-and-changing-traveller-priorities",
+      "status": 429,
+      "redirect": null,
+      "meaning": "Needs manual review"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/news/4133434/accor-and-sun-group-strengthen-strategic-partnership-to-shape-landmark-hospitality-experiences-across-vietnam",
+      "status": 403,
+      "redirect": null,
+      "meaning": "Access denied; not evidence of a broken link"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/news/4133455/sleeper-127-out-now-enjoy-your-stay",
+      "status": 429,
+      "redirect": null,
+      "meaning": "Needs manual review"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/news/4133486/hsmai-europe-launches-new-whitepaper-on-the-agentic-future-of-hospitality-technology",
+      "status": 403,
+      "redirect": null,
+      "meaning": "Access denied; not evidence of a broken link"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/news/4133489/employees-who-feel-overqualified-view-more-work-tasks-as-unreasonable",
+      "status": 403,
+      "redirect": null,
+      "meaning": "Access denied; not evidence of a broken link"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/news/4133497/peregrine-hospitality-adds-hotel-yountville-and-bardessono-hotel-spa-to-management-portfolio",
+      "status": 403,
+      "redirect": null,
+      "meaning": "Access denied; not evidence of a broken link"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/news/4133522/international-luxury-hotel-associations-inspire-2026-returns-to-orlando-this-december",
+      "status": 403,
+      "redirect": null,
+      "meaning": "Access denied; not evidence of a broken link"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/news/4133535/new-report-shows-americans-are-reimagining-summer-travel-not-canceling-it",
+      "status": 403,
+      "redirect": null,
+      "meaning": "Access denied; not evidence of a broken link"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/news/4133541/the-worlds-top-hotel-brands-are-quietly-building-a-40000-cruise-category",
+      "status": 403,
+      "redirect": null,
+      "meaning": "Access denied; not evidence of a broken link"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/news/4133542/siteminder-total-solar-eclipse-drives-up-to-76-growth-in-bookings-for-spains-hotels",
+      "status": 403,
+      "redirect": null,
+      "meaning": "Access denied; not evidence of a broken link"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/news/4133552/lodging-interactive-launches-celebrations-hub-and-drives-untapped-social-event-revenue",
+      "status": 429,
+      "redirect": null,
+      "meaning": "Needs manual review"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/news/4133553/from-landscape-to-last-detail-designing-the-farm-charm-experience",
+      "status": 403,
+      "redirect": null,
+      "meaning": "Access denied; not evidence of a broken link"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/news/4133572/international-hotel-industry-coalition-calls-for-long-term-united-states-mexico-canada-agreement-extension",
+      "status": 403,
+      "redirect": null,
+      "meaning": "Access denied; not evidence of a broken link"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/news/4133582/asia-pacific-hotel-investment-volumes-surge-54-in-historic-first-half-performance",
+      "status": 403,
+      "redirect": null,
+      "meaning": "Access denied; not evidence of a broken link"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/news/4133602/196-forum-munich-24-hotels-from-eleven-countries-compete-for-the-european-hotel-property-award-2026",
+      "status": 403,
+      "redirect": null,
+      "meaning": "Access denied; not evidence of a broken link"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/news/4133622/the-great-wake-up-debate-rob-beckett-and-holiday-inn-express-uncover-the-wake-up-rituals-defining-the-uk-and-ireland",
+      "status": 403,
+      "redirect": null,
+      "meaning": "Access denied; not evidence of a broken link"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/news/4133639/accor-signs-a-definitive-binding-agreement-on-the-sale-of-its-stake-in-essendi",
+      "status": 403,
+      "redirect": null,
+      "meaning": "Access denied; not evidence of a broken link"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/news/4133640/goco-hospitality-enters-ambitious-new-chapter-with-indigo8-appointment-and-fivelements-launch",
+      "status": 429,
+      "redirect": null,
+      "meaning": "Needs manual review"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/news/4133685/choice-hotels-internationals-woodspring-suites-ranked-1-economy-extended-stay-hotel-brand-in-the-jd-power-2026-north-america-hotel-guest-satisfaction-index-study",
+      "status": 403,
+      "redirect": null,
+      "meaning": "Access denied; not evidence of a broken link"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/news/4133712/axis-architecture-design-advances-its-east-coast-hospitality-presence-with-the-transformation-of-the-historic-hotel-viking",
+      "status": 429,
+      "redirect": null,
+      "meaning": "Needs manual review"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/news/4133721/half-year-2026-results-accor-shows-its-agility-in-a-challenging-global-environment",
+      "status": 403,
+      "redirect": null,
+      "meaning": "Access denied; not evidence of a broken link"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/news/4133754/hospitality-leaders-to-convene-in-paris-to-tackle-industrys-greatest-pressures",
+      "status": 429,
+      "redirect": null,
+      "meaning": "Needs manual review"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/news/4133779/thynk-appoints-chief-sales-officer-and-attracts-industry-leaders-across-hospitality-and-venues",
+      "status": 403,
+      "redirect": null,
+      "meaning": "Access denied; not evidence of a broken link"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/news/4133788/global-business-travel-spending-to-hit-record-171-trillion-in-2026-while-trips-reach-184-billion-says-gbta-forecast",
+      "status": 429,
+      "redirect": null,
+      "meaning": "Needs manual review"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/news/4133838/over-1-trillion-investment-in-travel-tourism-signals-a-vote-of-confidence-in-the-sectors-future",
+      "status": 403,
+      "redirect": null,
+      "meaning": "Access denied; not evidence of a broken link"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/news/4133856/hsmai-dc-panel-will-examine-the-economic-and-commercial-forces-shaping-hotel-strategy",
+      "status": 429,
+      "redirect": null,
+      "meaning": "Needs manual review"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/news/4133880/fcs-solutions-partners-with-salto-to-bring-mobile-access-for-hotel-housekeeping",
+      "status": 403,
+      "redirect": null,
+      "meaning": "Access denied; not evidence of a broken link"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/news/4133881/hvs-europe-hotel-transactions-bulletin-week-ending-07-august-2026",
+      "status": 403,
+      "redirect": null,
+      "meaning": "Access denied; not evidence of a broken link"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/news/4133920/penn-state-hotel-and-restaurant-society-to-honor-hospitality-management-alumni",
+      "status": 403,
+      "redirect": null,
+      "meaning": "Access denied; not evidence of a broken link"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/news/4133958/oth-hotels-resorts-expands-northeast-footprint-with-first-new-york-and-connecticut-management-contracts",
+      "status": 403,
+      "redirect": null,
+      "meaning": "Access denied; not evidence of a broken link"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/news/4133959/canary-technologies-named-to-the-2026-inc-5000-list",
+      "status": 429,
+      "redirect": null,
+      "meaning": "Needs manual review"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/opinion/4132326/oliver-hospitality-diversifies-portfolio-with-market-entrances-and-expanded-development",
+      "status": 403,
+      "redirect": null,
+      "meaning": "Access denied; not evidence of a broken link"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/opinion/4132606/capital-builds-hotels-people-build-hospitality",
+      "status": 429,
+      "redirect": null,
+      "meaning": "Needs manual review"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/opinion/4132649/technification-is-accelerating-commoditization",
+      "status": 403,
+      "redirect": null,
+      "meaning": "Access denied; not evidence of a broken link"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/opinion/4132693/if-search-and-display-had-a-baby-why-demand-gen-is-the-new-hybrid-you-actually-want",
+      "status": 403,
+      "redirect": null,
+      "meaning": "Access denied; not evidence of a broken link"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/opinion/4132709/luxury-hotel-opportunities-for-another-year-of-growth",
+      "status": 403,
+      "redirect": null,
+      "meaning": "Access denied; not evidence of a broken link"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/opinion/4132776/front-desk-teams-dont-have-to-be-your-switchboard",
+      "status": 429,
+      "redirect": null,
+      "meaning": "Needs manual review"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/opinion/4132860/the-roi-of-letting-go-why-autonomy-is-africas-real-hospitality-differentiator",
+      "status": 403,
+      "redirect": null,
+      "meaning": "Access denied; not evidence of a broken link"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/opinion/4133076/where-opportunity-meets-capital-the-new-architecture-of-hospitality-in-riyadh",
+      "status": 429,
+      "redirect": null,
+      "meaning": "Needs manual review"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/opinion/4133089/revenue-managers-used-to-set-the-price-now-they-read-it",
+      "status": 403,
+      "redirect": null,
+      "meaning": "Access denied; not evidence of a broken link"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/opinion/4133181/the-media-mention-is-now-a-distribution-channelis-your-hotel-treating-it-that-way",
+      "status": 429,
+      "redirect": null,
+      "meaning": "Needs manual review"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/opinion/4133188/why-regenerative-hospitality-is-emerging-as-the-next-frontier-for-destination-led-luxury",
+      "status": 403,
+      "redirect": null,
+      "meaning": "Access denied; not evidence of a broken link"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/opinion/4133227/the-hotel-content-supply-chain",
+      "status": 429,
+      "redirect": null,
+      "meaning": "Needs manual review"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/opinion/4133234/page-three-of-the-aging",
+      "status": 429,
+      "redirect": null,
+      "meaning": "Needs manual review"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/opinion/4133252/ai-native-distribution-is-the-one-thing-google-wont-build",
+      "status": 403,
+      "redirect": null,
+      "meaning": "Access denied; not evidence of a broken link"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/opinion/4133283/hotel-chains-built-ai-for-the-traveler-who-comes-to-them-first-that-traveler-is-leaving",
+      "status": 403,
+      "redirect": null,
+      "meaning": "Access denied; not evidence of a broken link"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/opinion/4133339/hotel-de-paris-monte-carlo-how-heritage-hotels-transform-place-into-luxury-value",
+      "status": 429,
+      "redirect": null,
+      "meaning": "Needs manual review"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/opinion/4133341/hospitalitys-real-question-isnt-legal-its-cultural",
+      "status": 403,
+      "redirect": null,
+      "meaning": "Access denied; not evidence of a broken link"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/opinion/4133379/the-mapmakers-paradox",
+      "status": 403,
+      "redirect": null,
+      "meaning": "Access denied; not evidence of a broken link"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/opinion/4133402/beyond-tokenomics-the-threat-of-the-invisible-hotel",
+      "status": 403,
+      "redirect": null,
+      "meaning": "Access denied; not evidence of a broken link"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/opinion/4133503/hospitality-leadership-isnt-about-having-more-skills-its-about-having-the-right-ones",
+      "status": 403,
+      "redirect": null,
+      "meaning": "Access denied; not evidence of a broken link"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/opinion/4133510/beyond-revpar-why-the-hotel-performance-dashboard-is-expanding",
+      "status": 429,
+      "redirect": null,
+      "meaning": "Needs manual review"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/opinion/4133513/a-full-events-diary-doesnt-guarantee-a-profitable-one",
+      "status": 403,
+      "redirect": null,
+      "meaning": "Access denied; not evidence of a broken link"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/opinion/4133558/the-rooms-the-same-you-wouldnt-recognize-whos-buying-it-now",
+      "status": 429,
+      "redirect": null,
+      "meaning": "Needs manual review"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/opinion/4133581/healing-unevenly-keralas-path-toward-regenerative-hospitality",
+      "status": 403,
+      "redirect": null,
+      "meaning": "Access denied; not evidence of a broken link"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/opinion/4133608/every-company-needs-a-reasonable-department",
+      "status": 429,
+      "redirect": null,
+      "meaning": "Needs manual review"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/opinion/4133610/food-hall-concept-done-right-at-fairmont-the-queen-elizabeth",
+      "status": 403,
+      "redirect": null,
+      "meaning": "Access denied; not evidence of a broken link"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/opinion/4133643/the-work-chat-that-multi-location-businesses-have-been-waiting-for",
+      "status": 403,
+      "redirect": null,
+      "meaning": "Access denied; not evidence of a broken link"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/opinion/4133645/the-eu-fined-google-for-burying-its-rivals-in-hotel-search-the-hotel-was-never-one-of-them",
+      "status": 429,
+      "redirect": null,
+      "meaning": "Needs manual review"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/opinion/4133775/weve-been-measuring-the-wrong-things-in-hotel-operations",
+      "status": 429,
+      "redirect": null,
+      "meaning": "Needs manual review"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/opinion/4133864/diving-deeper-hidden-insights-from-travel-dreams-2026",
+      "status": 403,
+      "redirect": null,
+      "meaning": "Access denied; not evidence of a broken link"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/opinion/4133869/encouraging-employee-innovation-through-brainstorming-to-improve-hospitality-organizational-performance",
+      "status": 429,
+      "redirect": null,
+      "meaning": "Needs manual review"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/opinion/4133956/is-time-without-a-smartphone-becoming-the-new-luxury",
+      "status": 403,
+      "redirect": null,
+      "meaning": "Access denied; not evidence of a broken link"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/podcast/4132815/how-to-win-direct-bookings-with-ai-search",
+      "status": 429,
+      "redirect": null,
+      "meaning": "Needs manual review"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/podcast/4133038/recast-how-swiss-deluxe-hotels-redefines-luxury-hospitality-with-tech",
+      "status": 403,
+      "redirect": null,
+      "meaning": "Access denied; not evidence of a broken link"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/podcast/4133083/the-ai-booking-shift-what-hoteliers-need-to-do-now",
+      "status": 403,
+      "redirect": null,
+      "meaning": "Access denied; not evidence of a broken link"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/podcast/4133614/darshana-jariwala-of-bridgeton-on-connecting-the-dots-between-brand-product-and-experience",
+      "status": 403,
+      "redirect": null,
+      "meaning": "Access denied; not evidence of a broken link"
+    },
+    {
+      "url": "https://www.hospitalitynet.org/report/4133752/hvs-us-market-pulse-july-2026",
+      "status": 403,
+      "redirect": null,
+      "meaning": "Access denied; not evidence of a broken link"
+    }
+  ]
+}

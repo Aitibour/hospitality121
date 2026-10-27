@@ -8,6 +8,7 @@ import { getCategorySlugForTerm } from '@/lib/categories'
 import { nameToSlug, AUTHORS_BY_NAME } from '@/lib/authors'
 import type { ContentItem } from '@/types/content'
 import BilingualContent from '@/components/BilingualContent'
+import { renderArticleMarkdown, articleDescription } from '@/lib/article-markdown.mjs'
 import ShareButtons from '@/components/ShareButtons'
 import FollowCTA from '@/components/FollowCTA'
 import { GEO_AUTHORITY_PAGES, getMatchingGeoPage, getMatchingPillar } from '@/lib/diamond-seo'
@@ -25,26 +26,19 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   if (!result) return {}
 
   const { item, body } = result
-  const bodyEn = body.split('\n<!-- FR -->\n')[0]
-  const description = (bodyEn
-    .split('\n')
-    .map(l => l.trim())
-    .find(l => l.length > 60) ?? '')
-    .replace(/[#*`[\]_|>]/g, '')
-    .slice(0, 155)
+  const description = articleDescription(item, body)
 
-  const base = process.env.NEXT_PUBLIC_BASE_URL || 'https://hospitality121.com'
+  const base = 'https://hospitality121.com'
   const authorName = 'author' in item ? item.author : item.type === 'podcast' ? item.guest : item.organizer
 
-  const shortTitle = item.title.length > 60 ? item.title.slice(0, 57) + '…' : item.title
   return {
-    title: shortTitle,
+    title: item.title,
     description,
     alternates: { canonical: `${base}/content/${item.slug}` },
     openGraph: {
       title: item.title,
       description,
-      images: [{ url: `${base}${item.image}` }],
+      images: [{ url: new URL(item.image, base).href }],
       type: 'article',
       url: `${base}/content/${item.slug}`,
       publishedTime: item.date,
@@ -55,7 +49,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       card: 'summary_large_image',
       title: item.title,
       description,
-      images: [`${base}${item.image}`],
+      images: [new URL(item.image, base).href],
     },
   }
 }
@@ -124,9 +118,9 @@ function extractFaqJsonLd(body: string): string | null {
 }
 
 function buildJsonLd(item: ContentItem, body: string) {
-  const base = process.env.NEXT_PUBLIC_BASE_URL || 'https://hospitality121.com'
+  const base = 'https://hospitality121.com'
   const url = `${base}/content/${item.slug}`
-  const description = body.split('\n<!-- FR -->\n')[0].split('\n').map(l => l.trim()).find(l => l.length > 60)?.slice(0, 160) ?? ''
+  const description = articleDescription(item, body)
 
   if (item.type === 'event') {
     return safeJsonLd({
@@ -137,7 +131,7 @@ function buildJsonLd(item: ContentItem, body: string) {
       location: { '@type': 'Place', name: item.location },
       organizer: { '@type': 'Person', name: item.organizer },
       url,
-      image: `${base}${item.image}`,
+      image: new URL(item.image, base).href,
       description,
     })
   }
@@ -149,7 +143,7 @@ function buildJsonLd(item: ContentItem, body: string) {
       name: item.title,
       datePublished: item.date,
       url,
-      image: `${base}${item.image}`,
+      image: new URL(item.image, base).href,
       description,
       actor: { '@type': 'Person', name: item.guest },
       publisher: { '@type': 'Organization', name: 'Hospitality121', url: base, logo: { '@type': 'ImageObject', url: `${base}/images/Logo.png` } },
@@ -159,7 +153,7 @@ function buildJsonLd(item: ContentItem, body: string) {
   }
 
   const author = 'author' in item ? item.author : ''
-  const wordCount = body.split(/\s+/).filter(Boolean).length
+  const wordCount = body.split(/<!--\s*FR\s*-->/)[0].split(/\s+/).filter(Boolean).length
   const authorRecord = AUTHORS_BY_NAME[author]
   const pillar = getMatchingPillar(`${item.title} ${item.category} ${description}`)
   const schemaType = item.type === 'news' ? 'NewsArticle' : item.type === 'blog' ? 'BlogPosting' : 'Article'
@@ -168,13 +162,13 @@ function buildJsonLd(item: ContentItem, body: string) {
     '@type': schemaType,
     headline: item.title,
     datePublished: item.date,
-    dateModified: item.date,
+    dateModified: item.dateModified || item.date,
     mainEntityOfPage: { '@type': 'WebPage', '@id': url },
     url,
     wordCount,
-    image: { '@type': 'ImageObject', url: `${base}${item.image}` },
+    image: { '@type': 'ImageObject', url: new URL(item.image, base).href },
     author: {
-      '@type': 'Person',
+      '@type': /^(H1H|Hospitality121)/.test(author) ? 'Organization' : 'Person',
       name: author,
       url: `${base}/author/${nameToSlug(author)}`,
       ...(authorRecord?.linkedin ? { sameAs: [authorRecord.linkedin] } : {}),
@@ -204,11 +198,12 @@ export default async function ContentDetailPage({ params }: { params: Promise<{ 
   const meta = getMeta(item)
   const catSlug = getCategorySlugForTerm(item.category)
 
-  const [bodyEn, bodyFr] = body.split('\n<!-- FR -->\n')
+  const [bodyEn, bodyFr] = body.split(/<!--\s*FR\s*-->/)
   const titleFr = 'titleFr' in item ? (item as { titleFr?: string }).titleFr : undefined
-  const sourceUrl = 'sourceUrl' in item && typeof item.sourceUrl === 'string' ? item.sourceUrl : null
+  const rawSourceUrl = 'sourceUrl' in item && typeof item.sourceUrl === 'string' ? item.sourceUrl : null
+  const sourceUrl = rawSourceUrl && /^https:\/\//i.test(rawSourceUrl) ? rawSourceUrl : null
 
-  const base = process.env.NEXT_PUBLIC_BASE_URL || 'https://hospitality121.com'
+  const base = 'https://hospitality121.com'
   const jsonLdString = buildJsonLd(item, body)
   const breadcrumbJsonLd = buildBreadcrumbJsonLd(item, base)
   const faqJsonLd = extractFaqJsonLd(body)
@@ -252,9 +247,9 @@ export default async function ContentDetailPage({ params }: { params: Promise<{ 
         <BilingualContent
           titleEn={item.title}
           titleFr={titleFr}
-          bodyEn={bodyEn}
-          bodyFr={bodyFr}
-        />
+          htmlEn={renderArticleMarkdown(bodyEn)}
+          htmlFr={bodyFr?.trim() ? renderArticleMarkdown(bodyFr) : undefined}
+        >
 
         {sourceUrl && (
           <aside className="mb-8 rounded-lg border border-gray-200 bg-surface px-4 py-3 text-sm text-muted" aria-label="Source attribution">
@@ -262,7 +257,7 @@ export default async function ContentDetailPage({ params }: { params: Promise<{ 
             <a href={sourceUrl} target="_blank" rel="noopener noreferrer" className="text-gold hover:underline">
               {getSourceLabel(sourceUrl)}
             </a>
-            <span>. Hospitality121 adds editorial context and links to the original reporting for verification.</span>
+            <span>. Read the original reporting for its evidence and context.</span>
           </aside>
         )}
 
@@ -293,15 +288,19 @@ export default async function ContentDetailPage({ params }: { params: Promise<{ 
         </div>
 
         {/* Hero image */}
-        <div className="relative w-full aspect-video rounded-lg overflow-hidden mb-10">
+        <figure className="mb-10">
+        <div className="relative w-full aspect-video rounded-lg overflow-hidden">
           <Image
             src={item.image}
-            alt={item.title}
+            alt={item.imageAlt || ''}
             fill
             className="object-cover"
             preload
           />
         </div>
+        {item.imageCredit && <figcaption className="mt-2 text-xs text-muted">{item.imageCredit}{item.imageLicense ? ` · ${item.imageLicense}` : ''}</figcaption>}
+        </figure>
+        </BilingualContent>
 
         {/* Podcast embed */}
         {item.type === 'podcast' && (
@@ -340,7 +339,7 @@ export default async function ContentDetailPage({ params }: { params: Promise<{ 
                 {item.guestBio && (
                   <p className="text-sm text-muted leading-relaxed">{item.guestBio}</p>
                 )}
-                {item.guestLinkedIn && (
+                {item.guestLinkedIn?.startsWith('https://www.linkedin.com/in/') && (
                   <a
                     href={item.guestLinkedIn}
                     target="_blank"
@@ -435,7 +434,7 @@ export default async function ContentDetailPage({ params }: { params: Promise<{ 
                   </div>
                   <div className="flex flex-col gap-1 min-w-0">
                     <span className="text-xs font-bold text-gold tracking-widest">{rel.category}</span>
-                    <span title={rel.title} className="text-sm font-semibold text-gray-800 group-hover:text-gold transition-colors truncate">{rel.title}</span>
+                    <span className="text-sm font-semibold text-gray-800 group-hover:text-gold transition-colors">{rel.title}</span>
                   </div>
                 </Link>
               ))}

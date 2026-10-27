@@ -6,18 +6,21 @@ type Props = { title: string; url: string }
 
 export default function ShareButtons({ title, url }: Props) {
   const [copied, setCopied] = useState(false)
+  const [copyError, setCopyError] = useState(false)
   const linkedin = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`
   const x = `https://x.com/intent/post?text=${encodeURIComponent(title)}&url=${encodeURIComponent(url)}`
 
   function handleCopy() {
+    setCopyError(false)
+    if (!navigator.clipboard) { setCopyError(true); return }
     navigator.clipboard.writeText(url).then(() => {
       setCopied(true)
       setTimeout(() => setCopied(false), 2000)
-    })
+    }).catch(() => setCopyError(true))
   }
 
   return (
-    <div className="flex items-center gap-3 mt-8 pt-6 border-t border-surface">
+    <div className="flex flex-wrap items-center gap-3 mt-8 pt-6 border-t border-surface">
       <span className="text-xs font-bold tracking-widest text-muted uppercase">Share</span>
       <a
         href={linkedin}
@@ -64,6 +67,7 @@ export default function ShareButtons({ title, url }: Props) {
           </>
         )}
       </button>
+      <span role="status" className="text-xs text-muted">{copyError ? `Copy failed. Article URL: ${url}` : copied ? 'Link copied.' : ''}</span>
     </div>
   )
 }
