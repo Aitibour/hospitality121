@@ -1,0 +1,10 @@
+{
+  "authorisedBy": "User explicitly requested deployment and posting without another approval",
+  "publishedAt": "2026-10-27T19:14:12.464Z",
+  "websiteCommit": "97308c479dd1c3b1837a289322c3115bcddf2000",
+  "previousDeployId": "6adff02e1af2653d20536246",
+  "deployId": "6ae0f3d5a765bc73297a59f6",
+  "deployUrl": "https://6ae0f3d5a765bc73297a59f6--hospitality121.netlify.app",
+  "url": "https://hospitality121.com/",
+  "status": "published"
+}

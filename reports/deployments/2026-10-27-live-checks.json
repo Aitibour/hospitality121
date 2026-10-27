@@ -1,0 +1,36 @@
+{
+  "base": "https://hospitality121.com",
+  "checkedAt": "2026-10-27T19:16:01.546Z",
+  "results": [
+    {
+      "route": "/about",
+      "status": 200,
+      "passed": true
+    },
+    {
+      "route": "/content/hotel-data-monetisation",
+      "status": 200,
+      "passed": true
+    },
+    {
+      "route": "/content/summer-travel-trends-blog",
+      "status": 200,
+      "passed": true
+    },
+    {
+      "route": "/search-index.json",
+      "status": 200,
+      "passed": true
+    },
+    {
+      "route": "/.netlify/functions/daily-hero",
+      "status": 200,
+      "passed": true
+    },
+    {
+      "route": "/audit-unknown-route",
+      "status": 404,
+      "passed": true
+    }
+  ]
+}

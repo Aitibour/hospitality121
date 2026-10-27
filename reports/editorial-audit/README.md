@@ -1,5 +1,7 @@
 # Hospitality121 audit — 27 October 2026
 
+**Deployment update:** after this audit, the user explicitly authorised deployment and posting without another approval. The verified website was published on 27 October 2026 at 19:14 UTC. See [the deployment record](../deployments/2026-10-27-status.md). Social posting is blocked by LinkedIn authentication and X sign-in; the historical pre-deployment findings below remain unchanged.
+
 Local implementation on `codex/editorial-quality-audit`, checkpoint `2dbab74e43c7dfbda23abec6952a44ea5e6c7076`. No production deployment, infrastructure change or real social post was made. This is a completed technical improvement batch and full machine inventory; the substantive editorial and image-rights audit remains incomplete pending evidence and editorial decisions.
 
 ## A. Critical issues fixed locally
