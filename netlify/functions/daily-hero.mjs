@@ -9,6 +9,7 @@ export default async function handler(request) {
     status: available ? 200 : 503,
     headers: {
       'Cache-Control': 'public, max-age=0, must-revalidate',
+      'Last-Modified': now.toUTCString(),
       'Netlify-CDN-Cache-Control': available ? `public, durable, max-age=${secondsUntilTomorrow(now)}` : 'no-store',
       'X-Content-Type-Options': 'nosniff',
     },
