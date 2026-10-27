@@ -2,6 +2,12 @@ name: Publish site update
 
 on:
   workflow_dispatch:
+    inputs:
+      mode:
+        description: Check the connection or publish the authorised update
+        type: choice
+        options: [check, publish]
+        default: publish
 
 concurrency:
   group: hospitality121-site-update-2026-10
@@ -22,6 +28,7 @@ jobs:
         env:
           LINKEDIN_ACCESS_TOKEN: ${{ secrets.LINKEDIN_ACCESS_TOKEN }}
           LINKEDIN_ORG_URN: ${{ secrets.LINKEDIN_ORG_URN }}
+          SITE_UPDATE_MODE: ${{ inputs.mode }}
         run: node scripts/publish-site-update.mjs
       - name: Save publication receipt
         if: always()
