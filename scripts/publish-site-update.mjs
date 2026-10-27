@@ -1,13 +1,16 @@
 import fs from 'node:fs'
 
 // A one-off, explicitly authorised site announcement. Do not call from article generation.
-const token = process.env.LINKEDIN_ACCESS_TOKEN
-const author = process.env.LINKEDIN_ORG_URN
+const token = (process.env.LINKEDIN_ACCESS_TOKEN || '').trim().replace(/^Bearer\s+/i, '')
+const configuredAuthor = (process.env.LINKEDIN_ORG_URN || '').trim().replace(/^["']|["']$/g, '')
+const author = /^\d+$/.test(configuredAuthor) ? `urn:li:organization:${configuredAuthor}` : configuredAuthor
 const receipt = { attemptedAt: new Date().toISOString(), platform: 'linkedin', status: 'not_published' }
 function save() { fs.writeFileSync('publication-receipt.json', JSON.stringify(receipt, null, 2)) }
 if (!token || !/^urn:li:organization:\d+$/.test(author || '')) {
+  receipt.configuration = { tokenPresent: !!token, organizationPresent: !!configuredAuthor, organizationFormat: /^urn:li:person:/.test(author) ? 'person URN; company identity required' : /^urn:li:organization:\d+$/.test(author) ? 'valid organization URN' : 'unrecognised organization format' }
   save()
-  throw new Error('LinkedIn company-page credentials are missing or invalid. No post sent.')
+  console.log(JSON.stringify(receipt.configuration))
+  throw new Error('LinkedIn company-page configuration is incomplete. No post sent. See the non-secret configuration summary.')
 }
 const headers = { Authorization: `Bearer ${token}`, 'Linkedin-Version': '202606', 'X-Restli-Protocol-Version': '2.0.0', 'Content-Type': 'application/json' }
 const commentary = 'Hospitality121 has a refreshed reading experience.\n\nExplore daily RSS selections on hotel technology, AI, cybersecurity and hotel operations, along with clearer article layouts and improved search.\n\nWhich technology challenge should hospitality leaders be discussing next?\n\nhttps://hospitality121.com/\n\n#Hospitality121 #HotelTechnology'
