@@ -3,16 +3,26 @@ import fs from 'node:fs'
 // A one-off, explicitly authorised site announcement. Do not call from article generation.
 const token = (process.env.LINKEDIN_ACCESS_TOKEN || '').trim().replace(/^Bearer\s+/i, '')
 const configuredAuthor = (process.env.LINKEDIN_ORG_URN || '').trim().replace(/^["']|["']$/g, '')
-const author = /^\d+$/.test(configuredAuthor) ? `urn:li:organization:${configuredAuthor}` : configuredAuthor
+let author = /^\d+$/.test(configuredAuthor) ? `urn:li:organization:${configuredAuthor}` : configuredAuthor
 const receipt = { attemptedAt: new Date().toISOString(), platform: 'linkedin', status: 'not_published' }
 function save() { fs.writeFileSync('publication-receipt.json', JSON.stringify(receipt, null, 2)) }
+const headers = { Authorization: `Bearer ${token}`, 'Linkedin-Version': '202606', 'X-Restli-Protocol-Version': '2.0.0', 'Content-Type': 'application/json' }
+if (token && !/^urn:li:organization:\d+$/.test(author)) {
+  // Resolve the exact company page requested by the user; never substitute a personal profile.
+  const lookup = await fetch('https://api.linkedin.com/rest/organizations?q=vanityName&vanityName=hospitality121', { headers, signal: AbortSignal.timeout(20000) })
+  receipt.companyLookupStatus = lookup.status
+  if (lookup.ok) {
+    const data = await lookup.json()
+    const company = data.elements?.find(entry => entry.vanityName?.toLowerCase() === 'hospitality121')
+    if (/^\d+$/.test(String(company?.id || ''))) author = `urn:li:organization:${company.id}`
+  }
+}
 if (!token || !/^urn:li:organization:\d+$/.test(author || '')) {
   receipt.configuration = { tokenPresent: !!token, organizationPresent: !!configuredAuthor, organizationFormat: /^urn:li:person:/.test(author) ? 'person URN; company identity required' : /^urn:li:organization:\d+$/.test(author) ? 'valid organization URN' : 'unrecognised organization format' }
   save()
   console.log(JSON.stringify(receipt.configuration))
   throw new Error('LinkedIn company-page configuration is incomplete. No post sent. See the non-secret configuration summary.')
 }
-const headers = { Authorization: `Bearer ${token}`, 'Linkedin-Version': '202606', 'X-Restli-Protocol-Version': '2.0.0', 'Content-Type': 'application/json' }
 const commentary = 'Hospitality121 has a refreshed reading experience.\n\nExplore daily RSS selections on hotel technology, AI, cybersecurity and hotel operations, along with clearer article layouts and improved search.\n\nWhich technology challenge should hospitality leaders be discussing next?\n\nhttps://hospitality121.com/\n\n#Hospitality121 #HotelTechnology'
 // Check the latest posts first. Refuse to publish when duplicate detection is unavailable.
 const prior = await fetch(`https://api.linkedin.com/rest/posts?q=author&author=${encodeURIComponent(author)}&count=100&sortBy=LAST_MODIFIED`, { headers: { ...headers, 'X-RestLi-Method': 'FINDER' }, signal: AbortSignal.timeout(20000) })
