@@ -2,7 +2,7 @@ import fs from 'node:fs'
 
 // A one-off, explicitly authorised site announcement. Do not call from article generation.
 const token = (process.env.LINKEDIN_ACCESS_TOKEN || '').trim().replace(/^Bearer\s+/i, '')
-const configuredAuthor = (process.env.LINKEDIN_ORG_URN || '').trim().replace(/^["']|["']$/g, '')
+const configuredAuthor = (process.env.LINKEDIN_ORGANIZATION_ID || process.env.LINKEDIN_ORG_URN || '').trim().replace(/^["']|["']$/g, '')
 let author = /^\d+$/.test(configuredAuthor) ? `urn:li:organization:${configuredAuthor}` : configuredAuthor
 const receipt = { attemptedAt: new Date().toISOString(), platform: 'linkedin', status: 'not_published' }
 function save() { fs.writeFileSync('publication-receipt.json', JSON.stringify(receipt, null, 2)) }
