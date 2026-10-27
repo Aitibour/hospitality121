@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "account": "Hospitality_121",
+  "timezone": "America/Vancouver",
+  "publications": [
+    {
+      "date": "2026-10-27",
+      "slot": "site-update",
+      "articleUrl": "https://hospitality121.com/",
+      "postUrl": "https://x.com/Hospitality_121/status/2115162714201080279",
+      "replyUrl": null,
+      "imageType": "link-preview",
+      "text": "Hospitality121 is refreshed: clearer articles, better search and daily RSS selections on hotel tech, AI, cybersecurity and operations. Explore https://hospitality121.com/ What should we cover next?",
+      "status": "published"
+    }
+  ]
+}
