@@ -12,6 +12,32 @@
       "imageType": "link-preview",
       "text": "Hospitality121 is refreshed: clearer articles, better search and daily RSS selections on hotel tech, AI, cybersecurity and operations. Explore https://hospitality121.com/ What should we cover next?",
       "status": "published"
+    },
+    {
+      "date": "2026-10-27",
+      "slot": "13:00",
+      "articleUrl": "https://hospitality121.com/content/housekeeping-workflow",
+      "sourceUrl": "https://www.shijigroup.com/press-news/shiji-unifies-housekeeping-workflows-with-tasks-per-room-in-daylight-pms-mobile-app",
+      "sourceDate": "2026-06-18",
+      "verifiedFacts": [
+        "Shiji Tasks per Room brings cleaning tasks and guest requests into the housekeeping mobile room view.",
+        "No quantified efficiency or guest satisfaction improvements asserted."
+      ],
+      "imagePath": "reports/social-publications/2026-10-27-housekeeping-illustration.png",
+      "imageHash": "32021ea23164010a9ab0b9c2b3d133043e6452ef055a34c33d972cd37ede2d61",
+      "imageType": "original AI editorial illustration",
+      "imageGenerator": "Built-in image_gen",
+      "imagePrompt": "Conceptual painterly editorial illustration: hotel room attendant holding a tablet beside a trolley, with room cleaning and guest request task icons; contemporary corridor; warm neutral and deep blue; no company logos, metrics or product UI; labelled Editorial illustration.",
+      "text": "Housekeeping, without the screen switching. Shiji brings cleaning tasks and guest requests into one mobile room view. Our article explores connected hotel workflows. Read the full analysis in the first reply. Image: editorial illustration.",
+      "postUrl": "https://x.com/Hospitality_121/status/2115173079483900397",
+      "replyUrl": "https://x.com/Hospitality_121/status/2115173258777473450",
+      "status": "published",
+      "articleHttpStatus": 200,
+      "altTextStatus": "X media-description editor stalled twice; image labelled editorial illustration in caption and graphic.",
+      "proofScreenshots": [
+        "reports/social-publications/2026-10-27-article-post.png",
+        "reports/social-publications/2026-10-27-article-reply.png"
+      ]
     }
   ]
 }
