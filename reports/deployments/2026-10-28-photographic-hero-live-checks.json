@@ -1,0 +1,62 @@
+{
+  "origin": "https://hospitality121.com",
+  "checkedAt": "2026-10-28T08:55:50.132Z",
+  "articles": [
+    {
+      "slug": "hotel-design-digital-journey",
+      "url": "https://hospitality121.com/content/hotel-design-digital-journey",
+      "image": "/images/content/hotel-design-digital-journey-photo.webp",
+      "sha256": "f8c3007c5f256c5e85f42dfa49607be40533d5a2bde7488d6a535d31164d1c25",
+      "status": 200
+    },
+    {
+      "slug": "hotel-tech-investment-case",
+      "url": "https://hospitality121.com/content/hotel-tech-investment-case",
+      "image": "/images/content/hotel-tech-investment-case-photo.webp",
+      "sha256": "798f292b50be0d902a2ca5ac2094e0877a7a6a6a45ac64a4ab26100c7239719f",
+      "status": 200
+    },
+    {
+      "slug": "php-security-hotel-websites",
+      "url": "https://hospitality121.com/content/php-security-hotel-websites",
+      "image": "/images/content/php-security-hotel-websites-photo.webp",
+      "sha256": "c5d567300886a354248123f5d3a44178df566b02d3b3c487b70d3843ee140362",
+      "status": 200
+    },
+    {
+      "slug": "serko-hopper-business-travel",
+      "url": "https://hospitality121.com/content/serko-hopper-business-travel",
+      "image": "/images/content/serko-hopper-business-travel-photo.webp",
+      "sha256": "7b70efd869b6276d1275367fca4b6964280b8f81a73268860e7e279e1a88b7b4",
+      "status": 200
+    },
+    {
+      "slug": "williamsburg-digital-upsells",
+      "url": "https://hospitality121.com/content/williamsburg-digital-upsells",
+      "image": "/images/content/williamsburg-digital-upsells-photo.webp",
+      "sha256": "069a648a408504c3b3125442f13bba18b06db70dd1e8cff6c40664f17533f587",
+      "status": 200
+    },
+    {
+      "slug": "worldhotels-digital-relaunch",
+      "url": "https://hospitality121.com/content/worldhotels-digital-relaunch",
+      "image": "/images/content/worldhotels-digital-relaunch-photo.webp",
+      "sha256": "f14bd1872d8738fff3f8d61722e26b12dd5126a6355a7c61106b623dc532562b",
+      "status": 200
+    },
+    {
+      "slug": "hotel-ai-information-hub",
+      "url": "https://hospitality121.com/content/hotel-ai-information-hub",
+      "image": "/images/content/hotel-ai-information-hub-photo.webp",
+      "sha256": "b09e5f0fdb2f3e2bf7d58f708c39db4d5625406721f0fb3bc6cd769b018e9d71",
+      "status": 200
+    },
+    {
+      "slug": "hotel-ai-pilot-before-budget",
+      "url": "https://hospitality121.com/content/hotel-ai-pilot-before-budget",
+      "image": "/images/content/hotel-ai-pilot-before-budget-photo.webp",
+      "sha256": "81216fb1d61cdb9850986afd232155c359b78141ec5eb8bac8e603979affeaad",
+      "status": 200
+    }
+  ]
+}

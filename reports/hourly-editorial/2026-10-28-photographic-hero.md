@@ -24,3 +24,9 @@ Source URLs and dates are also retained in each article's frontmatter. These are
 The published hero selector and its server-rendered fallback require `imageType: photograph`, credit, licence, source URL and a local image. Every hero destination is `/content/<slug>`. Generated imagery and missing reuse provenance are excluded. The hourly automation now requires real licensed photographs and skips candidates lacking a suitable image.
 
 All eight photograph hashes differ. Content style validation, publication validation, lint, regression tests and static build are required before deployment. Production deployment receipts and final browser screenshots record the published result separately.
+
+## Verified production release
+
+Published Netlify deploy `6ae1436346c471ddacdfaa4a` on 28 October 2026 at 08:50 UTC, from website commit `1ea908eb488a460578b62ecc97012b411a30fb83`. Validation passed: 292 content files, 83 tests, lint, TypeScript and 373 generated routes. The preview and production checks verified all eight internal article URLs, complete reporting bodies, photo bytes/hashes, credit, canonical URLs and homepage CTA. Browser proof confirmed the eight-slide live carousel and a full article with its photograph, source credit and body.
+
+The interrupted uploader returned HTTP 422 after Netlify had already marked its full manifest ready. The deploy helper now checks that actual ready state when an upload retry returns 422; it still fails when the deploy is incomplete. No second deployment or duplicate article was created.

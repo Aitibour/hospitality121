@@ -33,6 +33,15 @@ async function api(route, options = {}) {
     await new Promise(resolve => setTimeout(resolve, retryDelay))
     continue
   }
+  // A timed-out upload can have succeeded remotely. Netlify closes file uploads
+  // once the whole manifest is ready, so a retry may then return 422.
+  if (response.status === 422 && options.method === 'PUT' && /^\/deploys\/[^/]+\/files\//.test(route)) {
+    const detail = await response.text()
+    const deployRoute = route.match(/^\/deploys\/[^/]+/)[0]
+    const completed = await api(deployRoute)
+    if (completed.state === 'ready') return completed
+    throw new Error(`Netlify API 422: ${detail.slice(0,300)}`)
+  }
   if (!response.ok) throw new Error(`Netlify API ${response.status}: ${(await response.text()).slice(0,300)}`)
   return response.json()
  }
