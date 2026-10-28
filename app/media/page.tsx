@@ -89,7 +89,7 @@ const PLATFORMS = [
     name: 'X (Twitter)',
     category: 'Social',
     description: 'Real-time hospitality news, event commentary, industry debate, and links to the latest coverage.',
-    href: 'https://x.com/hospitality121',
+    href: 'https://x.com/Hospitality_121',
     color: '#000000',
     icon: (
       <svg viewBox="0 0 24 24" fill="currentColor" className="w-7 h-7">

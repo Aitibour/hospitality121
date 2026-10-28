@@ -1,5 +1,13 @@
 # Editorial review and publication
 
+## Owner-authorised hourly original coverage
+
+The owner subsequently authorised hourly RSS monitoring, original rewritten coverage, original topic images and production publication without another approval. The local Codex heartbeat performs this workflow independently of the older GitHub draft generators below. It must obtain source evidence, write its own news brief and clearly distinguish operational analysis from supplier claims. Reproducing publisher text or imagery is not authorised. Source credit remains visible, while the reading destination and full article stay on Hospitality121.
+
+Automated source checks are recorded truthfully with `editorialReview.reviewType: automated-source-check` and `reviewedBy: Codex automated editorial checks`. This is not a human sign-off or independent verification of supplier outcomes. New coverage discloses AI assistance, uses checked original illustrations and records source evidence. Skip unverifiable stories rather than manufacture detail. Structural validators remain mandatory but do not establish accuracy or rights.
+
+The homepage and `/hero-feed.json` select only published local article slugs; the old function endpoint is an internal-feed compatibility proxy. Source URLs are retained as provenance, including structured citations, and shown as a non-navigating source credit. Hero buttons always open `/content/<slug>` with the full Hospitality121 body. New static articles require a verified build and Netlify deployment before becoming hero or social destinations.
+
 The site is a Next.js static export on Netlify. Content is filesystem MDX, parsed as data and Markdown, not executed MDX. Existing archive URLs remain public. The daily hero links readers to recent RSS reporting at the original publisher; it does not create local articles.
 
 ## New generated drafts

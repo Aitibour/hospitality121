@@ -37,5 +37,7 @@ test('generated stories visibly attribute source reporting', () => {
   assert.match(source, /getSourceLabel/)
   assert.match(source, /aria-label="Source attribution"/)
   assert.match(source, /Source reporting:/)
-  assert.match(source, /Read the original reporting for its evidence and context/)
+  assert.match(source, /full Hospitality121 article and analysis appear below/)
+  assert.doesNotMatch(source, /<a href=\{sourceUrl\}/)
+  assert.match(source, /citation: item.sourceUrl/)
 })

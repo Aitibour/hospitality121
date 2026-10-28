@@ -80,7 +80,7 @@ export default function Footer() {
             <div className="flex gap-3">
               <a href="https://linkedin.com/company/hospitality121" target="_blank" rel="noopener noreferrer" className="text-xs text-gray-400 hover:text-gold transition-colors font-medium">LinkedIn</a>
               <a href="https://instagram.com/hospitality121" target="_blank" rel="noopener noreferrer" className="text-xs text-gray-400 hover:text-gold transition-colors font-medium">Instagram</a>
-              <a href="https://x.com/hospitality121" target="_blank" rel="noopener noreferrer" className="text-xs text-gray-400 hover:text-gold transition-colors font-medium">X</a>
+              <a href="https://x.com/Hospitality_121" target="_blank" rel="noopener noreferrer" className="text-xs text-gray-400 hover:text-gold transition-colors font-medium">X</a>
             </div>
           </div>
 

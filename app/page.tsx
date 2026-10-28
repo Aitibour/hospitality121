@@ -3,7 +3,8 @@ import { getAllContent } from '@/lib/content'
 import { limitByAuthor, pickEditorItems } from '@/lib/dedup'
 import type { Article, Podcast } from '@/types/content'
 import DailyHero from '@/components/DailyHero'
-import { loadDailyHero, classifyHeroTopic } from '@/scripts/lib/daily-hero.mjs'
+import { classifyHeroTopic } from '@/scripts/lib/daily-hero.mjs'
+import { selectPublishedHeroItems } from '@/scripts/lib/published-hero.mjs'
 import ContentGrid from '@/components/ContentGrid'
 import EditorsPick from '@/components/EditorsPick'
 import TopContent from '@/components/TopContent'
@@ -28,7 +29,7 @@ export default async function HomePage() {
   const select = createHomeSelection()
   const editorial     = all.filter(item => item.type !== 'event')
   const heroItems = select(limitByAuthor(editorial.filter(item => classifyHeroTopic(`${item.title} ${item.category}`)), 2), 8)
-  const initialFeed = await loadDailyHero().catch(() => ({ updatedAt: new Date().toISOString(), items: [] }))
+  const initialFeed = { updatedAt: new Date().toISOString(), items: selectPublishedHeroItems(all) }
   const heroSlugs     = new Set(heroItems.map(item => item.slug))
   const gridItems     = select(limitByAuthor(editorial.filter(item => !heroSlugs.has(item.slug)), 2), 10)
   const generatedItems = select(editorial.filter(isGeneratedPost), 8)

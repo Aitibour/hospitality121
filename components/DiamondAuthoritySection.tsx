@@ -18,7 +18,7 @@ export default function DiamondAuthoritySection({ items }: Props) {
           Source-based coverage
         </h2>
         <p className="mt-2 text-xs leading-relaxed text-muted">
-          AI-assisted coverage with links to the original publishers. Check each story&apos;s publication date.
+          Source-attributed coverage and analysis, available in full on Hospitality121. Check each story&apos;s publication date.
         </p>
       </div>
 

@@ -90,16 +90,16 @@ export default function HeroCarousel({ items }: Props) {
           <span className="text-gray-300 text-xs sm:text-sm">{publishedAgo}</span>
           {item.type !== 'event' && (
             <span className="text-xs bg-surface text-gold border border-gold/30 px-2 py-0.5 rounded">
-              {item.rss ? 'RSS · DAILY SELECTION' : item.type === 'podcast' ? 'PODCAST' : 'ARTICLE'}
+              {item.type === 'podcast' ? 'PODCAST' : 'ARTICLE'}
             </span>
           )}
         </div>
-        <Link href={item.href || `/content/${item.slug}`} prefetch={item.rss ? false : undefined} className="group/title block w-full min-w-0" title={item.title}>
+        <Link href={`/content/${item.slug}`} className="group/title block w-full min-w-0" title={item.title}>
           <h2 className="font-serif text-xl sm:text-3xl md:text-4xl font-bold text-gray-50 leading-tight mb-3 break-words group-hover/title:text-gold transition-colors">
             {item.title}
           </h2>
           <span className="inline-flex items-center gap-2 rounded-full bg-gold px-4 py-2 text-xs font-bold uppercase tracking-widest text-gray-950 shadow-sm transition-transform group-hover/title:translate-x-1">
-            {item.rss ? 'Read at source' : 'Read now'}
+            Read full article
             <span aria-hidden="true">-&gt;</span>
           </span>
         </Link>

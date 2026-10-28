@@ -12,10 +12,13 @@ export default function DailyHero({ initialFeed, fallbackItems }: { initialFeed:
     let refreshTimer: ReturnType<typeof setTimeout>
     async function refresh() {
       try {
-        const response = await fetch('/.netlify/functions/daily-hero', { signal: controller.signal })
+        const response = await fetch('/hero-feed.json', { signal: controller.signal, cache: 'no-cache' })
         if (!response.ok) throw new Error('Feed unavailable')
         const next: Feed = await response.json()
-        if (Array.isArray(next.items) && next.items.length > 0 && Number.isFinite(Date.parse(next.updatedAt))) setFeed(next)
+        if (Array.isArray(next.items) && next.items.length > 0 && Number.isFinite(Date.parse(next.updatedAt))) {
+          const local = next.items.filter(item => /^[a-z0-9-]+$/.test(item.slug) && item.href === `/content/${item.slug}`)
+          if (local.length) setFeed({ ...next, items: local })
+        }
       } catch {
         // Re-evaluate snapshot age even when upstream feeds fail.
         if (!controller.signal.aborted) setFeed(current => ({ ...current, updatedAt: new Date().toISOString() }))
@@ -31,7 +34,7 @@ export default function DailyHero({ initialFeed, fallbackItems }: { initialFeed:
   }, [])
 
   // Never label an old build-time snapshot as current news during an upstream outage.
-  const recent = feed.items.filter(item => Date.parse(item.date) >= Date.parse(feed.updatedAt) - 7 * 86400000)
+  const recent = feed.items.filter(item => item.href === `/content/${item.slug}` && Date.parse(item.date) >= Date.parse(feed.updatedAt) - 7 * 86400000)
   const items = recent.length > 0 ? recent : fallbackItems
   return <HeroCarousel key={items.map(item => item.slug).join(',')} items={items} />
 }

@@ -6,7 +6,7 @@ export default function FollowCTA({ compact = false }: { compact?: boolean }) {
       </p>
       <div className="flex flex-wrap gap-4 text-sm font-semibold">
         <a href="https://www.linkedin.com/company/hospitality121" target="_blank" rel="noopener noreferrer" className="underline underline-offset-4 hover:text-gold">Follow on LinkedIn ↗</a>
-        <a href="https://x.com/hospitality121" target="_blank" rel="noopener noreferrer" className="underline underline-offset-4 hover:text-gold">Follow on X ↗</a>
+        <a href="https://x.com/Hospitality_121" target="_blank" rel="noopener noreferrer" className="underline underline-offset-4 hover:text-gold">Follow on X ↗</a>
       </div>
     </aside>
   )

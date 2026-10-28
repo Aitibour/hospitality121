@@ -74,7 +74,7 @@ const ORG_SCHEMA = safeJsonLd({
   },
   sameAs: [
     'https://linkedin.com/company/hospitality121',
-    'https://x.com/hospitality121',
+    'https://x.com/Hospitality_121',
     'https://instagram.com/hospitality121',
   ],
   knowsAbout: [

@@ -254,10 +254,10 @@ export default async function ContentDetailPage({ params }: { params: Promise<{ 
         {sourceUrl && (
           <aside className="mb-8 rounded-lg border border-gray-200 bg-surface px-4 py-3 text-sm text-muted" aria-label="Source attribution">
             <span className="font-semibold text-gray-800">Source reporting: </span>
-            <a href={sourceUrl} target="_blank" rel="noopener noreferrer" className="text-gold hover:underline">
+            <span className="text-gray-800">
               {getSourceLabel(sourceUrl)}
-            </a>
-            <span>. Read the original reporting for its evidence and context.</span>
+            </span>
+            <span>. The full Hospitality121 article and analysis appear below.</span>
           </aside>
         )}
 

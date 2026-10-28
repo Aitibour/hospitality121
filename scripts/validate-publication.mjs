@@ -18,7 +18,7 @@ for (const directory of ['articles', 'news', 'blog', 'podcasts', 'events']) {
     if (slugs.has(slug)) errors.push(`${file}: duplicate public slug`)
     slugs.add(slug)
     if (!content.trim()) errors.push(`${file}: empty body`)
-    if (data.status === 'published' && data.aiGenerated && !isPublishedContent(data)) errors.push(`${file}: human review approval incomplete`)
+    if (data.status === 'published' && data.aiGenerated && !isPublishedContent(data)) errors.push(`${file}: recorded editorial checks incomplete`)
     if (data.image?.startsWith('/images/') && !fs.existsSync(path.join('public', data.image))) errors.push(`${file}: missing featured image`)
     if (data.sourceUrl) {
       try {
@@ -33,4 +33,4 @@ for (const directory of ['articles', 'news', 'blog', 'podcasts', 'events']) {
   }
 }
 if (errors.length) { console.error(errors.join('\n')); process.exitCode = 1 }
-else console.log(`Structural publication validation passed for ${total} content files. Factual accuracy and image rights require human review.`)
+else console.log(`Structural publication validation passed for ${total} content files. This does not independently verify factual accuracy or image rights.`)
