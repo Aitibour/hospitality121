@@ -1,0 +1,50 @@
+---
+title: PHP Security Check for Hotels
+description: Recent PHP advisories warrant a supplier check for hotel websites and connected web services that use the language.
+source: 'RH-ISAC update, 22 October 2026; PHP project advisories checked through 26 October'
+sourceUrl: 'https://rhisac.org/general-blog/update-php-releases-critical-php-security-update-to-mitigate-vulnerabilities/'
+sourcePublishedAt: '2026-10-22T14:52:59Z'
+category: TECHNOLOGY
+author: Hospitality121 Editorial
+authorAvatar: /images/Logo.png
+date: '2026-10-28'
+type: news
+featured: true
+readTime: 2 min read
+editorialFormat: rss-original
+status: published
+aiGenerated: true
+editorialReview:
+  reviewType: automated-source-check
+  reviewedBy: Codex automated editorial checks
+  reviewedAt: '2026-10-28T00:26:59.007Z'
+  factCheck: approved
+  imageRights: approved
+  seo: approved
+image: /images/content/php-security-hotel-websites-photo.webp
+imageType: photograph
+imageAlt: Photograph of green computer text on a dark screen.
+imageCredit: Photo by Pixabay via Pexels. Reference photograph of computer code; not evidence of a hotel security incident.
+imageSource: 'https://www.pexels.com/photo/computer-codes-207580/'
+imageLicense: CC0 1.0 (Pexels-listed public-domain photograph)
+imageCaption: Reference photograph of computer code; not evidence of a hotel security incident.
+---
+Hotel operators whose websites or web services use PHP should confirm the current patch position with their hosting or application provider. RH-ISAC's 22 October update highlighted critical PHP vulnerabilities, and the PHP project published subsequent guidance on 23 October and updated Windows packages on 26 October.
+
+PHP's 21 October security releases are 8.5.12, 8.4.27, 8.3.36 and 8.2.35. The project says these address CVE-2026-109618 and CVE-2026-109619, which can permit remote code execution. Its later Windows rebuilds include an additional dependency fix. These notices concern affected PHP systems; they do not establish that any particular hotel has been compromised.
+
+## Ask for evidence of the running system
+
+Hospitality121's analysis: a hotel can have several web services supplied by different companies. Start by identifying which provider owns each relevant application and whether it actually uses PHP. Do not assume the technology from the appearance of the website.
+
+Request confirmation of the installed package, the applicable vendor advisory and when the updated service was put into operation. A statement that an update has been downloaded is different from confirmation that the running service uses it.
+
+## Check the whole update record
+
+Supported operating-system vendors may provide backported patches, so package evidence should be interpreted against the supplier's own security notice. A version string alone may not tell the complete story.
+
+After the provider completes its change, agree an appropriate service check for essential website functions and retain the provider's confirmation. Avoid changing production PHP settings on the basis of a general news article.
+
+This is a hotel-operations brief, not a diagnosis of an installation. The PHP project's current advisory and the responsible technical provider should determine the actual remediation plan.
+
+Reporting basis: RH-ISAC's update and the PHP project's October advisories. Original Hospitality121 brief and operational analysis, prepared with AI assistance and automated source checks. Explore [hospitality cybersecurity](/technology/cybersecurity).

@@ -1,0 +1,118 @@
+{
+  "photos": [
+    {
+      "slug": "worldhotels-digital-relaunch",
+      "id": 18435555,
+      "photographer": "aboodi vesakaran",
+      "source": "https://www.pexels.com/photo/exterior-of-a-hotel-18435555/",
+      "downloadUrl": "https://images.pexels.com/photos/18435555/pexels-photo-18435555.jpeg?auto=compress&cs=tinysrgb&w=1800",
+      "file": "public/images/content/worldhotels-digital-relaunch-photo.webp",
+      "license": "Pexels License (free editorial and commercial use)",
+      "licenseUrl": "https://www.pexels.com/license/",
+      "caption": "Reference photograph of hotel architecture; not identified as a WorldHotels property.",
+      "sha256": "f14bd1872d8738fff3f8d61722e26b12dd5126a6355a7c61106b623dc532562b",
+      "checkedAt": "2026-10-28T00:26:53.233Z"
+    },
+    {
+      "slug": "williamsburg-digital-upsells",
+      "id": 8089081,
+      "photographer": "Max Vakhtbovych",
+      "source": "https://www.pexels.com/photo/bed-in-hotel-room-8089081/",
+      "downloadUrl": "https://images.pexels.com/photos/8089081/pexels-photo-8089081.jpeg?auto=compress&cs=tinysrgb&w=1800",
+      "file": "public/images/content/williamsburg-digital-upsells-photo.webp",
+      "license": "Pexels License (free editorial and commercial use)",
+      "licenseUrl": "https://www.pexels.com/license/",
+      "caption": "Reference photograph of guest accommodation; not Williamsburg Lodge.",
+      "sha256": "069a648a408504c3b3125442f13bba18b06db70dd1e8cff6c40664f17533f587",
+      "checkedAt": "2026-10-28T00:26:54.245Z"
+    },
+    {
+      "slug": "hotel-ai-pilot-before-budget",
+      "id": 7888760,
+      "photographer": "RDNE Stock project",
+      "source": "https://www.pexels.com/photo/people-in-a-business-meeting-7888760/",
+      "downloadUrl": "https://images.pexels.com/photos/7888760/pexels-photo-7888760.jpeg?auto=compress&cs=tinysrgb&w=1800",
+      "file": "public/images/content/hotel-ai-pilot-before-budget-photo.webp",
+      "license": "Pexels License (free editorial and commercial use)",
+      "licenseUrl": "https://www.pexels.com/license/",
+      "caption": "Reference photograph of team planning; not an Otel product demonstration.",
+      "sha256": "81216fb1d61cdb9850986afd232155c359b78141ec5eb8bac8e603979affeaad",
+      "checkedAt": "2026-10-28T00:26:54.866Z"
+    },
+    {
+      "slug": "hotel-tech-investment-case",
+      "id": 7698802,
+      "photographer": "Yan Krukau",
+      "source": "https://www.pexels.com/photo/coworkers-looking-at-a-laptop-in-a-meeting-7698802/",
+      "downloadUrl": "https://images.pexels.com/photos/7698802/pexels-photo-7698802.jpeg?auto=compress&cs=tinysrgb&w=1800",
+      "file": "public/images/content/hotel-tech-investment-case-photo.webp",
+      "license": "Pexels License (free editorial and commercial use)",
+      "licenseUrl": "https://www.pexels.com/license/",
+      "caption": "Reference photograph of business planning; not the people quoted in the source.",
+      "sha256": "798f292b50be0d902a2ca5ac2094e0877a7a6a6a45ac64a4ab26100c7239719f",
+      "checkedAt": "2026-10-28T00:26:55.427Z"
+    },
+    {
+      "slug": "hotel-design-digital-journey",
+      "id": 7821345,
+      "photographer": "Mikhail Nilov",
+      "source": "https://www.pexels.com/photo/reception-area-of-a-hotel-7821345/",
+      "downloadUrl": "https://images.pexels.com/photos/7821345/pexels-photo-7821345.jpeg?auto=compress&cs=tinysrgb&w=1800",
+      "file": "public/images/content/hotel-design-digital-journey-photo.webp",
+      "license": "Pexels License (free editorial and commercial use)",
+      "licenseUrl": "https://www.pexels.com/license/",
+      "caption": "Reference photograph of hotel reception design; not an Outform installation.",
+      "sha256": "f8c3007c5f256c5e85f42dfa49607be40533d5a2bde7488d6a535d31164d1c25",
+      "checkedAt": "2026-10-28T00:26:56.238Z"
+    },
+    {
+      "slug": "hotel-ai-information-hub",
+      "id": 39761922,
+      "photographer": "Andri Wijayanto",
+      "source": "https://www.pexels.com/photo/modern-hotel-reception-desk-with-computer-setup-39761922/",
+      "downloadUrl": "https://images.pexels.com/photos/39761922/pexels-photo-39761922.jpeg?auto=compress&cs=tinysrgb&w=1800",
+      "file": "public/images/content/hotel-ai-information-hub-photo.webp",
+      "license": "Pexels License (free editorial and commercial use)",
+      "licenseUrl": "https://www.pexels.com/license/",
+      "caption": "Reference photograph of a hotel workstation; not the Avalora or Yipy interface.",
+      "sha256": "b09e5f0fdb2f3e2bf7d58f708c39db4d5625406721f0fb3bc6cd769b018e9d71",
+      "checkedAt": "2026-10-28T00:26:57.059Z"
+    },
+    {
+      "slug": "serko-hopper-business-travel",
+      "id": 4173241,
+      "photographer": "Gustavo Fring",
+      "source": "https://www.pexels.com/photo/positive-woman-with-passport-using-laptop-on-luggage-in-airport-4173241/",
+      "downloadUrl": "https://images.pexels.com/photos/4173241/pexels-photo-4173241.jpeg?auto=compress&cs=tinysrgb&w=1800",
+      "file": "public/images/content/serko-hopper-business-travel-photo.webp",
+      "license": "Pexels License (free editorial and commercial use)",
+      "licenseUrl": "https://www.pexels.com/license/",
+      "caption": "Reference photograph of digital travel planning; not a Serko customer endorsement.",
+      "sha256": "7b70efd869b6276d1275367fca4b6964280b8f81a73268860e7e279e1a88b7b4",
+      "checkedAt": "2026-10-28T00:26:58.079Z"
+    },
+    {
+      "slug": "php-security-hotel-websites",
+      "id": 207580,
+      "photographer": "Pixabay",
+      "source": "https://www.pexels.com/photo/computer-codes-207580/",
+      "downloadUrl": "https://images.pexels.com/photos/207580/pexels-photo-207580.jpeg?auto=compress&cs=tinysrgb&w=1800",
+      "file": "public/images/content/php-security-hotel-websites-photo.webp",
+      "license": "CC0 1.0 (Pexels-listed public-domain photograph)",
+      "licenseUrl": "https://www.pexels.com/license/",
+      "caption": "Reference photograph of computer code; not evidence of a hotel security incident.",
+      "sha256": "c5d567300886a354248123f5d3a44178df566b02d3b3c487b70d3843ee140362",
+      "checkedAt": "2026-10-28T00:26:59.012Z"
+    }
+  ],
+  "restoredTopics": [
+    "worldhotels-digital-relaunch",
+    "williamsburg-digital-upsells",
+    "hotel-ai-pilot-before-budget",
+    "hotel-tech-investment-case",
+    "hotel-design-digital-journey",
+    "hotel-ai-information-hub",
+    "serko-hopper-business-travel",
+    "php-security-hotel-websites"
+  ]
+}

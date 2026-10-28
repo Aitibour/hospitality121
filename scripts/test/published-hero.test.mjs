@@ -4,7 +4,12 @@ import { selectPublishedHeroItems } from '../lib/published-hero.mjs'
 import handler from '../../netlify/functions/daily-hero.mjs'
 
 const now = new Date('2026-10-27T23:30:00Z')
-const item = (slug, image = `/images/${slug}.webp`) => ({ slug, image, title: `Hotel AI ${slug}`, category: 'TECHNOLOGY', type: 'news', date: '2026-10-27', href: 'https://publisher.example/news' })
+const item = (slug, image = `/images/${slug}.webp`) => ({ slug, image, imageType: 'photograph', imageCredit: 'Photographer', imageLicense: 'Pexels License', imageSource: 'https://www.pexels.com/photo/example/', title: `Hotel AI ${slug}`, category: 'TECHNOLOGY', type: 'news', date: '2026-10-27', href: 'https://publisher.example/news' })
+
+test('hero excludes generated images and photographs without recorded reuse provenance', () => {
+  const result = selectPublishedHeroItems([item('verified'), { ...item('generated'), imageType: 'illustration' }, { ...item('unknown'), imageLicense: '' }, { ...item('uncredited'), imageCredit: '' }, { ...item('unsourced'), imageSource: '' }], now)
+  assert.deepEqual(result.map(row => row.slug), ['verified'])
+})
 
 test('published hero replaces upstream destinations with actual internal slugs', () => {
   const result = selectPublishedHeroItems([item('information'), item('pilot'), { ...item('future'), date: '2099-01-01' }, item('../escape')], now)
