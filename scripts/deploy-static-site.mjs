@@ -24,10 +24,13 @@ async function api(route, options = {}) {
     continue
   }
   if (response.status === 429 || response.status === 503) {
-    console.log(`Netlify requested slower uploads; retrying in ${Math.min(30, 3 * (attempt + 1))} seconds.`)
+    const retryAfter = response.headers.get('retry-after')
+    const serverDelay = retryAfter && /^\d+$/.test(retryAfter) ? Number(retryAfter) * 1000 : Date.parse(retryAfter || '') - Date.now()
+    const retryDelay = Math.max(Math.min(30000, 3000 * (attempt + 1)), Number.isFinite(serverDelay) ? serverDelay : 0)
+    console.log(`Netlify HTTP ${response.status}; retrying in ${Math.ceil(retryDelay / 1000)} seconds.`)
     await response.text()
-    nextRequestAt = Date.now() + Math.min(30000, 3000 * (attempt + 1))
-    await new Promise(resolve => setTimeout(resolve, Math.min(30000, 3000 * (attempt + 1))))
+    nextRequestAt = Math.max(nextRequestAt, Date.now() + retryDelay)
+    await new Promise(resolve => setTimeout(resolve, retryDelay))
     continue
   }
   if (!response.ok) throw new Error(`Netlify API ${response.status}: ${(await response.text()).slice(0,300)}`)
@@ -71,7 +74,7 @@ const required = deploy.required || []
 console.log(`Uploading ${required.length} changed files and ${(deploy.required_functions || []).length} function.`)
 let cursor = 0
 let uploaded = 0
-await Promise.all(Array.from({ length: 4 }, async () => {
+await Promise.all(Array.from({ length: 8 }, async () => {
   while (cursor < required.length) {
     const hash = required[cursor++]
     const file = fileByHash.get(hash)
@@ -96,5 +99,3 @@ for (let attempt = 0; attempt < 60; attempt++) {
 if (deploy.state !== 'ready') throw new Error('Deploy did not finish in the allotted verification period')
 await fs.writeFile('.netlify/daily-hero-deploy.json', JSON.stringify({ id: deploy.id, url: deploy.deploy_ssl_url, state: deploy.state }))
 console.log(JSON.stringify({ id: deploy.id, url: deploy.deploy_ssl_url, state: deploy.state }))
-
-

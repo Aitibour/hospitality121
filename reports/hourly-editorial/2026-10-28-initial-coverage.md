@@ -22,4 +22,8 @@ The homepage and static `/hero-feed.json` use published local article slugs. The
 
 The existing local heartbeat `hospitality121-daily-x-news-and-article` is updated to run the original-article workflow hourly, at most one suitable verified nonduplicate article per hour. It skips inadequate evidence rather than publishing filler. X remains 09:00/13:00 Vancouver with native article cards; LinkedIn posting remains skipped. Local scheduled runs require Codex, the computer and necessary authenticated access to remain available.
 
-Validation: 82 tests passed, structural content validation passed for 286 files, and lint passed. Build and production receipts are recorded separately after deployment.
+Validation: 82 tests passed, structural content validation passed for 286 files, lint passed, TypeScript passed and the production build generated 367 routes. Browser inspection verified an actual hero click to a full article locally and in production.
+
+Published 28 October 2026 at 00:18:07 UTC, Netlify deployment `6ae13d32664ceef3708a4edb`, website commit `f62b95b0836feb94ff7fdf101398d46442a76366`. Previous production deployment `6ae0f3d5a765bc73297a59f6` is retained. Receipt: `reports/deployments/2026-10-28T00-18-06-136Z-original-articles.json`. Live checks: `reports/deployments/2026-10-28-original-articles-live-checks.json`.
+
+Production returned HTTP 200 for both full articles, both original images, the homepage, the internal hero feed and the legacy function. All eight feed destinations are local; the current carousel displays the two recent original articles. Read at source is absent. Local proof screenshots: `live-internal-hero-2026-10-28.png` and `live-full-article-2026-10-28.png` in this folder.

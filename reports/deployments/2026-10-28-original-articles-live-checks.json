@@ -1,0 +1,30 @@
+{
+  "checkedAt": "2026-10-28T00:18:22.372Z",
+  "records": [
+    {
+      "path": "/hero-feed.json",
+      "status": 200,
+      "internalItems": 8
+    },
+    {
+      "path": "/.netlify/functions/daily-hero",
+      "status": 200,
+      "internalItems": 8
+    },
+    {
+      "slug": "hotel-ai-information-hub",
+      "articleStatus": 200,
+      "imageStatus": 200
+    },
+    {
+      "slug": "hotel-ai-pilot-before-budget",
+      "articleStatus": 200,
+      "imageStatus": 200
+    },
+    {
+      "path": "/",
+      "status": 200,
+      "internalHero": true
+    }
+  ]
+}
