@@ -31,7 +31,7 @@ export default function PrivacyPage() {
               'Email address, name, and company when you download a resource',
               'Usage data (pages visited, time on site, referring URLs) via Google Analytics, only if you consent to cookies',
               'IP address and browser information collected automatically by our hosting provider (Netlify)',
-              'Article view counts: a random per-article browser-session identifier prevents refreshes from increasing the count. Our counter stores the article slug and random identifier, without names, email addresses, IP addresses or cross-site tracking. Counts begin on 29 October 2026 and represent sessions, not unique people or confirmed reads.',
+              'Article view tracking: a random per-article browser-session identifier prevents refreshes from increasing the count. Our counter stores the article slug and random identifier, without names, email addresses, IP addresses or cross-site tracking. Tracking began on 29 October 2026 and measures sessions, not unique people or confirmed reads. Displayed view numbers temporarily use simulated values between 100 and 4,058; actual session counts remain stored separately.',
             ].map(item => (
               <li key={item} className="flex items-start gap-2">
                 <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-gold shrink-0" />

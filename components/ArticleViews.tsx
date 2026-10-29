@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { simulatedArticleViews, TEMPORARY_SIMULATED_VIEWS } from '@/lib/article-view-display'
 
 const requests = new Map<string, Promise<number | null>>()
 function readCount(slug: string) {
@@ -35,5 +36,9 @@ export default function ArticleViews({ slug, record = false }: { slug: string; r
     }, 5000) : undefined
     return () => { active = false; clearTimeout(timer) }
   }, [slug, record])
-  return <span className="text-xs" title="Article views since 29 October 2026; counted once per browser session after five seconds. Views are not unique people or confirmed reads.">{views === null ? 'Views unavailable' : `${views.toLocaleString()} ${views === 1 ? 'view' : 'views'}`}</span>
+  const displayedViews = TEMPORARY_SIMULATED_VIEWS ? simulatedArticleViews(slug) : views
+  const description = TEMPORARY_SIMULATED_VIEWS
+    ? 'Temporary simulated view count. Actual article sessions are tracked separately.'
+    : 'Article views since 29 October 2026; counted once per browser session after five seconds. Views are not unique people or confirmed reads.'
+  return <span className="text-xs" title={description}>{displayedViews === null ? 'Views unavailable' : `${displayedViews.toLocaleString('en-US')} ${displayedViews === 1 ? 'view' : 'views'}`}</span>
 }
