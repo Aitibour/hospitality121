@@ -1,0 +1,84 @@
+{
+  "base": "https://hospitality121.com",
+  "checkedAt": "2026-10-29T21:12:36.537Z",
+  "articles": [
+    {
+      "slug": "hotel-design-digital-journey",
+      "title": "Design Meets Hotel Technology",
+      "date": "2026-10-28",
+      "href": "/content/hotel-design-digital-journey",
+      "image": "/images/content/hotel-design-digital-journey-photo.webp",
+      "hash": "f8c3007c5f256c5e85f42dfa49607be40533d5a2bde7488d6a535d31164d1c25"
+    },
+    {
+      "slug": "hotel-tech-investment-case",
+      "title": "Hotel Tech Is a Business Investment",
+      "date": "2026-10-28",
+      "href": "/content/hotel-tech-investment-case",
+      "image": "/images/content/hotel-tech-investment-case-photo.webp",
+      "hash": "798f292b50be0d902a2ca5ac2094e0877a7a6a6a45ac64a4ab26100c7239719f"
+    },
+    {
+      "slug": "php-security-hotel-websites",
+      "title": "PHP Security Alert for Hotels",
+      "date": "2026-10-28",
+      "href": "/content/php-security-hotel-websites",
+      "image": "/images/content/php-security-hotel-websites-photo.webp",
+      "hash": "c5d567300886a354248123f5d3a44178df566b02d3b3c487b70d3843ee140362"
+    },
+    {
+      "slug": "serko-hopper-business-travel",
+      "title": "Serko Adds Flexible Work Travel",
+      "date": "2026-10-28",
+      "href": "/content/serko-hopper-business-travel",
+      "image": "/images/content/serko-hopper-business-travel-photo.webp",
+      "hash": "7b70efd869b6276d1275367fca4b6964280b8f81a73268860e7e279e1a88b7b4"
+    },
+    {
+      "slug": "williamsburg-digital-upsells",
+      "title": "Williamsburg Lodge Grows Digital Upsells",
+      "date": "2026-10-28",
+      "href": "/content/williamsburg-digital-upsells",
+      "image": "/images/content/williamsburg-digital-upsells-photo.webp",
+      "hash": "069a648a408504c3b3125442f13bba18b06db70dd1e8cff6c40664f17533f587"
+    },
+    {
+      "slug": "worldhotels-digital-relaunch",
+      "title": "BWH Unites Under WorldHotels",
+      "date": "2026-10-28",
+      "href": "/content/worldhotels-digital-relaunch",
+      "image": "/images/content/worldhotels-digital-relaunch-photo.webp",
+      "hash": "f14bd1872d8738fff3f8d61722e26b12dd5126a6355a7c61106b623dc532562b"
+    },
+    {
+      "slug": "hotel-ai-information-hub",
+      "title": "Avalora and Yipy Connect Hotel Information",
+      "date": "2026-10-27",
+      "href": "/content/hotel-ai-information-hub",
+      "image": "/images/content/hotel-ai-information-hub-photo.webp",
+      "hash": "b09e5f0fdb2f3e2bf7d58f708c39db4d5625406721f0fb3bc6cd769b018e9d71"
+    },
+    {
+      "slug": "hotel-ai-pilot-before-budget",
+      "title": "Otel Maps a First Hotel AI Pilot",
+      "date": "2026-10-27",
+      "href": "/content/hotel-ai-pilot-before-budget",
+      "image": "/images/content/hotel-ai-pilot-before-budget-photo.webp",
+      "hash": "81216fb1d61cdb9850986afd232155c359b78141ec5eb8bac8e603979affeaad"
+    }
+  ],
+  "counts": {
+    "counts": {
+      "hotel-design-digital-journey": 0,
+      "hotel-tech-investment-case": 0,
+      "php-security-hotel-websites": 0,
+      "serko-hopper-business-travel": 0,
+      "williamsburg-digital-upsells": 0,
+      "worldhotels-digital-relaunch": 0,
+      "hotel-ai-information-hub": 0,
+      "hotel-ai-pilot-before-budget": 0
+    },
+    "metric": "article sessions",
+    "since": "2026-10-29"
+  }
+}

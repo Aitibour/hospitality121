@@ -114,7 +114,7 @@ export default function HeroCarousel({ items }: Props) {
             <span aria-hidden="true">-&gt;</span>
           </a>
         {item.excerpt && <p className="mb-3 mt-3 max-w-2xl text-sm leading-relaxed text-gray-200 line-clamp-2">{item.excerpt}</p>}
-        <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-gray-200">
           <AuthorLine name={name} avatar={avatar} date={publishedAgo} nameColor="text-gray-100" dateColor="text-gray-300" />
           <span className="text-gray-300 text-sm">{meta}</span>
           <ArticleViews slug={item.slug} />
