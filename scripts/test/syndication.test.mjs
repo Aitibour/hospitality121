@@ -31,13 +31,11 @@ test('site discovery exposes RSS and Google News sitemap', () => {
   assert.match(llms, /RSS feed/)
 })
 
-test('generated stories visibly attribute source reporting', () => {
+test('article source provenance remains in schema without the removed banner', () => {
   const source = fs.readFileSync('app/content/[slug]/page.tsx', 'utf8')
 
-  assert.match(source, /getSourceLabel/)
-  assert.match(source, /aria-label="Source attribution"/)
-  assert.match(source, /Source reporting:/)
-  assert.match(source, /full Hospitality121 article and analysis appear below/)
+  assert.doesNotMatch(source, /Source reporting:/)
+  assert.doesNotMatch(source, /<figcaption/)
   assert.doesNotMatch(source, /<a href=\{sourceUrl\}/)
   assert.match(source, /citation: item.sourceUrl/)
 })

@@ -11,7 +11,7 @@ export default function PrivacyPage() {
   return (
     <div className="max-w-3xl mx-auto px-4 py-16">
       <h1 className="font-serif text-4xl font-bold mb-2">Privacy Policy</h1>
-      <p className="text-muted text-sm mb-12">Last updated: 17 May 2026</p>
+      <p className="text-muted text-sm mb-12">Last updated: 29 October 2026</p>
 
       <div className="flex flex-col gap-10 text-sm text-gray-700 leading-relaxed">
 
@@ -31,6 +31,7 @@ export default function PrivacyPage() {
               'Email address, name, and company when you download a resource',
               'Usage data (pages visited, time on site, referring URLs) via Google Analytics, only if you consent to cookies',
               'IP address and browser information collected automatically by our hosting provider (Netlify)',
+              'Article view counts: a random per-article browser-session identifier prevents refreshes from increasing the count. Our counter stores the article slug and random identifier, without names, email addresses, IP addresses or cross-site tracking. Counts begin on 29 October 2026 and represent sessions, not unique people or confirmed reads.',
             ].map(item => (
               <li key={item} className="flex items-start gap-2">
                 <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-gold shrink-0" />

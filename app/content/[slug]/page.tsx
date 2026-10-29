@@ -11,6 +11,7 @@ import BilingualContent from '@/components/BilingualContent'
 import { renderArticleMarkdown, articleDescription } from '@/lib/article-markdown.mjs'
 import ShareButtons from '@/components/ShareButtons'
 import FollowCTA from '@/components/FollowCTA'
+import ArticleViews from '@/components/ArticleViews'
 import { GEO_AUTHORITY_PAGES, getMatchingGeoPage, getMatchingPillar } from '@/lib/diamond-seo'
 
 export const revalidate = 3600
@@ -69,14 +70,6 @@ function getMeta(item: ContentItem) {
 
 function formatDate(dateStr: string) {
   return new Date(dateStr).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })
-}
-
-function getSourceLabel(sourceUrl: string): string {
-  try {
-    return new URL(sourceUrl).hostname.replace(/^www\./, '')
-  } catch {
-    return 'Original source'
-  }
 }
 
 function safeJsonLd(obj: Record<string, unknown>): string {
@@ -200,8 +193,6 @@ export default async function ContentDetailPage({ params }: { params: Promise<{ 
 
   const [bodyEn, bodyFr] = body.split(/<!--\s*FR\s*-->/)
   const titleFr = 'titleFr' in item ? (item as { titleFr?: string }).titleFr : undefined
-  const rawSourceUrl = 'sourceUrl' in item && typeof item.sourceUrl === 'string' ? item.sourceUrl : null
-  const sourceUrl = rawSourceUrl && /^https:\/\//i.test(rawSourceUrl) ? rawSourceUrl : null
 
   const base = 'https://hospitality121.com'
   const jsonLdString = buildJsonLd(item, body)
@@ -251,15 +242,6 @@ export default async function ContentDetailPage({ params }: { params: Promise<{ 
           htmlFr={bodyFr?.trim() ? renderArticleMarkdown(bodyFr) : undefined}
         >
 
-        {sourceUrl && (
-          <aside className="mb-8 rounded-lg border border-gray-200 bg-surface px-4 py-3 text-sm text-muted" aria-label="Source attribution">
-            <span className="font-semibold text-gray-800">Source reporting: </span>
-            <span className="text-gray-800">
-              {getSourceLabel(sourceUrl)}
-            </span>
-            <span>. The full Hospitality121 article and analysis appear below.</span>
-          </aside>
-        )}
 
         {/* Author row */}
         <div className="flex items-center gap-3 mb-8 text-sm text-muted">
@@ -284,6 +266,8 @@ export default async function ContentDetailPage({ params }: { params: Promise<{ 
             <span>{formatDate(item.date)}</span>
             <span className="mx-2">·</span>
             <span>{meta.detail}</span>
+            <span className="mx-2">·</span>
+            <ArticleViews slug={item.slug} record />
           </div>
         </div>
 
@@ -298,7 +282,6 @@ export default async function ContentDetailPage({ params }: { params: Promise<{ 
             preload
           />
         </div>
-        {item.imageCredit && <figcaption className="mt-2 text-xs text-muted">{item.imageCredit}{item.imageLicense ? ` · ${item.imageLicense}` : ''}</figcaption>}
         </figure>
         </BilingualContent>
 

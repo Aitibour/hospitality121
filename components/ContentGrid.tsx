@@ -4,6 +4,7 @@ import type { ContentItem } from '@/types/content'
 import CategoryLabel from './CategoryLabel'
 import AuthorLine from './AuthorLine'
 import { formatDate } from '@/lib/formatDate'
+import ArticleViews from './ArticleViews'
 
 type Props = {
   items: ContentItem[]
@@ -66,6 +67,7 @@ export default function ContentGrid({ items, showEpisodeNumbers = false, contain
                   {item.title}
                 </h3>
                 <p className="text-muted text-xs">{meta}</p>
+                <ArticleViews slug={item.slug} />
               </div>
               </article>
             </Link>

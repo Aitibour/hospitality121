@@ -2,12 +2,12 @@
 
 import { useState, useEffect, useCallback } from 'react'
 import Image from 'next/image'
-import Link from 'next/link'
 import type { ContentItem } from '@/types/content'
 import CategoryLabel from './CategoryLabel'
 import AuthorLine from './AuthorLine'
 import { formatDate } from '@/lib/formatDate'
 import FollowCTA from './FollowCTA'
+import ArticleViews from './ArticleViews'
 
 export type HeroItem = ContentItem & { href?: string; rss?: boolean; imageAlt?: string; imageCaption?: string; excerpt?: string }
 type Props = { items: HeroItem[] }
@@ -15,6 +15,13 @@ type Props = { items: HeroItem[] }
 export default function HeroCarousel({ items }: Props) {
   const [current, setCurrent] = useState(0)
   const [paused, setPaused] = useState(false)
+
+  useEffect(() => {
+    for (const item of items) {
+      const photo = new window.Image()
+      photo.src = item.image
+    }
+  }, [items])
 
   const next = useCallback(() => setCurrent(c => (c + 1) % items.length), [items.length])
   const prev = useCallback(() => setCurrent(c => (c - 1 + items.length) % items.length), [items.length])
@@ -64,7 +71,9 @@ export default function HeroCarousel({ items }: Props) {
       }}
       className="relative w-full h-[72svh] min-h-[420px] max-h-[760px] overflow-hidden md:h-[calc(100vh-64px)] md:min-h-[520px]"
     >
+      <a href={`/content/${item.slug}`} aria-label={`Read ${item.title}`} className="absolute inset-0 z-0">
       <Image
+        key={item.slug}
         src={item.image}
         alt={item.imageAlt || item.title}
         fill
@@ -74,7 +83,8 @@ export default function HeroCarousel({ items }: Props) {
         loading="eager"
         fetchPriority="high"
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
+      </a>
+      <div className="pointer-events-none absolute inset-0 z-10 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
 
       <div
         id={slideId}
@@ -82,7 +92,7 @@ export default function HeroCarousel({ items }: Props) {
         aria-roledescription="slide"
         aria-label={`${current + 1} of ${items.length}: ${item.title}`}
         aria-live={paused ? 'polite' : 'off'}
-        className="absolute bottom-0 left-0 right-0 max-w-3xl p-4 pb-12 sm:p-6 md:p-10"
+        className="pointer-events-none absolute bottom-0 left-0 right-0 z-20 max-w-3xl p-4 pb-16 sm:p-6 sm:pb-16 md:p-10"
       >
         <div className="flex flex-wrap items-center gap-2 mb-3">
           <CategoryLabel label={item.category} />
@@ -94,25 +104,25 @@ export default function HeroCarousel({ items }: Props) {
             </span>
           )}
         </div>
-        <Link href={`/content/${item.slug}`} className="group/title block w-full min-w-0" title={item.title}>
+        <a href={`/content/${item.slug}`} className="pointer-events-auto group/title block w-full min-w-0" title={item.title}>
           <h2 className="font-serif text-xl sm:text-3xl md:text-4xl font-bold text-gray-50 leading-tight mb-3 break-words group-hover/title:text-gold transition-colors">
             {item.title}
           </h2>
-          <span className="inline-flex items-center gap-2 rounded-full bg-gold px-4 py-2 text-xs font-bold uppercase tracking-widest text-gray-950 shadow-sm transition-transform group-hover/title:translate-x-1">
+        </a>
+          <a href={`/content/${item.slug}`} className="pointer-events-auto mb-3 inline-flex min-h-11 items-center gap-2 rounded-full bg-gold px-4 py-2 text-xs font-bold uppercase tracking-widest text-gray-950 shadow-sm hover:translate-x-1 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white">
             Read full article
             <span aria-hidden="true">-&gt;</span>
-          </span>
-        </Link>
+          </a>
         {item.excerpt && <p className="mb-3 mt-3 max-w-2xl text-sm leading-relaxed text-gray-200 line-clamp-2">{item.excerpt}</p>}
         <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
           <AuthorLine name={name} avatar={avatar} date={publishedAgo} nameColor="text-gray-100" dateColor="text-gray-300" />
           <span className="text-gray-300 text-sm">{meta}</span>
+          <ArticleViews slug={item.slug} />
         </div>
-        <FollowCTA compact />
-        {item.imageCaption && <p className="mt-2 text-xs text-gray-200">{item.imageCaption}</p>}
+        <div className="pointer-events-auto"><FollowCTA compact /></div>
       </div>
 
-      <div className="absolute bottom-4 right-4 flex items-center gap-3 md:bottom-6 md:right-6">
+      <div className="absolute bottom-3 right-2 z-30 flex items-center gap-1 sm:gap-3 md:bottom-6 md:right-6">
         <button onClick={prev} aria-label="Previous slide" className="hidden sm:grid h-10 w-10 place-items-center rounded-full bg-black/35 text-gray-100 hover:bg-black/60 hover:text-gray-50 text-2xl leading-none">‹</button>
         <div role="tablist" aria-label="Carousel slides">
           <div className="flex gap-1.5">

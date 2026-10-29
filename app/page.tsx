@@ -1,7 +1,8 @@
 import type { Metadata } from 'next'
 import { getAllContent } from '@/lib/content'
-import { limitByAuthor, pickEditorItems } from '@/lib/dedup'
+import { pickEditorItems } from '@/lib/dedup'
 import type { Article, Podcast } from '@/types/content'
+import { selectLatestArticles } from '@/scripts/lib/latest-articles.mjs'
 import DailyHero from '@/components/DailyHero'
 import { selectPublishedHeroItems } from '@/scripts/lib/published-hero.mjs'
 import ContentGrid from '@/components/ContentGrid'
@@ -19,19 +20,14 @@ export const metadata: Metadata = {
 
 export const revalidate = 3600
 
-function isGeneratedPost(item: { type: string; sourceUrl?: string; author?: string }) {
-  return (item.type === 'blog' || item.type === 'news') && (!!item.sourceUrl || item.author === 'H1H Newsfeed')
-}
-
 export default async function HomePage() {
   const all = getAllContent()
   const select = createHomeSelection()
-  const editorial     = all.filter(item => item.type !== 'event')
   const heroItems = select(selectPublishedHeroItems(all), 8)
   const initialFeed = { updatedAt: new Date().toISOString(), items: selectPublishedHeroItems(all) }
-  const heroSlugs     = new Set(heroItems.map(item => item.slug))
-  const gridItems     = select(limitByAuthor(editorial.filter(item => !heroSlugs.has(item.slug)), 2), 10)
-  const generatedItems = select(editorial.filter(isGeneratedPost), 8)
+  const fresh = selectLatestArticles(all)
+  const gridItems = fresh.slice(0, 4)
+  const generatedItems = fresh.slice(4, 8)
   const featuredItems = select(pickEditorItems(all.filter(item => item.featured), 10), 10)
   const articles      = select(all.filter((item): item is Article => item.type === 'article'), 5)
   const podcasts      = select(all.filter((item): item is Podcast => item.type === 'podcast'), 5)
@@ -54,7 +50,12 @@ export default async function HomePage() {
       <DailyHero initialFeed={initialFeed} fallbackItems={heroItems} />
       <AdSlot zone="hero-banner" />
       <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-8 items-start">
-        <ContentGrid items={gridItems} contained={false} />
+        <section className="py-8" aria-label="Latest articles">
+          <h2 className="font-serif text-2xl font-bold">Latest articles</h2>
+          <p className="mt-2 text-sm text-muted">The newest stories, published in the past seven days.</p>
+          <ContentGrid items={gridItems} contained={false} />
+          {gridItems.length === 0 && <p className="mt-6 text-sm text-muted">Fresh coverage will appear here as it is published.</p>}
+        </section>
         <div className="py-8">
           <DiamondAuthoritySection items={generatedItems} />
         </div>

@@ -17,6 +17,7 @@
     "optimize:images": "node scripts/optimize-images.mjs"
   },
   "dependencies": {
+    "@netlify/blobs": "^11.1.7",
     "@tailwindcss/typography": "^0.5.19",
     "@types/marked": "^5.0.2",
     "fuse.js": "^7.3.0",
