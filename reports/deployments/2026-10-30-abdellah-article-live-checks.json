@@ -1,0 +1,35 @@
+{
+  "base": "https://hospitality121.com",
+  "checkedAt": "2026-10-30T13:47:27.949Z",
+  "article": "/content/hotel-ai-must-earn-guest-trust",
+  "byline": "Abdellah Ait Ibour",
+  "editorialDate": "2026-10-29",
+  "simulatedDisplay": 130,
+  "fullBodyVerified": true,
+  "listings": [
+    "/insights",
+    "/author/abdellah-ait-ibour"
+  ],
+  "hero": "/content/hotel-ai-must-earn-guest-trust",
+  "assets": [
+    {
+      "file": "/images/content/hotel-ai-guest-trust-photo.webp",
+      "sha256": "d714bc9b25441fde8860029c8b1980fcdc0691084f05246994690bf3dd197867"
+    },
+    {
+      "file": "/images/content/hotel-ai-guest-trust-flow.svg",
+      "sha256": "3c96f14df6848b17461d11214b8a3bcc4771e2b888789cb60afb5a3b0f933b5f"
+    },
+    {
+      "file": "/images/authors/abdellah-ait-ibour.svg",
+      "sha256": "a35837a0dd01715be01b02af75930826f033b5370a0fe34b6f6019a083ef600a"
+    }
+  ],
+  "actualTracking": {
+    "counts": {
+      "hotel-ai-must-earn-guest-trust": 0
+    },
+    "metric": "article sessions",
+    "since": "2026-10-29"
+  }
+}

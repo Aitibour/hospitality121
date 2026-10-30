@@ -5,7 +5,7 @@
   "author": "Abdellah Ait Ibour",
   "editorialDate": "2026-10-29",
   "dateRequestedByOwner": true,
-  "actualPublication": "Pending deployment; editorial date is explicitly requested, not a deployment timestamp.",
+  "actualPublication": "2026-10-30T13:46:53.941Z",
   "review": {
     "reviewType": "automated-source-check",
     "reviewedBy": "Codex automated editorial checks",
@@ -80,5 +80,15 @@
     "https://x.com/AbdellahAi16209"
   ],
   "originalAnalysis": "Illustrative early arrival and quiet-room scenarios; proposed service loop and measures; no fabricated firsthand experience, quote or measured outcome.",
-  "publication": "Pending npm run verify and hosted preview."
+  "publication": {
+    "deployId": "6ae498964642934683da9ce8",
+    "websiteCommit": "f0dabe024ffcbfba62467ea104fb25b48d759115",
+    "canonical": "https://hospitality121.com/content/hotel-ai-must-earn-guest-trust",
+    "validation": "npm run verify passed:87 tests,lint,TypeScript,293 content files,375 routes",
+    "preview": "Full article,byline,date,130 display,diagram,photo,personal socials,Insights,author page,hero and actual tracking API passed",
+    "production": "HTTP checks passed and live browser verified; screenshot saved",
+    "screenshot": "reports/deployments/abdellah-live-article-2026-10-30.png",
+    "recovery": "Recovered final article-views function upload on same deployment after network timeout; no duplicate deployment",
+    "sourceLimits": "Original analysis; source-derived passages under200words each; no direct quotations"
+  }
 }
