@@ -1,0 +1,24 @@
+{
+  "checkedAt": "2026-10-30T18:03:13.137Z",
+  "requested": "Owner requested author portrait edit and diagram relocation",
+  "portrait": {
+    "source": "Owner-supplied headshot.jpeg",
+    "generatedEdit": "C:/Users/Abdel/.codex/generated_images/01a17a90-5769-78e2-818a-c46ef9f61cac/exec-9efd4a3b-dbd9-43c4-b227-8f6fbf68b069.png",
+    "file": "public/images/authors/abdellah-ait-ibour-portrait.webp",
+    "sha256": "54c40af8edadf97c4eed4a562d5cc28ebce2334e737bc0059847d99b414c6504",
+    "changes": [
+      "Remove Open to Work overlay",
+      "Charcoal blazer with black crew-neck shirt",
+      "Relaxed three-quarter shoulders",
+      "Neutral studio background"
+    ],
+    "type": "AI-edited owner portrait",
+    "visuallyInspected": true
+  },
+  "diagram": {
+    "placement": "Before Build a service loop the team can trust, after research and hotel-group examples",
+    "bodyOrderPreserved": true
+  },
+  "automation": "Remains paused by owner request",
+  "hero": "Existing licensed reference photograph retained; supplied lobby image not applied because no replacement instruction was given."
+}

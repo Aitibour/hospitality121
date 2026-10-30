@@ -13,7 +13,7 @@ const AUTHORS: Author[] = [
     name: 'Abdellah Ait Ibour',
     slug: 'abdellah-ait-ibour',
     title: 'Hospitality Technology Contributor',
-    photo: '/images/authors/abdellah-ait-ibour.svg',
+    photo: '/images/authors/abdellah-ait-ibour-portrait.webp',
     bio: 'Abdellah Ait Ibour writes about hospitality technology, AI and the operational decisions that shape the guest experience.',
     linkedin: 'https://www.linkedin.com/in/abdellah-ait-ibour',
     x: 'https://x.com/AbdellahAi16209',
