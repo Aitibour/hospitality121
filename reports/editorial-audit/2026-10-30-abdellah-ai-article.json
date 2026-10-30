@@ -1,0 +1,84 @@
+{
+  "checkedAt": "2026-10-30T13:07:32.065Z",
+  "article": "content/articles/hotel-ai-must-earn-guest-trust.mdx",
+  "title": "Hotel AI Must Earn Guest Trust",
+  "author": "Abdellah Ait Ibour",
+  "editorialDate": "2026-10-29",
+  "dateRequestedByOwner": true,
+  "actualPublication": "Pending deployment; editorial date is explicitly requested, not a deployment timestamp.",
+  "review": {
+    "reviewType": "automated-source-check",
+    "reviewedBy": "Codex automated editorial checks",
+    "reviewedAt": "2026-10-30T12:57:42.413Z",
+    "factCheck": "approved",
+    "imageRights": "approved",
+    "seo": "approved"
+  },
+  "wordCount": 1422,
+  "viewDisplay": {
+    "simulated": true,
+    "requested": 130,
+    "realTrackingUnchanged": true
+  },
+  "image": {
+    "file": "public/images/content/hotel-ai-guest-trust-photo.webp",
+    "sha256": "d714bc9b25441fde8860029c8b1980fcdc0691084f05246994690bf3dd197867",
+    "duplicateHashes": [],
+    "source": "https://www.pexels.com/photo/a-hotel-receptionist-handing-a-key-card-to-a-guest-7820321/",
+    "photographer": "Mikhail Nilov",
+    "licenseUrl": "https://www.pexels.com/license/",
+    "license": "Pexels License; attribution optional; modification allowed; no endorsement implied",
+    "visuallyInspected": true,
+    "subject": "Hands exchanging a room key card over a hotel reception counter",
+    "referenceOnly": true,
+    "crop": "1800x1013 landscape crop; no generated pixels"
+  },
+  "diagram": {
+    "file": "public/images/content/hotel-ai-guest-trust-flow.svg",
+    "original": true,
+    "proposedFrameworkNotMeasuredResults": true,
+    "renderedAndInspected": true
+  },
+  "facts": [
+    {
+      "url": "https://www.mews.com/en/press/new-mews-data-guests-want-ai-in-background",
+      "published": "2026-10-07",
+      "facts": "89% hybrid/background AI; 75% human staff; July survey of 3,250 travellers across eight countries",
+      "qualification": "Vendor-published preference survey; not performance proof"
+    },
+    {
+      "url": "https://stateofhotelai.com/",
+      "published": "2026-09-29",
+      "facts": "107 leaders; August-September fieldwork; 42% confident data readiness; barriers 35% change management,34% data quality,29% integration",
+      "qualification": "Small self-reported leadership sample; not industry census"
+    },
+    {
+      "url": "https://www.mews.com/en/press/mews-research-ai-standard-in-hotel-operations",
+      "published": "2026-05-18",
+      "facts": "59% human-led welcome/check-in; over 500 properties; December 2025-March 2026",
+      "tradeCoverage": [
+        "https://www.hotelmanagement.net/tech/global-consultant-deciding-where-ai-belongs-your-hotel",
+        "https://insights.ehotelier.com/global-news/2026/05/19/most-hoteliers-use-ai-daily-but-guest-experience-still-needs-a-human-touch/"
+      ],
+      "qualification": "Same survey, not independent confirmations"
+    },
+    {
+      "url": "https://stories.hilton.com/emea/releases/hilton-introduces-the-hilton-ai-planner",
+      "published": "2026-03-10",
+      "facts": "Beta conversational discovery/comparison and amenities",
+      "qualification": "Announcement, no independent guest satisfaction/conversion result claimed"
+    },
+    {
+      "url": "https://group.accor.com/en/news-stories/all-concierge-conversational-ai-travel-companion",
+      "published": "2026-09-24",
+      "facts": "ALL Concierge hotel discovery/property info/human support; website11languages; appmorelimited",
+      "qualification": "FAQ roadmap distinguished from delivered capabilities"
+    }
+  ],
+  "authorSocialLinks": [
+    "https://www.linkedin.com/in/abdellah-ait-ibour",
+    "https://x.com/AbdellahAi16209"
+  ],
+  "originalAnalysis": "Illustrative early arrival and quiet-room scenarios; proposed service loop and measures; no fabricated firsthand experience, quote or measured outcome.",
+  "publication": "Pending npm run verify and hosted preview."
+}

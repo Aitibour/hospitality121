@@ -164,7 +164,7 @@ function buildJsonLd(item: ContentItem, body: string) {
       '@type': /^(H1H|Hospitality121)/.test(author) ? 'Organization' : 'Person',
       name: author,
       url: `${base}/author/${nameToSlug(author)}`,
-      ...(authorRecord?.linkedin ? { sameAs: [authorRecord.linkedin] } : {}),
+      ...((authorRecord?.linkedin || authorRecord?.x) ? { sameAs: [authorRecord.linkedin, authorRecord.x].filter(Boolean) } : {}),
     },
     publisher: { '@type': 'Organization', name: 'Hospitality121', url: base, logo: { '@type': 'ImageObject', url: `${base}/images/Logo.png` } },
     description,
@@ -283,6 +283,12 @@ export default async function ContentDetailPage({ params }: { params: Promise<{ 
           />
         </div>
         </figure>
+        {item.slug === 'hotel-ai-must-earn-guest-trust' && (
+          <div className="mb-10 rounded-xl border border-gold/30 bg-surface p-3 sm:p-6">
+            <Image src="/images/content/hotel-ai-guest-trust-flow.svg" width={960} height={1020} alt="The hotel AI service loop: understand the request, check live hotel facts, assign a responsible team, confirm delivery, and learn from the guest outcome. A human can take over at every stage." className="w-full h-auto" />
+            <p className="mt-3 text-sm text-muted">An operating model proposed by Abdellah Ait Ibour. A response becomes service only when someone owns delivery.</p>
+          </div>
+        )}
         </BilingualContent>
 
         {/* Podcast embed */}

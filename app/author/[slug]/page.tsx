@@ -27,7 +27,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   }
 }
 
-function buildPersonJsonLd(author: { name: string; title: string; photo: string; linkedin?: string }, slug: string): string {
+function buildPersonJsonLd(author: { name: string; title: string; photo: string; linkedin?: string; x?: string }, slug: string): string {
   const base = 'https://hospitality121.com'
   const photoUrl = author.photo.startsWith('http') ? author.photo : `${base}${author.photo}`
   return JSON.stringify({
@@ -38,7 +38,7 @@ function buildPersonJsonLd(author: { name: string; title: string; photo: string;
     url: `${base}/author/${slug}`,
     image: photoUrl,
     worksFor: { '@type': 'Organization', name: 'Hospitality121', url: base },
-    ...(author.linkedin ? { sameAs: [author.linkedin] } : {}),
+    ...((author.linkedin || author.x) ? { sameAs: [author.linkedin, author.x].filter(Boolean) } : {}),
   }).replace(/</g, '\\u003c').replace(/>/g, '\\u003e').replace(/&/g, '\\u0026')
 }
 
@@ -83,6 +83,7 @@ export default async function AuthorPage({ params }: { params: Promise<{ slug: s
               LinkedIn Profile →
             </a>
           )}
+          {author.x && <a href={author.x} target="_blank" rel="noopener noreferrer" className="inline-block mt-3 ml-5 text-xs font-bold tracking-wider text-gold hover:underline">Follow on X →</a>}
         </div>
       </div>
 

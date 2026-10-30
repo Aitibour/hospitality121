@@ -5,9 +5,19 @@ export type Author = {
   bio: string
   photo: string
   linkedin?: string
+  x?: string
 }
 
 const AUTHORS: Author[] = [
+  {
+    name: 'Abdellah Ait Ibour',
+    slug: 'abdellah-ait-ibour',
+    title: 'Hospitality Technology Contributor',
+    photo: '/images/authors/abdellah-ait-ibour.svg',
+    bio: 'Abdellah Ait Ibour writes about hospitality technology, AI and the operational decisions that shape the guest experience.',
+    linkedin: 'https://www.linkedin.com/in/abdellah-ait-ibour',
+    x: 'https://x.com/AbdellahAi16209',
+  },
   {
     name: 'Sumaya Oneill',
     slug: 'sumaya-oneill',
