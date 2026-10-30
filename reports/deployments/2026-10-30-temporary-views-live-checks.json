@@ -1,0 +1,64 @@
+{
+  "base": "https://hospitality121.com",
+  "checkedAt": "2026-10-30T12:05:21.655Z",
+  "proofs": [
+    {
+      "path": "/insights",
+      "counts": [
+        1389,
+        2555,
+        3773,
+        1731,
+        2380,
+        313,
+        1568,
+        2646,
+        3768,
+        1486,
+        1606,
+        3229,
+        3293,
+        1704,
+        1760,
+        2675,
+        2928,
+        425,
+        1059,
+        3895,
+        4034,
+        1710,
+        2881,
+        2650,
+        2140,
+        783
+      ]
+    },
+    {
+      "path": "/",
+      "counts": [
+        1943,
+        1943,
+        2784,
+        3941,
+        2405,
+        2625,
+        653,
+        733,
+        1548
+      ]
+    },
+    {
+      "path": "/content/williamsburg-digital-upsells",
+      "counts": [
+        2625
+      ]
+    }
+  ],
+  "realTracking": {
+    "counts": {
+      "williamsburg-digital-upsells": 1
+    },
+    "metric": "article sessions",
+    "since": "2026-10-29"
+  }
+}
