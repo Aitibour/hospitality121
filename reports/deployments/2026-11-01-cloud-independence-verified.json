@@ -1,0 +1,38 @@
+{
+  "checkedAt": "2026-11-01T15:43:32.125Z",
+  "publishedDeploy": "6ae757418713b54489611a0f",
+  "context": "production",
+  "schedules": [
+    {
+      "name": "x-scheduler",
+      "cron": "0,30 * * * *"
+    }
+  ],
+  "health": {
+    "provider": "buffer",
+    "enabled": true,
+    "production": true,
+    "channel": "Hospitality_121",
+    "serviceId": "2053714931216781312",
+    "recentPosts": 0,
+    "timeZone": "America/Vancouver",
+    "hours": [
+      9,
+      13
+    ],
+    "health": {
+      "status": "outside_schedule",
+      "checkedAt": "2026-11-01T14:54:04.133Z"
+    },
+    "checkedAt": "2026-11-01T15:43:32.641Z"
+  },
+  "editorial": {
+    "workflow": "cloud-editorial.yml",
+    "schedule": "hourly,minute17",
+    "verifiedRun": "https://github.com/Aitibour/hospitality121/actions/runs/41319121656",
+    "conclusion": "success",
+    "result": "no_fresh_candidate"
+  },
+  "desktopAutomation": "Monitoring only; no publication responsibility",
+  "limits": "Cloud scheduler does not depend on desktop or Codex/Claude session. Service availability and valid publishing credentials remain required. No live post forced for testing."
+}
