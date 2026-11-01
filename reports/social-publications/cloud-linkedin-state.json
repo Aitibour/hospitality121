@@ -1,0 +1,15 @@
+{
+  "buffer-linkedin/2026-11-01/news": {
+    "date": "2026-11-01",
+    "slot": "news",
+    "provider": "buffer",
+    "platform": "linkedin",
+    "slug": "hyatt-advisor-loyalty-technology",
+    "articleUrl": "https://hospitality121.com/content/hyatt-advisor-loyalty-technology",
+    "text": "Hyatt's Advisor Loyalty Offers a Hotel Tech Lesson\n\nHyatt's Confidant Rewards case study shows why advisor loyalty technology needs reliable booking records, clear incentives and measurable outcomes.\n\nRead the full Hospitality121 article: https://hospitality121.com/content/hyatt-advisor-loyalty-technology\n\n#HotelTechnology #Hospitality #GuestExperience",
+    "image": "/images/content/hyatt-advisor-loyalty-technology-photo.webp",
+    "status": "needs_attention",
+    "updatedAt": "2026-11-01T16:31:47.679Z",
+    "error": "Buffer definitively rejected unsupported paid first-comment feature; removed for retry"
+  }
+}
