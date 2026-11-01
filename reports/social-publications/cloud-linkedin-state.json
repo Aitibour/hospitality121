@@ -8,8 +8,9 @@
     "articleUrl": "https://hospitality121.com/content/hyatt-advisor-loyalty-technology",
     "text": "Hyatt's Advisor Loyalty Offers a Hotel Tech Lesson\n\nHyatt's Confidant Rewards case study shows why advisor loyalty technology needs reliable booking records, clear incentives and measurable outcomes.\n\nRead the full Hospitality121 article: https://hospitality121.com/content/hyatt-advisor-loyalty-technology\n\n#HotelTechnology #Hospitality #GuestExperience",
     "image": "/images/content/hyatt-advisor-loyalty-technology-photo.webp",
-    "status": "publishing",
-    "updatedAt": "2026-11-01T16:31:46.350Z",
-    "attemptedAt": "2026-11-01T16:31:46.350Z"
+    "status": "needs_attention",
+    "updatedAt": "2026-11-01T16:31:47.679Z",
+    "attemptedAt": "2026-11-01T16:31:46.350Z",
+    "error": "Buffer did not accept the thread; check Buffer for the result before retrying"
   }
 }
