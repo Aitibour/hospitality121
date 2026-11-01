@@ -1,4 +1,4 @@
-export function bufferClient({ apiKey, channelId, organizationId, accountId = '2053714931216781312', fetcher = fetch }) {
+export function bufferClient({ apiKey, channelId, organizationId, accountId = '2053714931216781312', service = 'twitter', fetcher = fetch }) {
   async function query(query, variables = {}) {
     if (!apiKey) throw new Error('Hospitality121 Buffer API key is required')
     const response = await fetcher('https://api.buffer.com', { method: 'POST', headers: { Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json' }, body: JSON.stringify({ query, variables }), signal: AbortSignal.timeout(25000) })
@@ -11,7 +11,9 @@ export function bufferClient({ apiKey, channelId, organizationId, accountId = '2
     async verify() {
       if (!channelId || !organizationId) throw new Error('Buffer channel and organization must be pinned before publication')
       const { channel } = await query('query($input:ChannelInput!){channel(input:$input){id name service serviceId isDisconnected isLocked isQueuePaused}}', { input: { id: channelId } })
-      if (channel.service !== 'twitter' || channel.serviceId !== accountId || channel.name.replace(/^@/, '').toLowerCase() !== 'hospitality_121') throw new Error('Buffer channel does not match @Hospitality_121')
+      const name = service === 'linkedin' ? 'hospitality121' : 'hospitality_121'
+      if (!['twitter', 'linkedin'].includes(service) || (service === 'linkedin' && accountId !== 'urn:li:organization:116020434')) throw new Error('Hospitality121 company-page identity must be pinned')
+      if (channel.service !== service || channel.serviceId !== accountId || channel.name.replace(/^@/, '').toLowerCase() !== name) throw new Error('Buffer channel does not match the Hospitality121 account')
       if (channel.isDisconnected || channel.isLocked || channel.isQueuePaused) throw new Error('Buffer channel is disconnected, locked or paused')
       return channel
     },
@@ -29,7 +31,10 @@ export function bufferClient({ apiKey, channelId, organizationId, accountId = '2
     },
     async createThread(text, articleUrl) {
       if (!/^https:\/\/hospitality121\.com\/content\/[a-z0-9-]+$/.test(articleUrl)) throw new Error('Only live Hospitality121 articles may be posted')
-      const input = { channelId, text, schedulingType: 'automatic', mode: 'shareNow', saveToDraft: false, needsApproval: false, aiAssisted: true, assets: [], metadata: { twitter: { thread: [{ text, assets: [] }, { text: `Read the full post here: ${articleUrl}`, assets: [] }] } } }
+      const metadata = service === 'linkedin'
+        ? { linkedin: { firstComment: `Read the full post here: ${articleUrl}`, linkAttachment: { url: articleUrl } } }
+        : { twitter: { thread: [{ text, assets: [] }, { text: `Read the full post here: ${articleUrl}`, assets: [] }] } }
+      const input = { channelId, text, schedulingType: 'automatic', mode: 'shareNow', saveToDraft: false, needsApproval: false, aiAssisted: true, assets: [], metadata }
       // No image upload: keep the article URL eligible for X's native website card.
       const { createPost } = await query('mutation($input:CreatePostInput!){createPost(input:$input){...on PostActionSuccess{post{id status externalLink}}...on MutationError{message}}}', { input })
       if (!createPost.post?.id) throw new Error('Buffer did not accept the thread; check Buffer for the result before retrying')

@@ -11,5 +11,11 @@ export default async function handler(request, context) {
   const channel = await client.verify()
   const posts = await client.recent()
   const store = getStore({ name: 'hospitality121-x', consistency: 'strong' })
-  return Response.json({ provider: process.env.X_PUBLISH_PROVIDER, enabled: process.env.X_AUTOMATION_ENABLED === 'true', production: isPublishedProduction(context), channel: channel.name, serviceId: channel.serviceId, recentPosts: posts.length, timeZone: 'America/Vancouver', hours: [9, 13], health: await store.get('health', { type: 'json' }), checkedAt: new Date().toISOString() }, { headers: { 'Cache-Control': 'no-store' } })
+  let linkedin = { enabled: false }
+  if (process.env.LINKEDIN_AUTOMATION_ENABLED === 'true') {
+    const liClient = bufferClient({ apiKey: process.env.BUFFER_API_KEY, channelId: process.env.BUFFER_LINKEDIN_CHANNEL_ID, organizationId: process.env.BUFFER_ORGANIZATION_ID, accountId: process.env.LINKEDIN_ACCOUNT_ID, service: 'linkedin' })
+    const liChannel = await liClient.verify(), liPosts = await liClient.recent()
+    linkedin = { enabled: true, channel: liChannel.name, serviceId: liChannel.serviceId, recentPosts: liPosts.length, health: await getStore({ name: 'hospitality121-linkedin', consistency: 'strong' }).get('health', { type: 'json' }) }
+  }
+  return Response.json({ provider: process.env.X_PUBLISH_PROVIDER, enabled: process.env.X_AUTOMATION_ENABLED === 'true', production: isPublishedProduction(context), channel: channel.name, serviceId: channel.serviceId, recentPosts: posts.length, timeZone: 'America/Vancouver', hours: [9, 13], health: await store.get('health', { type: 'json' }), linkedin, checkedAt: new Date().toISOString() }, { headers: { 'Cache-Control': 'no-store' } })
 }
