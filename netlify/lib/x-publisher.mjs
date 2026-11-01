@@ -35,4 +35,3 @@ export function postText(item, kind) {
   if (weighted > 280) throw new Error('X post exceeds the standard post limit')
   return text
 }
-

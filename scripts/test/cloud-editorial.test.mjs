@@ -27,8 +27,9 @@ test('generated article cannot introduce unsupported numerical results', () => {
   assert.throws(() => validateCloudPost({ ...post, body: post.body+' Results increased 94%.' }, { facts: [] }, []), /unsupported number/)
 })
 
-test('preview and unpublished deploys cannot run the social publisher', () => {
+test('only the current published deploy can run the social publisher, including promoted drafts', () => {
   assert.equal(isPublishedProduction({ deploy: { context: 'production', published: true } }), true)
   assert.equal(isPublishedProduction({ deploy: { context: 'production', published: false } }), false)
-  assert.equal(isPublishedProduction({ deploy: { context: 'deploy-preview', published: true } }), false)
+  assert.equal(isPublishedProduction({ deploy: { context: 'deploy-preview', published: false } }), false)
+  assert.equal(isPublishedProduction({ deploy: { context: 'deploy-preview', published: true } }), true)
 })

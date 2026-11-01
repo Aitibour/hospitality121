@@ -1,0 +1,15 @@
+{
+  "provider": "buffer",
+  "enabled": true,
+  "production": true,
+  "channel": "Hospitality_121",
+  "serviceId": "2053714931216781312",
+  "recentPosts": 0,
+  "timeZone": "America/Vancouver",
+  "hours": [
+    9,
+    13
+  ],
+  "health": null,
+  "checkedAt": "2026-11-01T14:41:54.833Z"
+}
