@@ -10,7 +10,6 @@
     "image": "/images/content/hyatt-advisor-loyalty-technology-photo.webp",
     "status": "needs_attention",
     "updatedAt": "2026-11-01T16:31:47.679Z",
-    "attemptedAt": "2026-11-01T16:31:46.350Z",
-    "error": "Buffer did not accept the thread; check Buffer for the result before retrying"
+    "error": "Buffer definitively rejected unsupported paid first-comment feature; removed for retry"
   }
 }
