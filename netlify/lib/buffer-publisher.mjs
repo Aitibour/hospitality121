@@ -21,7 +21,11 @@ export async function runBufferSlot({ now = new Date(), store, client, fetcher =
   const claimed = await store.setJSON(key, { ...previous?.data, status: 'publishing', updatedAt: now.toISOString() }, previous ? { onlyIfMatch: previous.etag } : { onlyIfNew: true })
   if (!claimed.modified) return { status: 'already_running' }
   let record = { ...previous?.data, date: slot.date, slot: slot.kind, provider: 'buffer', platform }
-  const save = async status => { record = { ...record, status, updatedAt: new Date().toISOString() }; await store.setJSON(key, record) }
+  const save = async status => {
+    record = { ...record, status, updatedAt: new Date().toISOString() }
+    const saved = await store.setJSON(key, record)
+    if (saved?.modified === false) throw new Error('Publication state could not be persisted; no further write will be attempted')
+  }
   try {
     if (record.bufferPostId) {
       const post = await client.getPost(record.bufferPostId)

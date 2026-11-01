@@ -1,0 +1,31 @@
+name: LinkedIn Buffer publisher
+on:
+  schedule:
+    - cron: '5,35 * * * *'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: hospitality121-linkedin-buffer
+  cancel-in-progress: false
+jobs:
+  linkedin:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify company page and publish only in its Vancouver time slot
+        env:
+          BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
+          GITHUB_TOKEN: ${{ github.token }}
+        run: node scripts/run-linkedin-cloud.mjs
+      - name: Preserve publication check receipt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: linkedin-buffer-receipt
+          path: reports/deployments/linkedin-cloud-run.json
+          retention-days: 30

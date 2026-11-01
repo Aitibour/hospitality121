@@ -1,6 +1,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import { parseEnv } from 'node:util'
+import { execFileSync } from 'node:child_process'
 import { bufferClient } from '../netlify/lib/buffer-client.mjs'
 
 const { BUFFER_API_KEY } = parseEnv(fs.readFileSync('.env.buffer.local', 'utf8'))
@@ -16,9 +17,10 @@ const base = 'https://api.netlify.com/api/v1/accounts/59026eb6cf321c7359e9f482/e
 const response = await fetch(base + query, { headers, signal: AbortSignal.timeout(20000) })
 if (!response.ok) throw new Error('Unable to read cloud settings')
 const entries = await response.json()
-for (const [key, value] of Object.entries({ BUFFER_LINKEDIN_CHANNEL_ID: channelId, LINKEDIN_ACCOUNT_ID: accountId, LINKEDIN_AUTOMATION_ENABLED: 'true' })) {
+for (const [key, value] of Object.entries({ BUFFER_LINKEDIN_CHANNEL_ID: channelId, LINKEDIN_ACCOUNT_ID: accountId, LINKEDIN_AUTOMATION_ENABLED: 'false' })) {
   const exists = entries.some(e => e.key === key), body = { key, values: [{ context: 'all', value }] }
   const saved = await fetch(base + (exists ? `/${key}` : '') + query, { method: exists ? 'PUT' : 'POST', headers, body: JSON.stringify(exists ? body : [body]), signal: AbortSignal.timeout(20000) })
   if (!saved.ok) throw new Error(`Cloud LinkedIn settings HTTP ${saved.status}`)
 }
-console.log('Verified LinkedIn settings enabled. Deploy required to activate scheduler.')
+execFileSync('gh', ['secret', 'set', 'BUFFER_API_KEY', '--repo', 'Aitibour/hospitality121'], { input: BUFFER_API_KEY, stdio: ['pipe', 'pipe', 'pipe'] })
+console.log('Buffer secret configured for GitHub Actions. Netlify LinkedIn dispatch is disabled to prevent duplicate publishers.')
