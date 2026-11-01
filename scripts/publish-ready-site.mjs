@@ -37,7 +37,21 @@ if (deploy.context !== 'production') {
   // branch would create a branch-deploy, so production deliberately has none.
   let pending
   try { pending = JSON.parse(await fs.readFile('.netlify/production-pending.json', 'utf8')) } catch { /* First release. */ }
-  production = pending?.previewId === state.id ? await api(`/deploys/${pending.id}`) : await api(`/sites/${siteId}/deploys`, 'POST', { ...manifest, draft: false, async: true, framework: 'next', framework_version: '16.4.3', title: 'Verified Hospitality121 production release' })
+  if (pending?.previewId === state.id) production = await api(`/deploys/${pending.id}`)
+  else {
+    const startedAt = Date.now()
+    try {
+      production = await api(`/sites/${siteId}/deploys`, 'POST', { ...manifest, draft: false, async: true, framework: 'next', framework_version: '16.4.3', title: 'Verified Hospitality121 production release' })
+    } catch (error) {
+      // A request timeout can occur after Netlify accepts the manifest. Recover
+      // that exact new release rather than creating another production upload.
+      const recent = await api(`/sites/${siteId}/deploys?per_page=10`)
+      const candidate = recent.find(item => item.context === 'production' && item.title === 'Verified Hospitality121 production release' && Date.parse(item.created_at) >= startedAt - 2000 && !item.published_at)
+      if (!candidate) throw error
+      production = await api(`/deploys/${candidate.id}`)
+      if (production.required?.length || production.required_functions?.some(hash => !Object.values(manifest.functions).includes(hash))) throw error
+    }
+  }
   await fs.writeFile('.netlify/production-pending.json', JSON.stringify({ id: production.id, previewId: state.id }))
   for (let attempt = 0; attempt < 90 && ['new', 'preparing'].includes(production.state); attempt++) {
     await new Promise(resolve => setTimeout(resolve, 2000))

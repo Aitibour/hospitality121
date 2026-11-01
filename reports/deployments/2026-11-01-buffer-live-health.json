@@ -1,18 +1,33 @@
 {
-  "provider": "buffer",
-  "enabled": true,
-  "production": true,
-  "channel": "Hospitality_121",
-  "serviceId": "2053714931216781312",
-  "recentPosts": 0,
-  "timeZone": "America/Vancouver",
-  "hours": [
-    9,
-    13
-  ],
+  "checkedAt": "2026-11-01T15:44:06.448Z",
   "health": {
-    "status": "outside_schedule",
-    "checkedAt": "2026-11-01T14:54:04.133Z"
+    "provider": "buffer",
+    "enabled": true,
+    "production": true,
+    "channel": "Hospitality_121",
+    "serviceId": "2053714931216781312",
+    "recentPosts": 0,
+    "timeZone": "America/Vancouver",
+    "hours": [
+      9,
+      13
+    ],
+    "health": {
+      "status": "outside_schedule",
+      "checkedAt": "2026-11-01T14:54:04.133Z"
+    },
+    "checkedAt": "2026-11-01T15:44:04.289Z"
   },
-  "checkedAt": "2026-11-01T15:01:47.551Z"
+  "deploy": {
+    "id": "6ae757418713b54489611a0f",
+    "context": "production",
+    "schedules": [
+      {
+        "name": "x-scheduler",
+        "cron": "0,30 * * * *"
+      }
+    ]
+  },
+  "unauthorizedHealthStatus": 401,
+  "heroFirstSlug": "hyatt-advisor-loyalty-technology"
 }
