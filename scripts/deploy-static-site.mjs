@@ -66,6 +66,12 @@ async function walk(dir) {
 }
 await walk(path.join(root, 'out'))
 await addFile(path.join(root, 'netlify.toml'), '/netlify.toml')
+if (process.argv.includes('--functions-only')) {
+  // Preserve the exact live static site when releasing only scheduler fixes.
+  const publishedFiles = await api(`/sites/${siteId}/files`)
+  for (const key of Object.keys(files)) delete files[key]
+  for (const file of publishedFiles) files[file.path] = file.sha
+}
 for (const bundle of bundles) {
   const bytes = await fs.readFile(bundle.path)
   const hash = createHash('sha256').update(bytes).digest('hex')
@@ -90,6 +96,7 @@ await Promise.all(Array.from({ length: 8 }, async () => {
   while (cursor < required.length) {
     const hash = required[cursor++]
     const file = fileByHash.get(hash)
+    if (!file) throw new Error('A live static file was unexpectedly requested; refusing to alter the functions-only release')
     await api(`/deploys/${deploy.id}/files/${file.name.slice(1).split('/').map(encodeURIComponent).join('/')}`, { method: 'PUT', headers: { 'Content-Type': 'application/octet-stream' }, body: file.bytes })
     uploaded++
     if (uploaded % 100 === 0) console.log(`Uploaded ${uploaded}/${required.length} changed files`)
