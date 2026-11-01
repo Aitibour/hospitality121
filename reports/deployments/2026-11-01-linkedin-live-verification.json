@@ -1,0 +1,18 @@
+{
+  "checkedAt": "2026-11-01T17:06:47.680Z",
+  "provider": "Buffer",
+  "runtime": "GitHub Actions",
+  "company": "urn:li:organization:116020434",
+  "schedule": {
+    "hours": [
+      9,
+      13
+    ],
+    "timeZone": "America/Vancouver"
+  },
+  "status": "sent",
+  "postUrl": "https://www.linkedin.com/feed/update/urn:li:share:7522703531284303872",
+  "bufferPostId": "6ae76f89142f545151ee51ce",
+  "workflow": "https://github.com/Aitibour/hospitality121/actions/runs/41328962821",
+  "paidFirstComment": false
+}
