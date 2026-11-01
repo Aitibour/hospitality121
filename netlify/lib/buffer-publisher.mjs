@@ -68,6 +68,7 @@ export async function runBufferSlot({ now = new Date(), store, client, fetcher =
     await store.setJSON(`${usedPrefix}/${record.slug}`, { date: slot.date, bufferPostId: post.id })
     return record
   } catch (error) {
+    if (error.definitiveRejection && !record.bufferPostId) delete record.attemptedAt
     record.error = error.message
     await save('needs_attention')
     throw error

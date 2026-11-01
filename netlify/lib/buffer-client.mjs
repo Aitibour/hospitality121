@@ -32,12 +32,16 @@ export function bufferClient({ apiKey, channelId, organizationId, accountId = '2
     async createThread(text, articleUrl) {
       if (!/^https:\/\/hospitality121\.com\/content\/[a-z0-9-]+$/.test(articleUrl)) throw new Error('Only live Hospitality121 articles may be posted')
       const metadata = service === 'linkedin'
-        ? { linkedin: { firstComment: `Read the full post here: ${articleUrl}`, linkAttachment: { url: articleUrl } } }
+        ? { linkedin: { linkAttachment: { url: articleUrl } } }
         : { twitter: { thread: [{ text, assets: [] }, { text: `Read the full post here: ${articleUrl}`, assets: [] }] } }
       const input = { channelId, text, schedulingType: 'automatic', mode: 'shareNow', saveToDraft: false, needsApproval: false, aiAssisted: true, assets: [], metadata }
       // No image upload: keep the article URL eligible for X's native website card.
       const { createPost } = await query('mutation($input:CreatePostInput!){createPost(input:$input){...on PostActionSuccess{post{id status externalLink}}...on MutationError{message}}}', { input })
-      if (!createPost.post?.id) throw new Error('Buffer did not accept the thread; check Buffer for the result before retrying')
+      if (!createPost.post?.id) {
+        const error = new Error(createPost.message ? `Buffer rejected the post: ${createPost.message.slice(0, 300)}` : 'Buffer did not accept the post; check Buffer for the result before retrying')
+        error.definitiveRejection = !!createPost.message
+        throw error
+      }
       return createPost.post
     },
     async getPost(id) {

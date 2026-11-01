@@ -82,14 +82,14 @@ test('LinkedIn uses its own history so an X post does not suppress the company-p
   assert(f.records.has('used-linkedin/verified-hotel-tech'))
 })
 
-test('LinkedIn creates a company-page link post with a first comment and no X thread', async () => {
+test('LinkedIn creates a company-page link post without paid first-comment metadata or an X thread', async () => {
   let input
   const c = bufferClient({ apiKey: 'test', channelId: 'company-channel', organizationId: 'org', accountId: 'urn:li:organization:116020434', service: 'linkedin', fetcher: async (_url, options) => { input = JSON.parse(options.body).variables.input; return Response.json({ data: { createPost: { post: { id: 'linkedin-post', status: 'scheduled' } } } }) } })
   const url = 'https://hospitality121.com/content/test'
   await c.createThread('A verified hospitality story. '+url, url)
   assert.equal(input.channelId, 'company-channel')
   assert.equal(input.metadata.linkedin.linkAttachment.url, url)
-  assert.equal(input.metadata.linkedin.firstComment, 'Read the full post here: '+url)
+  assert.equal(input.metadata.linkedin.firstComment, undefined)
   assert.equal(input.metadata.twitter, undefined)
   assert.deepEqual(input.assets, [])
 })

@@ -6,6 +6,6 @@ Schedule: 09:00 news and 13:00 article, America/Vancouver, with daylight saving 
 
 Netlify rejected the attempted production release: Account credit usage exceeded, new deploys blocked until credits are added. The LinkedIn publisher therefore uses GitHub Actions and Buffer directly, independent of Netlify deployment availability. The proposed Netlify LinkedIn scheduler was removed and its flag disabled so future website deployments cannot start a second LinkedIn publisher.
 
-Format: readable headline, verified article summary, canonical article CTA, three relevant hashtags, native link attachment and first comment pointing to the same article. No separate media attachment or X thread metadata. Only verified published local articles with the appropriate recency are eligible.
+Format: readable headline, verified article summary, canonical article CTA, three relevant hashtags and native link attachment. No separate media attachment or X thread metadata. Only verified published local articles with the appropriate recency are eligible. Buffer explicitly rejected first-comment metadata because it requires a paid plan, so this optional feature was removed; the canonical link remains in the main post and native attachment. No paid upgrade was performed.
 
 Tests cover independent X/LinkedIn histories, correct company-page link/comment input, wrong-account rejection and interrupted Buffer response recovery. No demonstration LinkedIn post sent during setup; the next eligible scheduled slot performs actual publication.
