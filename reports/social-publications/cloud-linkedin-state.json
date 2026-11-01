@@ -19,7 +19,15 @@
     "bufferPostId": "6ae76f89142f545151ee51ce"
   },
   "buffer-linkedin/2026-11-01/article": {
+    "date": "2026-11-01",
+    "slot": "article",
+    "provider": "buffer",
+    "platform": "linkedin",
+    "slug": "hotel-ai-must-earn-guest-trust",
+    "articleUrl": "https://hospitality121.com/content/hotel-ai-must-earn-guest-trust",
+    "text": "Hotel AI Must Earn Guest Trust\n\nAbdellah Ait Ibour explores why hotel AI needs service accountability, reliable operations and human judgement to improve the guest experience.\n\nRead the full Hospitality121 article: https://hospitality121.com/content/hotel-ai-must-earn-guest-trust\n\n#HotelTechnology #Hospitality #GuestExperience",
+    "image": "/images/content/hotel-ai-guest-trust-photo.webp",
     "status": "publishing",
-    "updatedAt": "2026-11-01T20:46:12.317Z"
+    "updatedAt": "2026-11-01T20:46:15.216Z"
   }
 }
