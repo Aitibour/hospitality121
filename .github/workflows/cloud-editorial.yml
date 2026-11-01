@@ -1,0 +1,62 @@
+name: Cloud editorial publisher
+on:
+  schedule:
+    - cron: '17 * * * *'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: hospitality121-cloud-publication
+  cancel-in-progress: false
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+      PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
+      NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - name: Find and verify one fresh article, or recover an unfinished deployment
+        id: editorial
+        run: node scripts/cloud-editorial.mjs
+      - name: Validate complete publication
+        if: steps.editorial.outputs.changed == 'true'
+        run: npm run verify
+      - name: Commit only the new verified article, photograph and report
+        if: steps.editorial.outputs.changed == 'true'
+        run: |
+          git config user.name 'Hospitality121 Cloud Publisher'
+          git config user.email 'action@github.com'
+          git add content/news public/images/content reports/hourly-editorial
+          if ! git diff --cached --quiet; then
+            git commit -m 'Publish source-checked hospitality technology coverage'
+            git push origin HEAD:main
+          fi
+      - name: Install the deployment tool
+        if: steps.editorial.outputs.changed == 'true'
+        run: |
+          npm install -g netlify-cli@26.0.2
+          echo "NETLIFY_CLI_ROOT=$(npm root -g)/netlify-cli" >> "$GITHUB_ENV"
+      - name: Deploy a preview, verify it and publish production
+        if: steps.editorial.outputs.changed == 'true'
+        run: |
+          node scripts/deploy-static-site.mjs
+          node scripts/publish-ready-site.mjs
+          node scripts/verify-cloud-live.mjs
+      - name: Save check and deployment receipts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cloud-editorial-receipts
+          path: |
+            reports/hourly-editorial/*cloud.json
+            reports/deployments/*original-articles.json
+            reports/deployments/cloud-live-check.json
+          retention-days: 14

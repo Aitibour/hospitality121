@@ -2,11 +2,11 @@ import fs from 'node:fs/promises'
 import path from 'node:path'
 import { pathToFileURL } from 'node:url'
 import { createHash } from 'node:crypto'
-const cliRoot = path.join(process.env.APPDATA, 'npm/node_modules/netlify-cli')
+const cliRoot = process.env.NETLIFY_CLI_ROOT || path.join(process.env.APPDATA, 'npm/node_modules/netlify-cli')
 const { zipFunctions } = await import(pathToFileURL(path.join(cliRoot, 'node_modules/@netlify/zip-it-and-ship-it/dist/main.js')))
 const root = process.cwd()
-const config = JSON.parse(await fs.readFile(path.join(process.env.APPDATA, 'netlify/Config/config.json'), 'utf8'))
-const token = config.users[config.userId].auth.token
+const config = process.env.NETLIFY_AUTH_TOKEN ? null : JSON.parse(await fs.readFile(path.join(process.env.APPDATA, 'netlify/Config/config.json'), 'utf8'))
+const token = process.env.NETLIFY_AUTH_TOKEN || config.users[config.userId].auth.token
 const siteId = '7b971775-1cad-43b5-9172-701405749ba8'
 let nextRequestAt = 0
 async function api(route, options = {}) {
@@ -73,7 +73,10 @@ for (const bundle of bundles) {
   functionByHash.set(hash, { bundle, bytes })
 }
 console.log(`Preparing draft: ${Object.keys(files).length} files, ${bundles.length} function.`)
-let deploy = await api(`/sites/${siteId}/deploys`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ draft: true, async: true, files, functions, framework: 'next', framework_version: '16.4.3', title: 'Original Hospitality121 articles and internal hero reading' }) })
+const function_schedules = bundles.filter(bundle => bundle.schedule).map(bundle => ({ name: bundle.name, cron: bundle.schedule }))
+const functions_config = Object.fromEntries(bundles.map(bundle => [bundle.name, { build_data: bundle.buildData, priority: bundle.priority }]))
+await fs.writeFile('.netlify/daily-hero-manifest.json', JSON.stringify({ files, functions, function_schedules, functions_config }))
+let deploy = await api(`/sites/${siteId}/deploys`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ draft: true, async: true, branch: 'main', files, functions, function_schedules, functions_config, framework: 'next', framework_version: '16.4.3', title: 'Hospitality121 verified publishing and cloud automation' }) })
 await fs.writeFile('.netlify/daily-hero-deploy.json', JSON.stringify({ id: deploy.id, url: deploy.deploy_ssl_url }))
 while (deploy.state === 'preparing' || deploy.state === 'new') {
   await new Promise(resolve => setTimeout(resolve, 1500))

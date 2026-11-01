@@ -240,7 +240,7 @@ export default async function ContentDetailPage({ params }: { params: Promise<{ 
           titleFr={titleFr}
           htmlEn={renderArticleMarkdown(bodyEn)}
           htmlFr={bodyFr?.trim() ? renderArticleMarkdown(bodyFr) : undefined}
-          bodyInsertBefore="<h2>Build a service loop the team can trust</h2>"
+          bodyInsertBefore="<p>Consider a guest requesting a quiet room before arrival."
           bodyInsert={item.slug === 'hotel-ai-must-earn-guest-trust' ? (
             <div className="my-10 rounded-xl border border-gold/30 bg-surface p-3 sm:p-6">
               <Image src="/images/content/hotel-ai-guest-trust-flow.svg" width={960} height={1020} alt="The hotel AI service loop: understand the request, check live hotel facts, assign a responsible team, confirm delivery, and learn from the guest outcome. A human can take over at every stage." className="w-full h-auto" />

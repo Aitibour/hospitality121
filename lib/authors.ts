@@ -12,10 +12,10 @@ const AUTHORS: Author[] = [
   {
     name: 'Abdellah Ait Ibour',
     slug: 'abdellah-ait-ibour',
-    title: 'Hospitality Technology Contributor',
-    photo: '/images/authors/abdellah-ait-ibour-portrait.webp',
-    bio: 'Abdellah Ait Ibour writes about hospitality technology, AI and the operational decisions that shape the guest experience.',
-    linkedin: 'https://www.linkedin.com/in/abdellah-ait-ibour',
+    title: 'Hospitality Technology Leader & PMP-Certified Project Manager',
+    photo: '/images/authors/abdellah-ait-ibour-casual-angle-v4.webp',
+    bio: 'Abdellah Ait Ibour is a hospitality technology leader and PMP-certified project manager with more than a decade of experience in multi-property IT operations, digital transformation and IT governance. His background includes regional IT and PMO leadership at Barceló Hotel Group, alongside project management roles with Marriott Hotels and Royal Tulip. His work spans infrastructure, cybersecurity and the delivery of technology programmes in demanding hotel environments. A TEDx speaker, he shares practical perspectives on technology leadership, project delivery and sustainability. At Hospitality121, he explores how AI and dependable operations can improve the guest experience.',
+    linkedin: 'https://www.linkedin.com/in/abdellah-aitibour',
     x: 'https://x.com/AbdellahAi16209',
   },
   {
