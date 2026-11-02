@@ -38,7 +38,11 @@
     "bufferPostId": "6ae7a51907b774c8fb2d0e19"
   },
   "buffer-linkedin/2026-11-02/news": {
-    "status": "publishing",
-    "updatedAt": "2026-11-02T16:57:06.266Z"
+    "date": "2026-11-02",
+    "slot": "news",
+    "provider": "buffer",
+    "platform": "linkedin",
+    "status": "no_fresh_unposted_article",
+    "updatedAt": "2026-11-02T16:57:09.278Z"
   }
 }
