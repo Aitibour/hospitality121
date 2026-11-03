@@ -44,5 +44,9 @@
     "platform": "linkedin",
     "status": "no_fresh_unposted_article",
     "updatedAt": "2026-11-02T16:57:09.278Z"
+  },
+  "buffer-linkedin/2026-11-03/article": {
+    "status": "publishing",
+    "updatedAt": "2026-11-03T20:36:42.922Z"
   }
 }
