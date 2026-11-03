@@ -46,7 +46,12 @@
     "updatedAt": "2026-11-02T16:57:09.278Z"
   },
   "buffer-linkedin/2026-11-03/article": {
-    "status": "publishing",
-    "updatedAt": "2026-11-03T20:36:42.922Z"
+    "date": "2026-11-03",
+    "slot": "article",
+    "provider": "buffer",
+    "platform": "linkedin",
+    "error": "Published article feed unavailable",
+    "status": "needs_attention",
+    "updatedAt": "2026-11-03T20:36:45.934Z"
   }
 }
