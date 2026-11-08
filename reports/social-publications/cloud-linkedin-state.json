@@ -71,5 +71,9 @@
     "error": "Published article feed unavailable",
     "status": "needs_attention",
     "updatedAt": "2026-11-06T20:30:37.899Z"
+  },
+  "buffer-linkedin/2026-11-08/article": {
+    "status": "publishing",
+    "updatedAt": "2026-11-08T20:20:36.949Z"
   }
 }
