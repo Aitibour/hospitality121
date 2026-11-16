@@ -3,6 +3,15 @@ on:
   schedule:
     - cron: '17 * * * *'
   workflow_dispatch:
+    inputs:
+      batch_size:
+        description: 'Verified articles to attempt in this one-time manual release'
+        required: true
+        default: '1'
+        type: choice
+        options:
+          - '1'
+          - '4'
 permissions:
   contents: write
 concurrency:
@@ -16,6 +25,7 @@ jobs:
       GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
       PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
       NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+      MANUAL_BATCH_LIMIT: ${{ github.event_name == 'workflow_dispatch' && inputs.batch_size || '1' }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -25,7 +35,22 @@ jobs:
       - run: npm ci
       - name: Find and verify one fresh article, or recover an unfinished deployment
         id: editorial
-        run: node scripts/cloud-editorial.mjs
+        shell: bash
+        run: |
+          changed=false
+          batch_limit="${MANUAL_BATCH_LIMIT:-1}"
+          batch_mode=false
+          if [[ "$batch_limit" -gt 1 ]]; then batch_mode=true; fi
+          for ((attempt = 1; attempt <= batch_limit; attempt++)); do
+            attempt_output="$(mktemp)"
+            GITHUB_OUTPUT="$attempt_output" EDITORIAL_BATCH_MODE="$batch_mode" node scripts/cloud-editorial.mjs
+            if grep -q '^changed=true$' "$attempt_output"; then
+              changed=true
+            else
+              break
+            fi
+          done
+          echo "changed=$changed" >> "$GITHUB_OUTPUT"
       - name: Validate complete publication
         if: steps.editorial.outputs.changed == 'true'
         run: npm run verify

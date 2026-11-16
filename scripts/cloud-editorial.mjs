@@ -11,6 +11,7 @@ import { isDuplicateTitle } from './lib/content-quality.mjs'
 import { PRIMARY_HOSTS, PRIMARY_EDITORIAL_FEEDS, DAILY_ARTICLE_LIMIT, PUBLICATION_INTERVAL_HOURS, EDITORIAL_DISCOVERY_HOURS, publicationSlot, editorialDay, countDailyCloudArticles, selectCloudCandidates, validateEvidence, validateCloudPost } from './lib/cloud-editorial.mjs'
 
 const now = new Date(), stamp = now.toISOString(), date = editorialDay(now)
+const batchMode = process.env.EDITORIAL_BATCH_MODE === 'true'
 const report = { checkedAt: stamp, status: 'checking', candidates: [] }
 const reportPath = `reports/hourly-editorial/${stamp.replace(/[:.]/g, '-')}-cloud.json`
 await fs.mkdir('reports/hourly-editorial', { recursive: true })
@@ -28,7 +29,7 @@ async function finish(changed, status) {
 
 // Recover a previously committed article whose deployment did not finish.
 const pending = content.filter(item => item.cloudPublishedAt).sort((a, b) => Date.parse(b.cloudPublishedAt) - Date.parse(a.cloudPublishedAt))[0]
-if (pending) {
+if (pending && !batchMode) {
   const response = await fetch(`https://hospitality121.com/content/${pending.slug}`, { signal: AbortSignal.timeout(15000) })
   const html = await response.text()
   if (!response.ok || !html.includes('<article') || !html.includes(`https://hospitality121.com/content/${pending.slug}`)) {
@@ -45,14 +46,16 @@ if (report.publishedToday >= DAILY_ARTICLE_LIMIT) {
   process.exit(0)
 }
 
-report.publicationSlot = publicationSlot(now)
-if (report.publicationSlot === null) {
-  await finish(false, 'outside_publication_window')
-  process.exit(0)
-}
-if (pending && Date.parse(pending.cloudPublishedAt) > +now - PUBLICATION_INTERVAL_HOURS * 3600000) {
-  await finish(false, 'publication_interval_not_elapsed')
-  process.exit(0)
+report.publicationSlot = batchMode ? 'manual_batch' : publicationSlot(now)
+if (!batchMode) {
+  if (report.publicationSlot === null) {
+    await finish(false, 'outside_publication_window')
+    process.exit(0)
+  }
+  if (pending && Date.parse(pending.cloudPublishedAt) > +now - PUBLICATION_INTERVAL_HOURS * 3600000) {
+    await finish(false, 'publication_interval_not_elapsed')
+    process.exit(0)
+  }
 }
 
 // Hospitality Net returns HTTP 403 to the cloud runner for full article pages.
