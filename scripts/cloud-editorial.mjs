@@ -54,7 +54,10 @@ if (pending && Date.parse(pending.cloudPublishedAt) > +now - PUBLICATION_INTERVA
   process.exit(0)
 }
 
-const feeds = [...PRIMARY_EDITORIAL_FEEDS, ...HERO_FEEDS, ...FEEDS].filter((f, i, all) => all.findIndex(other => other.url === f.url) === i)
+// Hospitality Net returns HTTP 403 to the cloud runner for full article pages.
+const feeds = [...PRIMARY_EDITORIAL_FEEDS, ...HERO_FEEDS, ...FEEDS].filter((feed, index, all) =>
+  new URL(feed.url).hostname !== 'www.hospitalitynet.org' && all.findIndex(other => other.url === feed.url) === index
+)
 const articles = await fetchAllArticles({ feeds, maxAgeHours: EDITORIAL_DISCOVERY_HOURS })
 report.rssCount = articles.length
 const candidates = selectCloudCandidates(articles, content, now)

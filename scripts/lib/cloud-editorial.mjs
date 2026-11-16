@@ -10,6 +10,7 @@ export const PRIMARY_EDITORIAL_FEEDS = [
   { url: 'https://www.canarytechnologies.com/blog/rss.xml', source: 'Canary Technologies' },
   { url: 'https://www.ahla.com/rss.xml', source: 'American Hotel & Lodging Association' },
   { url: 'https://ir.hworld.com/rss/news-releases.xml', source: 'H World Group' },
+  { url: 'https://www.globenewswire.com/RssFeed/subjectcode/70-Hotels%20and%20Resorts/feedTitle/Hotels%20and%20Resorts', source: 'GlobeNewswire Hotels and Resorts' },
 ]
 export const EDITORIAL_DISCOVERY_HOURS = 48
 const publicationCalendar = new Intl.DateTimeFormat('sv-SE', { timeZone: 'America/Vancouver', year: 'numeric', month: '2-digit', day: '2-digit' })
