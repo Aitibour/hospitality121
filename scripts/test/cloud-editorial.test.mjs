@@ -1,6 +1,6 @@
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
-import { publicationSlot, countDailyCloudArticles, selectCloudCandidates, validateEvidence, validateCloudPost } from '../lib/cloud-editorial.mjs'
+import { publicationSlot, countDailyCloudArticles, classifyEditorialCategory, selectCloudCandidates, validateEvidence, validateCloudPost } from '../lib/cloud-editorial.mjs'
 import { isPublishedProduction } from '../../netlify/lib/production.mjs'
 
 test('cloud discovery rejects old, duplicate and future RSS entries', () => {
@@ -11,6 +11,29 @@ test('cloud discovery rejects old, duplicate and future RSS entries', () => {
   assert.equal(selectCloudCandidates([olderItem], [{ title: item.title, sourceUrl: 'https://www.mews.com/another-release' }], now).length, 1)
   assert.equal(selectCloudCandidates([item], [{ title: 'Different', sourceUrl: item.url+'?utm_source=rss' }], now).length, 0)
   assert.equal(selectCloudCandidates([{ ...item, pubDate: '2026-10-26T12:00:00Z' }, { ...item, pubDate: '2026-11-02T12:00:00Z' }], [], now).length, 0)
+})
+
+test('scheduled discovery rotates across source-supported hospitality sections', () => {
+  const now = new Date('2026-11-16T21:00:00Z')
+  const titles = [
+    ['Hotel wellness spa opens new retreat', 'WELLNESS'],
+    ['Hospitality business investment expands portfolio', 'INVESTMENT'],
+    ['Hotel technology conference announces agenda', 'CONFERENCE'],
+    ['Guest experience program updates hotel service', 'GUEST EXPERIENCE'],
+    ['Hospitality trends forecast for lodging', 'TRENDS'],
+    ['Hotel research report presents industry insights', 'INSIGHTS'],
+    ['Hotel digital technology platform expands', 'TECHNOLOGY'],
+  ]
+  const articles = titles.map(([title], index) => ({ title, excerpt: 'Hospitality industry update', source: 'Official publisher', url: `https://www.mews.com/story-${index}`, pubDate: '2026-11-16T12:00:00Z' }))
+  titles.forEach(([title, category], index) => assert.equal(classifyEditorialCategory(articles[index]), category, title))
+  const first = selectCloudCandidates(articles, [], now)
+  assert.equal(first.length, articles.length)
+  assert.equal(new Set(first.map(item => item.category)).size, articles.length)
+  assert.deepEqual(first.map(item => item.url), selectCloudCandidates(articles, [], now).map(item => item.url))
+  const published = [{ status: 'published', cloudPublishedAt: '2026-11-16T18:00:00Z', category: first[0].category, sourceUrl: first[0].url }]
+  const remaining = selectCloudCandidates(articles, published, now)
+  assert.equal(remaining.length, articles.length - 1)
+  assert.ok(remaining.every(item => item.category !== first[0].category))
 })
 
 test('cloud evidence rejects unsupported anchors and stale primary events', () => {
