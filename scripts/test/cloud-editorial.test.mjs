@@ -1,6 +1,6 @@
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
-import { selectCloudCandidates, validateEvidence, validateCloudPost } from '../lib/cloud-editorial.mjs'
+import { countDailyCloudArticles, selectCloudCandidates, validateEvidence, validateCloudPost } from '../lib/cloud-editorial.mjs'
 import { isPublishedProduction } from '../../netlify/lib/production.mjs'
 
 test('cloud discovery rejects old, duplicate and future RSS entries', () => {
@@ -32,4 +32,18 @@ test('only the current published deploy can run the social publisher, including 
   assert.equal(isPublishedProduction({ deploy: { context: 'production', published: false } }), false)
   assert.equal(isPublishedProduction({ deploy: { context: 'deploy-preview', published: false } }), false)
   assert.equal(isPublishedProduction({ deploy: { context: 'deploy-preview', published: true } }), true)
+})
+
+test('daily quota counts published cloud articles across UTC midnight in Vancouver', () => {
+  const now = new Date('2026-11-17T06:00:00Z')
+  const published = cloudPublishedAt => ({ status: 'published', cloudPublishedAt })
+  const items = [
+    published('2026-11-16T22:00:00Z'),
+    published('2026-11-17T04:00:00Z'),
+    published('2026-11-16T07:59:00Z'),
+    published('2026-11-17T07:00:00Z'),
+    { status: 'review', cloudPublishedAt: '2026-11-17T05:00:00Z' },
+  ]
+  assert.equal(countDailyCloudArticles(items, now), 2)
+  assert.equal(countDailyCloudArticles(items, new Date('2026-11-17T08:00:00Z')), 0)
 })

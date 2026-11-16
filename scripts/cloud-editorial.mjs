@@ -7,9 +7,9 @@ import sharp from 'sharp'
 import Groq from 'groq-sdk'
 import { fetchAllArticles, FEEDS } from './lib/rss.mjs'
 import { HERO_FEEDS, canonicalUrl } from './lib/daily-hero.mjs'
-import { PRIMARY_HOSTS, selectCloudCandidates, validateEvidence, validateCloudPost } from './lib/cloud-editorial.mjs'
+import { PRIMARY_HOSTS, DAILY_ARTICLE_LIMIT, EDITORIAL_DISCOVERY_HOURS, editorialDay, countDailyCloudArticles, selectCloudCandidates, validateEvidence, validateCloudPost } from './lib/cloud-editorial.mjs'
 
-const now = new Date(), stamp = now.toISOString(), date = stamp.slice(0, 10)
+const now = new Date(), stamp = now.toISOString(), date = editorialDay(now)
 const report = { checkedAt: stamp, status: 'checking', candidates: [] }
 const reportPath = `reports/hourly-editorial/${stamp.replace(/[:.]/g, '-')}-cloud.json`
 await fs.mkdir('reports/hourly-editorial', { recursive: true })
@@ -39,8 +39,16 @@ if (pending) {
     await finish(false, 'hourly_limit_reached'); process.exit(0)
   }
 }
+report.editorialDay = date
+report.publishedToday = countDailyCloudArticles(content, now)
+report.dailyTarget = DAILY_ARTICLE_LIMIT
+if (report.publishedToday >= DAILY_ARTICLE_LIMIT) {
+  await finish(false, 'daily_target_reached')
+  process.exit(0)
+}
+
 const feeds = [...HERO_FEEDS, ...FEEDS].filter((f, i, all) => all.findIndex(other => other.url === f.url) === i)
-const articles = await fetchAllArticles({ feeds, maxAgeHours: 24 })
+const articles = await fetchAllArticles({ feeds, maxAgeHours: EDITORIAL_DISCOVERY_HOURS })
 report.rssCount = articles.length
 const candidates = selectCloudCandidates(articles, content, now)
 if (!candidates.length) { await finish(false, 'no_fresh_candidate'); process.exit(0) }
@@ -64,7 +72,7 @@ async function readSource(input) {
     if (response.status >= 300 && response.status < 400) { url = new URL(response.headers.get('location'), url); continue }
     break
   }
-  if (!response?.ok || !response.headers.get('content-type')?.includes('text/html')) throw new Error('Source article not readable')
+  if (!response?.ok || !response.headers.get('content-type')?.includes('text/html')) throw new Error(`Source article not readable (HTTP ${response?.status ?? 'unknown'})`)
   const raw = await response.text()
   if (raw.length > 2000000) throw new Error('Source response too large')
   const doc = new JSDOM(raw).window.document

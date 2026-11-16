@@ -3,15 +3,34 @@ import { isAllowedRegionalArticle, validateNewsPost } from './content-quality.mj
 
 export const PRIMARY_HOSTS = ['stories.hilton.com', 'newsroom.hyatt.com', 'news.marriott.com', 'marriott.gcs-web.com', 'www.ihgplc.com', 'corporate.wyndhamhotels.com', 'media.choicehotels.com', 'group.accor.com', 'press.accor.com', 'www.mews.com', 'mews.com', 'www.canarytechnologies.com', 'canarytechnologies.com', 'www.shijigroup.com', 'shijigroup.com', 'www.cloudbeds.com', 'cloudbeds.com', 'rhisac.org', 'www.rhisac.org', 'www.cisa.gov', 'www.oracle.com', 'www.sabre.com', 'amadeus.com', 'www.amadeus.com', 'www.assaabloy.com', 'www.vingcard.com', 'antavo.com', 'www.antavo.com']
 
+export const DAILY_ARTICLE_LIMIT = 2
+export const EDITORIAL_DISCOVERY_HOURS = 48
+const publicationCalendar = new Intl.DateTimeFormat('sv-SE', { timeZone: 'America/Vancouver', year: 'numeric', month: '2-digit', day: '2-digit' })
+
+export function editorialDay(date) {
+  return publicationCalendar.format(date)
+}
+
+export function countDailyCloudArticles(content, now) {
+  const day = editorialDay(now)
+  return content.filter(item => {
+    const timestamp = Date.parse(item.cloudPublishedAt)
+    return item.status === 'published' && Number.isFinite(timestamp) && timestamp <= +now && editorialDay(timestamp) === day
+  }).length
+}
+
 export function selectCloudCandidates(articles, existing, now = new Date()) {
   const used = new Set(existing.map(item => canonicalUrl(item.sourceUrl)).filter(Boolean))
   return articles.filter(article => {
     const age = +now - Date.parse(article.pubDate), url = canonicalUrl(article.url)
-    return url && !used.has(url) && age >= 0 && age <= 86400000 && isAllowedRegionalArticle(article)
+    return url && !used.has(url) && age >= 0 && age <= EDITORIAL_DISCOVERY_HOURS * 3600000 && isAllowedRegionalArticle(article)
       && classifyHeroTopic(`${article.title} ${article.excerpt}`)
       && /hotel|hospitality|resort|lodging/i.test(`${article.title} ${article.excerpt} ${article.source}`)
       && !existing.some(item => item.title.toLowerCase() === article.title.toLowerCase())
-  }).sort((a, b) => Date.parse(b.pubDate) - Date.parse(a.pubDate)).slice(0, 6)
+  }).sort((a, b) => {
+    const isPrimary = item => Number(PRIMARY_HOSTS.includes(new URL(canonicalUrl(item.url)).hostname))
+    return isPrimary(b) - isPrimary(a) || Date.parse(b.pubDate) - Date.parse(a.pubDate)
+  }).slice(0, 12)
 }
 
 export function validateEvidence(evidence, sources, now = new Date()) {
