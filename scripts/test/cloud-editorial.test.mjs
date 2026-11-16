@@ -18,8 +18,8 @@ test('cloud evidence rejects unsupported anchors and stale primary events', () =
   const sources = [{ url: sourceUrl, text: 'The hotel service platform connects reception teams. Human ownership remains central to delivery.' }]
   const facts = [{ claim: 'The supplier describes a connected service platform.', sourceUrl, evidence: 'platform connects reception teams' }, { claim: 'The supplier retains human ownership.', sourceUrl, evidence: 'Human ownership remains central' }]
   const evidence = { publishable: true, eventDate: '2026-11-01T12:00:00Z', facts }
-  assert.doesNotThrow(() => validateEvidence({ ...evidence, eventDate: '2026-10-27T18:00:00Z' }, sources, now))
-  assert.throws(() => validateEvidence({ ...evidence, eventDate: '2026-10-27T17:59:59Z' }, sources, now), /not recent/)
+  assert.doesNotThrow(() => validateEvidence({ ...evidence, eventDate: '2026-10-26T18:00:00Z' }, sources, now))
+  assert.throws(() => validateEvidence({ ...evidence, eventDate: '2026-10-26T17:59:59Z' }, sources, now), /not recent/)
   assert.throws(() => validateEvidence({ ...evidence, eventDate: '2023-01-01' }, sources, now), /not recent/)
   assert.throws(() => validateEvidence({ ...evidence, facts: [facts[0], { ...facts[1], evidence: 'invented quotation' }] }, sources, now), /source anchor/)
 })

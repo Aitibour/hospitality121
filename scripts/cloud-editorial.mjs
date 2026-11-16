@@ -63,6 +63,17 @@ const feeds = [...PRIMARY_EDITORIAL_FEEDS, ...HERO_FEEDS, ...FEEDS].filter((feed
   new URL(feed.url).hostname !== 'www.hospitalitynet.org' && all.findIndex(other => other.url === feed.url) === index
 )
 const articles = await fetchAllArticles({ feeds, maxAgeHours: EDITORIAL_DISCOVERY_HOURS })
+if (batchMode && process.env.MANUAL_EDITORIAL_SOURCES) {
+  const manual = JSON.parse(process.env.MANUAL_EDITORIAL_SOURCES)
+  if (!Array.isArray(manual) || manual.length > 12) throw new Error('Invalid manual editorial source list')
+  for (const item of manual) {
+    const url = new URL(item.url)
+    if (url.protocol !== 'https:' || url.port || url.username || url.password || !PRIMARY_HOSTS.includes(url.hostname)) throw new Error('Manual editorial source host is not approved')
+    const pubDate = new Date(item.pubDate)
+    if (!item.title || !item.source || !Number.isFinite(+pubDate)) throw new Error('Manual editorial source metadata is incomplete')
+    articles.push({ title: item.title, url: canonicalUrl(url.href), pubDate: pubDate.toISOString(), source: item.source, excerpt: String(item.excerpt || item.title) })
+  }
+}
 report.rssCount = articles.length
 const candidates = selectCloudCandidates(articles, content, now)
 if (!candidates.length) { await finish(false, 'no_fresh_candidate'); process.exit(0) }

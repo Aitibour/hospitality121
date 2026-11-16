@@ -1,0 +1,47 @@
+{
+  "checkedAt": "2026-11-16T20:47:00Z",
+  "status": "ready_to_deploy",
+  "reviewType": "Codex primary-source comparison and visual photo inspection",
+  "articles": [
+    {
+      "slug": "inn-flow-ap-agent-human-approval",
+      "sourceUrl": "https://www.inn-flow.com/inn-flow-introduces-ap-agent-expanding-ai-powered-capabilities-across-hotel-accounting-workflows/",
+      "sourcePublishedAt": "2026-11-12T12:00:00Z",
+      "photoPage": "https://www.pexels.com/photo/woman-using-calculator-at-the-office-7654131/",
+      "photoSha256": "fd18f4ad47998832888f42f916f6ef7b4fb8e929fe9fb8b9f33b08892e52b103",
+      "visualInspection": "approved as a distinct real reference photograph"
+    },
+    {
+      "slug": "dailypoint-hapi-hotel-integration-layer",
+      "sourceUrl": "https://www.dailypoint.com/newsroom/press/dailypoint-and-hapi-partner-to-simplify-hotel-integrations",
+      "sourcePublishedAt": "2026-11-12T12:00:00Z",
+      "photoPage": "https://www.pexels.com/photo/friendly-hotel-reception-interaction-in-dhaka-37680832/",
+      "photoSha256": "524ee351b388ec9636b2783aefdeeef362d501c30dbe64a2d016b5d2e535bbaf",
+      "visualInspection": "approved as a distinct real reference photograph"
+    },
+    {
+      "slug": "urvenue-stripe-resort-wallets",
+      "sourceUrl": "https://www.urvenue.com/news/urvenue-expands-stripe-integration-to-bring-modern-payment-technology-to-resorts-and-hospitality/",
+      "sourcePublishedAt": "2026-11-11T12:00:00Z",
+      "photoPage": "https://www.pexels.com/photo/people-holding-a-guest-card-7820326/",
+      "photoSha256": "ab3ef0533253612e6a9b44407994dcb28867d1519c3b947c39452ed327aa03cc",
+      "visualInspection": "approved as a distinct real reference photograph"
+    },
+    {
+      "slug": "novacancy-asia-2026-technology-agenda",
+      "sourceUrl": "https://terrapinn.com/exhibition/novacancy-asia/agenda.stm",
+      "sourcePublishedAt": "2026-11-15T09:45:00Z",
+      "photoPage": "https://www.pexels.com/photo/business-meeting-in-modern-hotel-room-setting-39205254/",
+      "photoSha256": "8ef3bb292c8f4ac3b0f7849b2a7bb018399cfaa53a25e6fef6ac12d927a05254",
+      "visualInspection": "approved as a distinct real reference photograph"
+    }
+  ],
+  "validation": {
+    "contentAudit": "passed",
+    "structuralPublication": "passed for 298 files",
+    "tests": "105 passed",
+    "lint": "passed",
+    "productionBuild": "passed for 379 routes",
+    "homepageAndHeroFeed": "all four titles present"
+  }
+}

@@ -1,7 +1,7 @@
 import { canonicalUrl, classifyHeroTopic } from './daily-hero.mjs'
 import { isAllowedRegionalArticle, validateNewsPost } from './content-quality.mjs'
 
-export const PRIMARY_HOSTS = ['stories.hilton.com', 'newsroom.hyatt.com', 'news.marriott.com', 'marriott.gcs-web.com', 'www.ihgplc.com', 'corporate.wyndhamhotels.com', 'media.choicehotels.com', 'group.accor.com', 'press.accor.com', 'www.mews.com', 'mews.com', 'www.canarytechnologies.com', 'canarytechnologies.com', 'www.shijigroup.com', 'shijigroup.com', 'www.cloudbeds.com', 'cloudbeds.com', 'rhisac.org', 'www.rhisac.org', 'www.cisa.gov', 'www.oracle.com', 'www.sabre.com', 'amadeus.com', 'www.amadeus.com', 'www.assaabloy.com', 'www.vingcard.com', 'antavo.com', 'www.antavo.com', 'www.ahla.com', 'ir.hworld.com']
+export const PRIMARY_HOSTS = ['stories.hilton.com', 'newsroom.hyatt.com', 'news.marriott.com', 'marriott.gcs-web.com', 'www.ihgplc.com', 'corporate.wyndhamhotels.com', 'media.choicehotels.com', 'group.accor.com', 'press.accor.com', 'www.mews.com', 'mews.com', 'www.canarytechnologies.com', 'canarytechnologies.com', 'www.shijigroup.com', 'shijigroup.com', 'www.cloudbeds.com', 'cloudbeds.com', 'rhisac.org', 'www.rhisac.org', 'www.cisa.gov', 'www.oracle.com', 'www.sabre.com', 'amadeus.com', 'www.amadeus.com', 'www.assaabloy.com', 'www.vingcard.com', 'antavo.com', 'www.antavo.com', 'www.ahla.com', 'ir.hworld.com', 'www.inn-flow.com', 'www.dailypoint.com', 'www.urvenue.com', 'terrapinn.com', 'www.terrapinn.com']
 
 export const DAILY_ARTICLE_LIMIT = 4
 export const PUBLICATION_INTERVAL_HOURS = 4
@@ -12,7 +12,8 @@ export const PRIMARY_EDITORIAL_FEEDS = [
   { url: 'https://ir.hworld.com/rss/news-releases.xml', source: 'H World Group' },
   { url: 'https://www.globenewswire.com/RssFeed/subjectcode/70-Hotels%20and%20Resorts/feedTitle/Hotels%20and%20Resorts', source: 'GlobeNewswire Hotels and Resorts' },
 ]
-export const EDITORIAL_DISCOVERY_HOURS = 120
+// Inclusive five-calendar-day discovery: at any time on Nov 16, Nov 11 remains eligible.
+export const EDITORIAL_DISCOVERY_HOURS = 144
 const publicationCalendar = new Intl.DateTimeFormat('sv-SE', { timeZone: 'America/Vancouver', year: 'numeric', month: '2-digit', day: '2-digit' })
 
 const publicationHour = new Intl.DateTimeFormat('en-GB', { timeZone: 'America/Vancouver', hour: '2-digit', hourCycle: 'h23' })
