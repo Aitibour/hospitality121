@@ -7,7 +7,7 @@ import sharp from 'sharp'
 import Groq from 'groq-sdk'
 import { fetchAllArticles, FEEDS } from './lib/rss.mjs'
 import { HERO_FEEDS, canonicalUrl } from './lib/daily-hero.mjs'
-import { PRIMARY_HOSTS, DAILY_ARTICLE_LIMIT, EDITORIAL_DISCOVERY_HOURS, editorialDay, countDailyCloudArticles, selectCloudCandidates, validateEvidence, validateCloudPost } from './lib/cloud-editorial.mjs'
+import { PRIMARY_HOSTS, PRIMARY_EDITORIAL_FEEDS, DAILY_ARTICLE_LIMIT, PUBLICATION_INTERVAL_HOURS, EDITORIAL_DISCOVERY_HOURS, publicationSlot, editorialDay, countDailyCloudArticles, selectCloudCandidates, validateEvidence, validateCloudPost } from './lib/cloud-editorial.mjs'
 
 const now = new Date(), stamp = now.toISOString(), date = editorialDay(now)
 const report = { checkedAt: stamp, status: 'checking', candidates: [] }
@@ -35,9 +35,6 @@ if (pending) {
     await finish(true, 'recover_pending_deployment')
     process.exit(0)
   }
-  if (Date.parse(pending.cloudPublishedAt) > +now - 3600000) {
-    await finish(false, 'hourly_limit_reached'); process.exit(0)
-  }
 }
 report.editorialDay = date
 report.publishedToday = countDailyCloudArticles(content, now)
@@ -47,7 +44,17 @@ if (report.publishedToday >= DAILY_ARTICLE_LIMIT) {
   process.exit(0)
 }
 
-const feeds = [...HERO_FEEDS, ...FEEDS].filter((f, i, all) => all.findIndex(other => other.url === f.url) === i)
+report.publicationSlot = publicationSlot(now)
+if (report.publicationSlot === null) {
+  await finish(false, 'outside_publication_window')
+  process.exit(0)
+}
+if (pending && Date.parse(pending.cloudPublishedAt) > +now - PUBLICATION_INTERVAL_HOURS * 3600000) {
+  await finish(false, 'publication_interval_not_elapsed')
+  process.exit(0)
+}
+
+const feeds = [...PRIMARY_EDITORIAL_FEEDS, ...HERO_FEEDS, ...FEEDS].filter((f, i, all) => all.findIndex(other => other.url === f.url) === i)
 const articles = await fetchAllArticles({ feeds, maxAgeHours: EDITORIAL_DISCOVERY_HOURS })
 report.rssCount = articles.length
 const candidates = selectCloudCandidates(articles, content, now)

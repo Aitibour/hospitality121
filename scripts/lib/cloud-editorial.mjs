@@ -1,11 +1,26 @@
 import { canonicalUrl, classifyHeroTopic } from './daily-hero.mjs'
 import { isAllowedRegionalArticle, validateNewsPost } from './content-quality.mjs'
 
-export const PRIMARY_HOSTS = ['stories.hilton.com', 'newsroom.hyatt.com', 'news.marriott.com', 'marriott.gcs-web.com', 'www.ihgplc.com', 'corporate.wyndhamhotels.com', 'media.choicehotels.com', 'group.accor.com', 'press.accor.com', 'www.mews.com', 'mews.com', 'www.canarytechnologies.com', 'canarytechnologies.com', 'www.shijigroup.com', 'shijigroup.com', 'www.cloudbeds.com', 'cloudbeds.com', 'rhisac.org', 'www.rhisac.org', 'www.cisa.gov', 'www.oracle.com', 'www.sabre.com', 'amadeus.com', 'www.amadeus.com', 'www.assaabloy.com', 'www.vingcard.com', 'antavo.com', 'www.antavo.com']
+export const PRIMARY_HOSTS = ['stories.hilton.com', 'newsroom.hyatt.com', 'news.marriott.com', 'marriott.gcs-web.com', 'www.ihgplc.com', 'corporate.wyndhamhotels.com', 'media.choicehotels.com', 'group.accor.com', 'press.accor.com', 'www.mews.com', 'mews.com', 'www.canarytechnologies.com', 'canarytechnologies.com', 'www.shijigroup.com', 'shijigroup.com', 'www.cloudbeds.com', 'cloudbeds.com', 'rhisac.org', 'www.rhisac.org', 'www.cisa.gov', 'www.oracle.com', 'www.sabre.com', 'amadeus.com', 'www.amadeus.com', 'www.assaabloy.com', 'www.vingcard.com', 'antavo.com', 'www.antavo.com', 'www.ahla.com', 'ir.hworld.com']
 
-export const DAILY_ARTICLE_LIMIT = 2
+export const DAILY_ARTICLE_LIMIT = 4
+export const PUBLICATION_INTERVAL_HOURS = 4
+export const PRIMARY_EDITORIAL_FEEDS = [
+  { url: 'https://www.cloudbeds.com/feed/', source: 'Cloudbeds' },
+  { url: 'https://www.canarytechnologies.com/blog/rss.xml', source: 'Canary Technologies' },
+  { url: 'https://www.ahla.com/rss.xml', source: 'American Hotel & Lodging Association' },
+  { url: 'https://ir.hworld.com/rss/news-releases.xml', source: 'H World Group' },
+]
 export const EDITORIAL_DISCOVERY_HOURS = 48
 const publicationCalendar = new Intl.DateTimeFormat('sv-SE', { timeZone: 'America/Vancouver', year: 'numeric', month: '2-digit', day: '2-digit' })
+
+const publicationHour = new Intl.DateTimeFormat('en-GB', { timeZone: 'America/Vancouver', hour: '2-digit', hourCycle: 'h23' })
+
+export function publicationSlot(date) {
+  const hour = Number(publicationHour.format(date))
+  if (hour < 8) return null
+  return 8 + Math.floor((hour - 8) / PUBLICATION_INTERVAL_HOURS) * PUBLICATION_INTERVAL_HOURS
+}
 
 export function editorialDay(date) {
   return publicationCalendar.format(date)

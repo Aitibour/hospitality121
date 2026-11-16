@@ -1,6 +1,6 @@
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
-import { countDailyCloudArticles, selectCloudCandidates, validateEvidence, validateCloudPost } from '../lib/cloud-editorial.mjs'
+import { publicationSlot, countDailyCloudArticles, selectCloudCandidates, validateEvidence, validateCloudPost } from '../lib/cloud-editorial.mjs'
 import { isPublishedProduction } from '../../netlify/lib/production.mjs'
 
 test('cloud discovery rejects old, duplicate and future RSS entries', () => {
@@ -32,6 +32,14 @@ test('only the current published deploy can run the social publisher, including 
   assert.equal(isPublishedProduction({ deploy: { context: 'production', published: false } }), false)
   assert.equal(isPublishedProduction({ deploy: { context: 'deploy-preview', published: false } }), false)
   assert.equal(isPublishedProduction({ deploy: { context: 'deploy-preview', published: true } }), true)
+})
+
+test('Vancouver publication slots stay at four local times across daylight saving changes', () => {
+  for (const [date, offset] of [['2026-07-01', '-07:00'], ['2026-11-16', '-08:00']]) {
+    const at = time => publicationSlot(new Date(date + 'T' + time + ':00' + offset))
+    assert.equal(at('07:59'), null)
+    assert.deepEqual(['08:00', '12:00', '16:00', '20:00', '23:59'].map(at), [8, 12, 16, 20, 20])
+  }
 })
 
 test('daily quota counts published cloud articles across UTC midnight in Vancouver', () => {
