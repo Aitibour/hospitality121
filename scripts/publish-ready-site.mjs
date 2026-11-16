@@ -5,7 +5,7 @@ import { createHash } from 'node:crypto'
 
 const config = process.env.NETLIFY_AUTH_TOKEN ? null : JSON.parse(await fs.readFile(path.join(process.env.APPDATA, 'netlify/Config/config.json'), 'utf8'))
 const token = process.env.NETLIFY_AUTH_TOKEN || config.users[config.userId].auth.token
-const siteId = '7b971775-1cad-43b5-9172-701405749ba8'
+const siteId = 'bb6c21e7-de00-4c8e-b2ce-28a3ea1af4b7'
 async function api(route, method = 'GET', body) {
   const response = await fetch(`https://api.netlify.com/api/v1${route}`, { method, headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' }, ...(body ? { body: JSON.stringify(body) } : {}), signal: AbortSignal.timeout(30000) })
   if (!response.ok) throw new Error(`Netlify HTTP ${response.status}`)
@@ -13,6 +13,7 @@ async function api(route, method = 'GET', body) {
 }
 const state = JSON.parse(await fs.readFile('.netlify/daily-hero-deploy.json', 'utf8'))
 const deploy = await api(`/deploys/${state.id}`)
+if (deploy.site_id !== siteId) throw new Error('Preview belongs to a different Netlify project')
 if (deploy.state !== 'ready') throw new Error('Preview is not ready')
 const feedResponse = await fetch(`${deploy.deploy_ssl_url}/hero-feed.json`)
 if (!feedResponse.ok) throw new Error('Preview published feed failed')
