@@ -12,7 +12,7 @@ export const PRIMARY_EDITORIAL_FEEDS = [
   { url: 'https://ir.hworld.com/rss/news-releases.xml', source: 'H World Group' },
   { url: 'https://www.globenewswire.com/RssFeed/subjectcode/70-Hotels%20and%20Resorts/feedTitle/Hotels%20and%20Resorts', source: 'GlobeNewswire Hotels and Resorts' },
 ]
-export const EDITORIAL_DISCOVERY_HOURS = 48
+export const EDITORIAL_DISCOVERY_HOURS = 120
 const publicationCalendar = new Intl.DateTimeFormat('sv-SE', { timeZone: 'America/Vancouver', year: 'numeric', month: '2-digit', day: '2-digit' })
 
 const publicationHour = new Intl.DateTimeFormat('en-GB', { timeZone: 'America/Vancouver', hour: '2-digit', hourCycle: 'h23' })
@@ -42,7 +42,6 @@ export function selectCloudCandidates(articles, existing, now = new Date()) {
     return url && !used.has(url) && age >= 0 && age <= EDITORIAL_DISCOVERY_HOURS * 3600000 && isAllowedRegionalArticle(article)
       && classifyHeroTopic(`${article.title} ${article.excerpt}`)
       && /hotel|hospitality|resort|lodging/i.test(`${article.title} ${article.excerpt} ${article.source}`)
-      && !existing.some(item => item.title.toLowerCase() === article.title.toLowerCase())
   }).sort((a, b) => {
     const isPrimary = item => Number(PRIMARY_HOSTS.includes(new URL(canonicalUrl(item.url)).hostname))
     return isPrimary(b) - isPrimary(a) || Date.parse(b.pubDate) - Date.parse(a.pubDate)
@@ -52,7 +51,7 @@ export function selectCloudCandidates(articles, existing, now = new Date()) {
 export function validateEvidence(evidence, sources, now = new Date()) {
   if (!evidence?.publishable || !Array.isArray(evidence.facts) || evidence.facts.length < 2 || evidence.facts.length > 4) throw new Error('Insufficient verified source facts')
   const event = Date.parse(evidence.eventDate)
-  if (!Number.isFinite(event) || event > +now || event < +now - 48 * 3600000) throw new Error('Primary event date is missing or not recent')
+  if (!Number.isFinite(event) || event > +now || event < +now - EDITORIAL_DISCOVERY_HOURS * 3600000) throw new Error('Primary event date is missing or not recent')
   let quotedWords = 0
   for (const fact of evidence.facts) {
     const source = sources.find(s => s.url === fact.sourceUrl)
