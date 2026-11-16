@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { getAllContent } from '@/lib/content'
 import { pickEditorItems } from '@/lib/dedup'
-import type { Article, Podcast } from '@/types/content'
+import type { Article, BlogPost, NewsItem, Podcast } from '@/types/content'
 import { selectLatestArticles } from '@/scripts/lib/latest-articles.mjs'
 import DailyHero from '@/components/DailyHero'
 import { selectPublishedHeroItems } from '@/scripts/lib/published-hero.mjs'
@@ -29,7 +29,10 @@ export default async function HomePage() {
   const gridItems = fresh.slice(0, 4)
   const generatedItems = fresh.slice(4, 8)
   const featuredItems = select(pickEditorItems(all.filter(item => item.featured), 10), 10)
-  const articles      = select(all.filter((item): item is Article => item.type === 'article'), 5)
+  const topArticleSelection = createHomeSelection()
+  const recentArticles = fresh as (Article | BlogPost | NewsItem)[]
+  const archiveArticles = all.filter((item): item is Article => item.type === 'article')
+  const articles = topArticleSelection([...recentArticles, ...archiveArticles], 5)
   const podcasts      = select(all.filter((item): item is Podcast => item.type === 'podcast'), 5)
 
   return (

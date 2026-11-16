@@ -1,9 +1,10 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import type { Article, Podcast } from '@/types/content'
+import type { Article, BlogPost, NewsItem, Podcast } from '@/types/content'
 import { formatDate } from '@/lib/formatDate'
 
-type ArticleRowProps = { items: Article[]; rank: number }
+type WrittenStory = Article | BlogPost | NewsItem
+type ArticleRowProps = { items: WrittenStory[]; rank: number }
 type PodcastRowProps = { items: Podcast[]; rank: number }
 
 function ArticleRow({ items, rank }: ArticleRowProps) {
@@ -50,7 +51,7 @@ function PodcastRow({ items, rank }: PodcastRowProps) {
   )
 }
 
-type Props = { articles: Article[]; podcasts: Podcast[] }
+type Props = { articles: WrittenStory[]; podcasts: Podcast[] }
 
 export default function TopContent({ articles, podcasts }: Props) {
   const topArticles = articles.slice(0, 5)

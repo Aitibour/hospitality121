@@ -1,9 +1,10 @@
 import { classifyHeroTopic, similarStory } from './daily-hero.mjs'
+import { newestArticleFirst } from './latest-articles.mjs'
 
 /** Only locally published articles can become hero destinations. RSS is discovery, not a destination. */
 export function selectPublishedHeroItems(content, now = new Date()) {
   const selected = [], images = new Set(), slugs = new Set()
-  for (const item of [...content].sort((a, b) => Date.parse(b.date) - Date.parse(a.date))) {
+  for (const item of [...content].sort(newestArticleFirst)) {
     const topic = classifyHeroTopic(`${item.title} ${item.category} ${item.description || ''}`)
     if (!topic || !['news', 'blog', 'article'].includes(item.type)) continue
     if (item.imageType !== 'photograph' || !item.imageCredit || !item.imageLicense || !/^https:\/\//.test(item.imageSource || '')) continue
