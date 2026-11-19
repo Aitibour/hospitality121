@@ -124,6 +124,7 @@ for (const file of await fs.readdir('public/images/content')) if (/\.(jpg|jpeg|w
 for (const candidate of candidates) {
   const check = { title: candidate.title, url: canonicalUrl(candidate.url) }
   report.candidates.push(check)
+  console.log(`Checking candidate: ${candidate.title}`)
   try {
     const original = await readSource(candidate.url)
     const primary = []
@@ -137,7 +138,7 @@ for (const candidate of candidates) {
     if (!primary.length) throw new Error('No readable primary evidence available')
     const evidence = await validatedEditorialTask(data => jsonTask('Extract only a genuinely recent hospitality development from the PRIMARY sources. The proposed editorial category must be supported by the primary text; reject an unrelated or misleading category. An old case study, opinion, or a syndicated old announcement is not a new development. Require an explicit primary event/announcement date within five days; do not infer event timing from an RSS timestamp. Return {publishable:boolean,eventDate:ISO date,facts:[{claim:paraphrased statement of at most 30 words,sourceUrl:exact supplied URL,evidence:exact short anchor of 3 to 6 words}],reason:string}. Use 2 to 4 facts, no more than 24 quoted words total. Supplier outcomes must be attributed as supplier claims. If timing or evidence is uncertain, publishable=false.', data), result => validateEvidence(result, primary, now), { discovered: { title: candidate.title, date: candidate.pubDate, proposedCategory: candidate.category }, primary })
     validateEvidence(evidence, primary, now)
-    const post = await validatedEditorialTask(data => jsonTask('Write original Hospitality121 coverage in the supplied editorial category based ONLY on the verified facts supplied. Return {slug,title,description,body,keywords:[at least 3],photoQuery}. Use a headline distinct from existing titles that describes this specific development. Headline max 85 characters, summary max155, body 180 to450 words. Use no quotations. Factual reporting at most130 words, concise paraphrases attributed to source. Label all recommendations with "Hospitality121 analysis:" and distinguish suggestions from reported implementation/results. No invented claims, statistics, experiences, dates or quotations. No em/en dashes or hype. Use useful Markdown headings and clear paragraphs. Do not copy source wording. Do not put links or images in the body; sources are appended by the application. Never manufacture a new launch from an old case study. Photo query must be a generic, relevant real hospitality setting, not a product or company logo.', data), result => validateCloudPost(result, evidence, content.map(i => i.title)), { category: candidate.category, evidence, existingTitles: content.map(i => i.title).slice(0, 100) })
+    const post = await validatedEditorialTask(data => jsonTask('Write original Hospitality121 coverage in the supplied editorial category based ONLY on the verified facts supplied. Return {slug,title,description,body,keywords:[at least 3],photoQuery}. The slug must contain only lowercase ASCII letters, digits and hyphens and be 8 to 70 characters long. Use a headline distinct from existing titles that describes this specific development. Headline max 85 characters, summary max155, body 180 to450 words. Use no quotations. Factual reporting at most130 words, concise paraphrases attributed to source. Label all recommendations with "Hospitality121 analysis:" and distinguish suggestions from reported implementation/results. No invented claims, statistics, experiences, dates or quotations. No em/en dashes or hype. Use useful Markdown headings and clear paragraphs. Do not copy source wording. Do not put links or images in the body; sources are appended by the application. Never manufacture a new launch from an old case study. Photo query must be a generic, relevant real hospitality setting, not a product or company logo.', data), result => validateCloudPost(result, evidence, content.map(i => i.title)), { category: candidate.category, evidence, existingTitles: content.map(i => i.title).slice(0, 100) })
     const existingTitles = content.map(item => item.title)
     if (isDuplicateTitle(post.title, existingTitles)) {
       const matchingTitles = existingTitles.filter(title => isDuplicateTitle(post.title, [title]))
@@ -145,8 +146,15 @@ for (const candidate of candidates) {
       post.title = revision.title
     }
     validateCloudPost(post, evidence, existingTitles)
-    const proof = await jsonTask('Fact-check the entire proposed article and its editorial category against supplied PRIMARY source texts. Return {approved:boolean,unsupportedClaims:[string],sourceAccurate:boolean,analysisClearlyLabelled:boolean}. Reject if any factual assertion or the category is not supported, any old event is represented as new, a vendor claim is unqualified, or recommendations are presented as measured outcomes. Do not approve from plausibility alone.', { post, category: candidate.category, primary })
-    if (!proof.approved || !proof.sourceAccurate || !proof.analysisClearlyLabelled || proof.unsupportedClaims?.length) throw new Error('Independent automated source comparison failed')
+    let proof
+    for (let reviewAttempt = 0; reviewAttempt < 3; reviewAttempt++) {
+      proof = await jsonTask('Fact-check the entire proposed article and its editorial category against supplied PRIMARY source texts. Return {approved:boolean,unsupportedClaims:[string],sourceAccurate:boolean,analysisClearlyLabelled:boolean}. Reject if any factual assertion or the category is not supported, any old event is represented as new, a vendor claim is unqualified, or recommendations are presented as measured outcomes. Do not approve from plausibility alone.', { post, category: candidate.category, primary })
+      check.sourceComparison = proof
+      if (proof.approved && proof.sourceAccurate && proof.analysisClearlyLabelled && !proof.unsupportedClaims?.length) break
+      if (reviewAttempt === 2) throw new Error('Independent automated source comparison failed')
+      const revised = await validatedEditorialTask(data => jsonTask('Correct this Hospitality121 article using the independent source review. Return {slug,title,description,body,keywords,photoQuery}. Remove every unsupported assertion. Use ONLY supplied facts and primary text. Never invent evidence or change event dates to pass checks. Keep recommendations explicitly labelled Hospitality121 analysis:. Slug 8 to 70 lowercase ASCII letters, digits or hyphens; headline at most 85 characters; description at most 155 characters; body 180 to 450 words. No em/en dashes, quotations, links or images. Do not reproduce source wording.', data), result => validateCloudPost(result, evidence, existingTitles), { post, review: proof, evidence, primary, category: candidate.category })
+      Object.assign(post, revised)
+    }
     const photoResponse = await fetch(`https://api.pexels.com/v1/search?query=${encodeURIComponent(post.photoQuery)}&orientation=landscape&per_page=12`, { headers: { Authorization: process.env.PEXELS_API_KEY }, signal: AbortSignal.timeout(15000) })
     if (!photoResponse.ok) throw new Error('Licensed photo discovery failed')
     const photos = (await photoResponse.json()).photos || []
@@ -179,6 +187,8 @@ for (const candidate of candidates) {
     process.exit(0)
   } catch (error) {
     check.status = 'skipped'; check.reason = error.message
+    console.log(`Candidate skipped: ${error.message}`)
+    await fs.writeFile(reportPath, JSON.stringify(report, null, 2))
     if (isEditorialServiceFailure(error)) {
       await finish(false, 'editorial_service_unavailable')
       throw error
