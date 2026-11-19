@@ -100,7 +100,7 @@ jobs:
           published="${published:-0}"
           added=0
           if [[ "${{ steps.editorial.outputs.changed }}" == 'true' ]]; then added=1; fi
-          if [[ "$hour" == 23 && $((published + added)) -lt 4 ]]; then
+          if [[ "$hour" -ge 20 && $((published + added)) -lt 4 ]]; then
             echo '::error::Fewer than four verified articles were published today. Inspect the cloud-editorial-receipts artifact for source, model, or photo failures.'
             exit 1
           fi

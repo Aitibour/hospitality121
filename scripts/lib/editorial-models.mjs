@@ -1,0 +1,19 @@
+// Use only reviewed models, and check account availability before drafting.
+export function selectEditorialModels(models, env = {}) {
+  const available = new Set(models.filter(model => model.active !== false).map(model => model.id))
+  function choose(preferred, fallbacks, purpose) {
+    const selected = [preferred, ...fallbacks].filter(Boolean).find(id => available.has(id))
+    if (!selected) throw new Error(`No approved ${purpose} model is available; update editorial model configuration`)
+    return selected
+  }
+  return {
+    text: choose(env.EDITORIAL_TEXT_MODEL, ['openai/gpt-oss-120b', 'qwen/qwen3.8-27b'], 'text'),
+    vision: choose(env.EDITORIAL_VISION_MODEL, ['qwen/qwen3.8-27b'], 'vision'),
+  }
+}
+
+export function isEditorialServiceFailure(error) {
+  return [401, 402, 403, 404, 429].includes(error.status) || error.status >= 500
+    || ['model_not_found', 'model_decommissioned', 'insufficient_quota'].includes(error.code)
+    || /APIConnection|APITimeout/.test(error.name || '')
+}
