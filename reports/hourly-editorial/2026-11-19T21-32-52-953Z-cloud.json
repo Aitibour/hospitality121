@@ -1,0 +1,73 @@
+{
+  "checkedAt": "2026-11-19T21:32:52.953Z",
+  "status": "ready_to_deploy",
+  "candidates": [
+    {
+      "title": "Unpatched Danfoss AK-SM800A Flaws Expose Refrigeration Controllers to Remote Takeover",
+      "url": "https://rhisac.org/general-blog/unpatched-danfoss-ak-sm800a-flaws-expose-refrigeration-controllers-to-remote-takeover",
+      "status": "skipped",
+      "reason": "Fact lacks an exact primary-source anchor"
+    },
+    {
+      "title": "Airbnb Pitches Hotels: We Care More About Stays Than Booking.com Does",
+      "url": "https://skift.com/2026/11/18/airbnb-pitches-hotels-we-care-more-about-stays-than-booking-com-does",
+      "sourceComparison": {
+        "approved": true,
+        "unsupportedClaims": [],
+        "sourceAccurate": true,
+        "analysisClearlyLabelled": true
+      },
+      "status": "published_locally",
+      "evidence": {
+        "publishable": true,
+        "eventDate": "2026-11-18",
+        "facts": [
+          {
+            "claim": "Airbnb is courting independent hotels with a new pitch aimed at Booking.com",
+            "sourceUrl": "https://skift.com/2026/11/18/airbnb-pitches-hotels-we-care-more-about-stays-than-booking-com-does",
+            "evidence": "Airbnb is courting independent"
+          },
+          {
+            "claim": "Lou Zameryka said Booking.com is not hotel‑centric",
+            "sourceUrl": "https://skift.com/2026/11/18/airbnb-pitches-hotels-we-care-more-about-stays-than-booking-com-does",
+            "evidence": "it's not hotel-centric"
+          },
+          {
+            "claim": "The pitch was delivered at the Phocuswright conference in Hollywood, Florida",
+            "sourceUrl": "https://skift.com/2026/11/18/airbnb-pitches-hotels-we-care-more-about-stays-than-booking-com-does",
+            "evidence": "Phocuswright conference in Hollywood"
+          }
+        ],
+        "reason": "Skift article dated 2026‑11‑18 reports a fresh Airbnb initiative targeting hotels, includes direct quotes and event details, and meets the five‑day recency requirement with exact textual anchors."
+      },
+      "sources": [
+        {
+          "url": "https://skift.com/2026/11/18/airbnb-pitches-hotels-we-care-more-about-stays-than-booking-com-does",
+          "sha256": "81a0526894d37ad04b34eae88298f6e807c38f4bff6a88e662b5c646723c15ba"
+        }
+      ],
+      "photograph": {
+        "page": "https://www.pexels.com/photo/elegant-hotel-lobby-with-express-checkout-desk-40317538/",
+        "photographer": "Yizi Zeng",
+        "sha256": "a13f006c3f09bc43354d92ace2acf48564571c75209c1fcd5a8715bd0456a29b",
+        "inspection": {
+          "relevant": true,
+          "realPhotograph": true,
+          "alt": "A close-up view of a hotel front desk area featuring a dark wood wall with gold 'OMNI HOTELS' lettering, a brass desk lamp, a Dell computer monitor, and a brass sign reading 'EXPRESS CHECKOUT'.",
+          "reason": "The image is a real photograph of a hotel lobby setting that matches the requested generic context. It clearly displays a specific hotel brand (Omni Hotels), which is a chain, rather than the 'mixed independent and chain branding' or generic setting requested. However, it is relevant to the article's topic of hotel operations and branding."
+        },
+        "license": "https://www.pexels.com/license/"
+      }
+    }
+  ],
+  "editorialDay": "2026-11-19",
+  "publishedToday": 0,
+  "dailyTarget": 4,
+  "publicationSlot": 12,
+  "rssCount": 22,
+  "models": {
+    "text": "openai/gpt-oss-120b",
+    "vision": "qwen/qwen3.8-27b"
+  },
+  "slug": "airbnb-targets-indie-hotels-at-phocuswright"
+}
