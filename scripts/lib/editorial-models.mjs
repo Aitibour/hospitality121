@@ -17,3 +17,14 @@ export function isEditorialServiceFailure(error) {
     || ['model_not_found', 'model_decommissioned', 'insufficient_quota'].includes(error.code)
     || /APIConnection|APITimeout/.test(error.name || '')
 }
+
+export async function validatedEditorialTask(task, validate, data) {
+  let correction = null
+  for (let attempt = 0; attempt < 3; attempt++) {
+    const result = await task({ ...data, ...(correction ? { correction } : {}) })
+    try { validate(result); return result } catch (error) {
+      if (isEditorialServiceFailure(error) || result.publishable === false || attempt === 2) throw error
+      correction = { error: error.message, previous: result, instruction: 'Correct the validation error using only the supplied evidence. Preserve all factual safeguards. If evidence is insufficient, say so; never invent supporting facts or anchors.' }
+    }
+  }
+}
