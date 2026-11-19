@@ -1,6 +1,6 @@
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
-import { selectEditorialModels, isEditorialServiceFailure, validatedEditorialTask } from '../lib/editorial-models.mjs'
+import { selectEditorialModels, isEditorialServiceFailure, validatedEditorialTask, editorialCompletion } from '../lib/editorial-models.mjs'
 
 test('retired configured model falls back to an available reviewed model', () => {
   assert.deepEqual(selectEditorialModels([{ id: 'openai/gpt-oss-120b' }, { id: 'qwen/qwen3.8-27b' }], { EDITORIAL_TEXT_MODEL: 'retired' }), { text: 'openai/gpt-oss-120b', vision: 'qwen/qwen3.8-27b' })
@@ -29,4 +29,14 @@ test('draft corrections receive feedback and still must pass validation', async 
   calls = 0
   await assert.rejects(validatedEditorialTask(async () => { calls++; return { publishable: false } }, () => { throw new Error('insufficient evidence') }, {}), /insufficient/)
   assert.equal(calls, 1)
+})
+
+test('rate-limited text uses the available reviewed fallback without changing the request', async () => {
+  const models = { text: 'preferred', vision: 'reviewed-fallback' }, calls = []
+  const create = async request => { calls.push(request); if (request.model === 'preferred') throw { status: 429 }; return 'completed' }
+  assert.equal(await editorialCompletion(create, { messages: ['evidence'] }, models), 'completed')
+  assert.deepEqual(calls, [{ messages: ['evidence'], model: 'preferred' }, { messages: ['evidence'], model: 'reviewed-fallback' }])
+  assert.equal(models.text, 'reviewed-fallback')
+  await assert.rejects(editorialCompletion(async () => { throw { status: 429 } }, {}, models, true))
+  await assert.rejects(editorialCompletion(async () => { throw { status: 401 } }, {}, { text: 'a', vision: 'b' }))
 })
