@@ -110,7 +110,7 @@ async function readSource(input) {
   const raw = await response.text()
   if (raw.length > 2000000) throw new Error('Source response too large')
   const doc = new JSDOM(raw).window.document
-  const root = doc.querySelector('article') || doc.querySelector('main')
+  const root = doc.querySelector('article') || doc.querySelector('main') || doc.querySelector('.wd_newsfeed_releases-detail') || doc.querySelector('[itemprop="articleBody"]')
   if (!root) throw new Error('No substantive article found')
   const links = [...root.querySelectorAll('a[href]')].map(a => { try { return new URL(a.getAttribute('href'), url).href } catch { return '' } }).filter(Boolean)
   root.querySelectorAll('script,style,nav,footer,header,aside,form').forEach(el => el.remove())
