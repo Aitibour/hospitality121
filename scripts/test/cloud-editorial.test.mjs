@@ -1,3 +1,4 @@
+// Use historical DST fixtures: BC stopped falling back in 2026; older ICU data varies.
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
 import { publicationSlot, countDailyCloudArticles, classifyEditorialCategory, selectCloudCandidates, validateEvidence, validateCloudPost } from '../lib/cloud-editorial.mjs'
@@ -60,8 +61,8 @@ test('only the current published deploy can run the social publisher, including 
   assert.equal(isPublishedProduction({ deploy: { context: 'deploy-preview', published: true } }), true)
 })
 
-test('Vancouver publication slots stay at four local times across daylight saving changes', () => {
-  for (const [date, offset] of [['2026-07-01', '-07:00'], ['2026-11-16', '-08:00']]) {
+test('Historical Vancouver publication slots stay at four local times across daylight saving changes', () => {
+  for (const [date, offset] of [['2025-07-01', '-07:00'], ['2025-11-16', '-08:00']]) {
     const at = time => publicationSlot(new Date(date + 'T' + time + ':00' + offset))
     assert.equal(at('07:59'), null)
     assert.deepEqual(['08:00', '12:00', '16:00', '20:00', '23:59'].map(at), [8, 12, 16, 20, 20])
@@ -69,15 +70,15 @@ test('Vancouver publication slots stay at four local times across daylight savin
 })
 
 test('daily quota counts published cloud articles across UTC midnight in Vancouver', () => {
-  const now = new Date('2026-11-17T06:00:00Z')
+  const now = new Date('2025-11-17T06:00:00Z')
   const published = cloudPublishedAt => ({ status: 'published', cloudPublishedAt })
   const items = [
-    published('2026-11-16T22:00:00Z'),
-    published('2026-11-17T04:00:00Z'),
-    published('2026-11-16T07:59:00Z'),
-    published('2026-11-17T07:00:00Z'),
-    { status: 'review', cloudPublishedAt: '2026-11-17T05:00:00Z' },
+    published('2025-11-16T22:00:00Z'),
+    published('2025-11-17T04:00:00Z'),
+    published('2025-11-16T07:59:00Z'),
+    published('2025-11-17T07:00:00Z'),
+    { status: 'review', cloudPublishedAt: '2025-11-17T05:00:00Z' },
   ]
   assert.equal(countDailyCloudArticles(items, now), 2)
-  assert.equal(countDailyCloudArticles(items, new Date('2026-11-17T08:00:00Z')), 0)
+  assert.equal(countDailyCloudArticles(items, new Date('2025-11-17T08:00:00Z')), 0)
 })

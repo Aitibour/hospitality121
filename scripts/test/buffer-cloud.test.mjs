@@ -1,3 +1,4 @@
+// Use historical DST fixtures: BC stopped falling back in 2026; older ICU data varies.
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
 import { bufferClient } from '../../netlify/lib/buffer-client.mjs'
@@ -6,7 +7,7 @@ import { runBufferSlot } from '../../netlify/lib/buffer-publisher.mjs'
 function fixture() {
   const records = new Map(), submitted = [], posts = []
   let serial = 0, interrupt = false
-  const item = { type: 'news', slug: 'verified-hotel-tech', title: 'Hotel AI requires accurate property information', description: 'A hotel technology case study examines reliable information and human service.', href: '/content/verified-hotel-tech', date: '2026-11-01', imageType: 'photograph', image: '/images/content/test.webp' }
+  const item = { type: 'news', slug: 'verified-hotel-tech', title: 'Hotel AI requires accurate property information', description: 'A hotel technology case study examines reliable information and human service.', href: '/content/verified-hotel-tech', date: '2025-11-02', imageType: 'photograph', image: '/images/content/test.webp' }
   const store = {
     get: async key => records.get(key)?.data || null,
     getWithMetadata: async key => records.get(key) || null,
@@ -28,7 +29,7 @@ function fixture() {
     getPost: async () => ({ id: 'buffer-1', status: 'sent', externalLink: 'https://x.com/Hospitality_121/status/123' }),
   }
   const fetcher = async url => url.endsWith('hero-feed.json') ? Response.json({ items: [item] }) : new Response(`<article>Full article</article><meta content="summary_large_image"><img src="${item.image}"><link href="https://hospitality121.com${item.href}">`)
-  return { args: { now: new Date('2026-11-01T17:00:00Z'), store, client, fetcher }, records, submitted, item, setInterrupt: () => { interrupt = true } }
+  return { args: { now: new Date('2025-11-02T17:00:00Z'), store, client, fetcher }, records, submitted, item, setInterrupt: () => { interrupt = true } }
 }
 
 test('Buffer submission is persisted and later confirmed without a second send', async () => {
@@ -78,7 +79,7 @@ test('LinkedIn uses its own history so an X post does not suppress the company-p
   assert.equal(result.platform, 'linkedin')
   assert.equal(f.submitted.length, 2)
   assert(f.submitted[1].text.includes('Read the full Hospitality121 article:'))
-  assert(f.records.has('buffer-linkedin/2026-11-01/news'))
+  assert(f.records.has('buffer-linkedin/2025-11-02/news'))
   assert(f.records.has('used-linkedin/verified-hotel-tech'))
 })
 
@@ -100,5 +101,5 @@ test('LinkedIn rejects a personal profile or another company page', async () => 
 })
 
 test('news slot rejects old source dates and commentary', async () => {
- for(const change of [{type:'article'},{sourcePublishedAt:'2026-10-20'}]){const f=fixture();Object.assign(f.item,change);assert.equal((await runBufferSlot(f.args)).status,'no_fresh_unposted_article');assert.equal(f.submitted.length,0)}
+ for(const change of [{type:'article'},{sourcePublishedAt:'2025-10-20'}]){const f=fixture();Object.assign(f.item,change);assert.equal((await runBufferSlot(f.args)).status,'no_fresh_unposted_article');assert.equal(f.submitted.length,0)}
 })
