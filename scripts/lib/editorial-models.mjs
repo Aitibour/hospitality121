@@ -29,17 +29,29 @@ export async function validatedEditorialTask(task, validate, data) {
   }
 }
 
-export async function editorialCompletion(create, request, models, image = false) {
+export async function editorialCompletion(create, request, models, image = false, pause = delay => new Promise(resolve => setTimeout(resolve, delay))) {
   const forModel = model => model === 'qwen/qwen3.8-27b'
     ? { ...request, model, max_tokens: Math.min(request.max_tokens ?? 900, 900), reasoning_effort: 'none', reasoning_format: 'hidden' }
     : { ...request, model }
+  async function invoke(model) {
+    for (let attempt = 0; ; attempt++) {
+      try { return await create(forModel(model)) } catch (error) {
+        const hint = String(error.message || '').match(/try again in ([\d.]+)(ms|s|m)/i)
+        const header = Number(error.headers?.['retry-after']) * 1000
+        const delay = hint ? Number(hint[1]) * ({ ms: 1, s: 1000, m: 60000 }[hint[2].toLowerCase()]) : header
+        if (error.status !== 429 || attempt >= 3 || !Number.isFinite(delay) || delay <= 0 || delay > 60000) throw error
+        // The provider's fractional wait may round down at the quota boundary.
+        await pause(Math.ceil(delay) + 1000)
+      }
+    }
+  }
   try {
-    return await create(forModel(image ? models.vision : models.text))
+    return await invoke(image ? models.vision : models.text)
   } catch (error) {
     // Both models passed the account availability preflight. Never replace image
     // review with a text-only model, or retry authentication/billing failures.
     if (image || ![404, 429].includes(error.status) || models.text === models.vision) throw error
     models.text = models.vision
-    return create(forModel(models.text))
+    return invoke(models.text)
   }
 }

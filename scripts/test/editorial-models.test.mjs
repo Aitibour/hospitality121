@@ -48,3 +48,17 @@ test('Qwen completion size fits the existing output rate limit and returns JSON 
   assert.equal(sent.reasoning_effort, 'none')
   assert.equal(sent.reasoning_format, 'hidden')
 })
+
+test('short provider quota waits are respected with a boundary buffer and bounded retries', async () => {
+  let calls = 0
+  const waits = []
+  const models = { text: 'same', vision: 'same' }
+  const limited = () => ({ status: 429, message: 'Please try again in 539.999999ms.' })
+  const result = await editorialCompletion(async () => { if (++calls === 1) throw limited(); return 'done' }, {}, models, false, async delay => waits.push(delay))
+  assert.equal(result, 'done')
+  assert.deepEqual(waits, [1540])
+  calls = 0
+  await assert.rejects(editorialCompletion(async () => { calls++; throw limited() }, {}, models, false, async () => {}))
+  assert.equal(calls, 4)
+  await assert.rejects(editorialCompletion(async () => { throw { status: 429, message: 'Please try again in 2m.' } }, {}, models, false, async () => assert.fail('long quota waits must fail visibly')))
+})
