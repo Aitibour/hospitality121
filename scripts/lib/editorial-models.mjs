@@ -30,13 +30,16 @@ export async function validatedEditorialTask(task, validate, data) {
 }
 
 export async function editorialCompletion(create, request, models, image = false) {
+  const forModel = model => model === 'qwen/qwen3.8-27b'
+    ? { ...request, model, max_tokens: Math.min(request.max_tokens ?? 900, 900), reasoning_effort: 'none', reasoning_format: 'hidden' }
+    : { ...request, model }
   try {
-    return await create({ ...request, model: image ? models.vision : models.text })
+    return await create(forModel(image ? models.vision : models.text))
   } catch (error) {
     // Both models passed the account availability preflight. Never replace image
     // review with a text-only model, or retry authentication/billing failures.
     if (image || ![404, 429].includes(error.status) || models.text === models.vision) throw error
     models.text = models.vision
-    return create({ ...request, model: models.text })
+    return create(forModel(models.text))
   }
 }

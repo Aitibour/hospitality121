@@ -40,3 +40,11 @@ test('rate-limited text uses the available reviewed fallback without changing th
   await assert.rejects(editorialCompletion(async () => { throw { status: 429 } }, {}, models, true))
   await assert.rejects(editorialCompletion(async () => { throw { status: 401 } }, {}, { text: 'a', vision: 'b' }))
 })
+
+test('Qwen completion size fits the existing output rate limit and returns JSON without reasoning text', async () => {
+  let sent
+  await editorialCompletion(async request => { sent = request; return {} }, { max_tokens: 3500 }, { text: 'qwen/qwen3.8-27b' })
+  assert.equal(sent.max_tokens, 900)
+  assert.equal(sent.reasoning_effort, 'none')
+  assert.equal(sent.reasoning_format, 'hidden')
+})
