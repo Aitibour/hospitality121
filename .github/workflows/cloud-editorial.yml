@@ -45,7 +45,13 @@ jobs:
           editorial_status=checking
           for ((attempt = 1; attempt <= batch_limit; attempt++)); do
             attempt_output="$(mktemp)"
-            GITHUB_OUTPUT="$attempt_output" EDITORIAL_BATCH_MODE="$batch_mode" node scripts/cloud-editorial.mjs
+            if ! GITHUB_OUTPUT="$attempt_output" EDITORIAL_BATCH_MODE="$batch_mode" node scripts/cloud-editorial.mjs; then
+              if [[ "$changed" == true ]]; then
+                echo '::warning::A later candidate attempt failed; deploying the articles that already passed mandatory checks.'
+                break
+              fi
+              exit 1
+            fi
             published_today="$(grep '^publishedToday=' "$attempt_output" | tail -1 | cut -d= -f2)"
             editorial_status="$(grep '^status=' "$attempt_output" | tail -1 | cut -d= -f2)"
             if grep -q '^changed=true$' "$attempt_output"; then
