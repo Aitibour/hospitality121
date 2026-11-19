@@ -1,0 +1,85 @@
+{
+  "checkedAt": "2026-11-19T00:56:27.297Z",
+  "status": "ready_to_deploy",
+  "candidates": [
+    {
+      "title": "Park Hyatt Brisbane to Make Its Queensland Debut on the Riverfront",
+      "url": "https://newsroom.hyatt.com/Park_Hyatt_Brisbane_to_Make_Its_Queensland_Debut_on_the_Riverfront",
+      "status": "skipped",
+      "reason": "400 {\"error\":{\"message\":\"Failed to generate JSON. Please adjust your prompt. See 'failed_generation' for more details.\",\"type\":\"invalid_request_error\",\"code\":\"json_validate_failed\",\"failed_generation\":\"max completion tokens reached before generating a valid document\"}}"
+    },
+    {
+      "title": "Abu Dhabi Holds Its F1 Hotel Rates as Doha Cuts",
+      "url": "https://skift.com/2026/11/18/abu-dhabi-holds-its-f1-hotel-rates-as-doha-cuts",
+      "status": "skipped",
+      "reason": "Invalid article metadata"
+    },
+    {
+      "title": "Airbnb Pitches Hotels: We Care More About Stays Than Booking.com Does",
+      "url": "https://skift.com/2026/11/18/airbnb-pitches-hotels-we-care-more-about-stays-than-booking-com-does",
+      "status": "skipped",
+      "reason": "Insufficient verified source facts"
+    },
+    {
+      "title": "Altoreva Adds Housekeeping to Hotel Operations Platform and Launches Two-Way Oracle OPERA Cloud Integration",
+      "url": "https://hoteltechnologynews.com/2026/11/altoreva-adds-housekeeping-to-hotel-operations-platform-and-launches-two-way-oracle-opera-cloud-integration",
+      "sourceComparison": {
+        "approved": true,
+        "unsupportedClaims": [],
+        "sourceAccurate": true,
+        "analysisClearlyLabelled": true
+      },
+      "status": "published_locally",
+      "evidence": {
+        "publishable": true,
+        "eventDate": "2026-11-17",
+        "facts": [
+          {
+            "claim": "Altoreva announced its Housekeeping module is live, integrating operations, security, and housekeeping into one platform.",
+            "sourceUrl": "https://hoteltechnologynews.com/2026/11/altoreva-adds-housekeeping-to-hotel-operations-platform-and-launches-two-way-oracle-opera-cloud-integration",
+            "evidence": "Housekeeping module is live"
+          },
+          {
+            "claim": "Altoreva launched a two-way integration with Oracle OPERA Cloud, currently running at Eagle Aruba Resort.",
+            "sourceUrl": "https://hoteltechnologynews.com/2026/11/altoreva-adds-housekeeping-to-hotel-operations-platform-and-launches-two-way-oracle-opera-cloud-integration",
+            "evidence": "two-way integration with Oracle OPERA"
+          },
+          {
+            "claim": "The platform allows staff to read guest data from OPERA and write room status back to the PMS.",
+            "sourceUrl": "https://hoteltechnologynews.com/2026/11/altoreva-adds-housekeeping-to-hotel-operations-platform-and-launches-two-way-oracle-opera-cloud-integration",
+            "evidence": "reads arrivals, in-room guests"
+          }
+        ],
+        "reason": "The primary source explicitly states the announcement date as 11.17.2026 and details the launch of the Housekeeping module and Oracle OPERA Cloud integration, supporting the OPERATIONS category."
+      },
+      "sources": [
+        {
+          "url": "https://hoteltechnologynews.com/2026/11/altoreva-adds-housekeeping-to-hotel-operations-platform-and-launches-two-way-oracle-opera-cloud-integration",
+          "sha256": "249707342038d4d4c9371a6f0329cca00db5ce570b350cbd97a5a8626800fe5a"
+        }
+      ],
+      "photograph": {
+        "page": "https://www.pexels.com/photo/women-putting-bed-sheet-in-a-bed-9462333/",
+        "photographer": "Liliana Drew",
+        "sha256": "487a29fc6ea5dc8712ce6d55e1a28c9bbc2ce3643c0c19cdc4a59077e89c7d51",
+        "inspection": {
+          "relevant": true,
+          "realPhotograph": true,
+          "alt": "Two housekeepers in light-colored uniforms making a bed with tan linens in a bright room with white curtains and a wooden headboard.",
+          "reason": "The image is a real photograph showing hotel housekeeping staff cleaning a guest room, which matches the requested setting."
+        },
+        "license": "https://www.pexels.com/license/"
+      }
+    }
+  ],
+  "editorialDay": "2026-11-18",
+  "publishedToday": 0,
+  "dailyTarget": 4,
+  "publicationSlot": 16,
+  "rssCount": 21,
+  "models": {
+    "text": "qwen/qwen3.8-27b",
+    "vision": "qwen/qwen3.8-27b"
+  },
+  "slug": "altoreva-housekeeping-module-live-with-opera-cloud"
+}
