@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import React from 'react'
+import Link from 'next/link'
 
 export const metadata: Metadata = {
   title: 'Collaborate',
@@ -70,6 +71,15 @@ export default function CollaboratePage() {
             <div><p className="text-xs font-bold tracking-widest text-gold uppercase mb-1">Editorial</p><h2 className="font-serif text-3xl font-bold text-gray-900">Articles &amp; Podcasts</h2></div>
             <a href="mailto:contact@hospitality121.com" className="text-sm font-bold text-gold hover:underline hidden sm:block">contact@hospitality121.com</a>
           </div>
+          <section id="contributor-guidelines" aria-labelledby="contributor-guidelines-heading" className="rounded-2xl border border-gray-100 bg-gray-50 p-6 sm:p-8 mb-8">
+            <h2 id="contributor-guidelines-heading" className="font-serif text-2xl font-bold text-gray-900 mb-5">Contributor Guidelines</h2>
+            <ul className="space-y-4 text-base text-gray-600 leading-relaxed">
+              <li><strong className="text-gray-900">Free editorial publication.</strong> Guest editorial articles are free to submit and publish. We do not charge contributors a publication fee.</li>
+              <li><strong className="text-gray-900">Editorial review.</strong> All submissions are subject to review and acceptance under our <Link href="/editorial-standards" className="text-gold underline underline-offset-4 hover:text-gray-900">Editorial Standards</Link>. Submission does not guarantee publication.</li>
+              <li><strong className="text-gray-900">Review and publication timing.</strong> We aim to respond to editorial enquiries within two business days. Review and publication timing depends on the submission, any revisions, and the editorial schedule. We confirm publication timing after acceptance.</li>
+              <li><strong className="text-gray-900">Share your published work.</strong> Contributors are encouraged to follow <a href="https://www.linkedin.com/company/hospitality121" target="_blank" rel="noopener noreferrer" className="text-gold underline underline-offset-4 hover:text-gray-900">Hospitality One2One on LinkedIn</a> and share their published articles while tagging our page. Following or sharing is optional and does not affect editorial acceptance.</li>
+            </ul>
+          </section>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">{EDITORIAL.map(opt => <Card key={opt.tag} opt={opt} />)}</div>
         </div>
       </div>
