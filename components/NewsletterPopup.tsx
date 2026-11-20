@@ -1,6 +1,7 @@
 'use client'
 
 import { useCallback, useEffect, useRef, useState } from 'react'
+import Image from 'next/image'
 
 const STORAGE_KEY = 'h1h_newsletter_dismissed'
 
@@ -101,7 +102,7 @@ export default function NewsletterPopup() {
     <>
       {/* Backdrop */}
       <div
-        className="fixed inset-0 bg-black/50 z-50 backdrop-blur-sm"
+        className="fixed inset-0 bg-black/65 z-50 backdrop-blur-md"
         onClick={dismiss}
         aria-hidden="true"
       />
@@ -113,23 +114,33 @@ export default function NewsletterPopup() {
         aria-modal="true"
         aria-labelledby="newsletter-title"
         aria-describedby="newsletter-description"
-        className="fixed z-50 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[92vw] max-w-md bg-white rounded-2xl shadow-2xl overflow-hidden"
+        className="fixed z-50 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[92vw] max-w-5xl max-h-[90dvh] overflow-y-auto rounded-2xl border border-gold/25 bg-[#101c2d] text-[#f7f2e8] shadow-2xl md:grid md:grid-cols-[0.95fr_1.05fr]"
       >
-        {/* Gold accent bar */}
-        <div className="h-1 bg-gold w-full" />
-
-        <div className="p-8">
+        <div className="relative hidden min-h-[640px] md:block">
+          <Image src="/images/content/hotel-design-digital-journey-photo.webp" alt="Warm lighting and a gold-accented hotel reception desk" fill sizes="(min-width: 768px) 48vw, 0px" className="object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#08111f] via-[#08111f]/10 to-transparent" />
+          <div className="absolute inset-x-0 bottom-0 p-9">
+            <p className="text-xs uppercase tracking-[0.22em] text-[#dfbf7d] mb-3">Real leaders. Real conversations.</p>
+            <p className="font-serif text-4xl leading-tight text-white">A closer look at<br />hospitality.</p>
+            <p className="mt-5 text-xs text-white/70">Photo: Mikhail Nilov / Pexels</p>
+          </div>
+        </div>
+        <div className="relative px-7 py-12 sm:px-12 md:py-14">
           <button
             ref={closeButtonRef}
             onClick={dismiss}
             aria-label="Close newsletter popup"
-            className="absolute top-5 right-5 text-gray-400 hover:text-gray-700 transition-colors"
+            className="absolute top-4 right-4 flex h-11 w-11 items-center justify-center rounded-full bg-black/20 text-[#f7f2e8] hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold transition-colors"
           >
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
               <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
             </svg>
           </button>
 
+          <div className="mb-8 text-center" aria-label="Hospitality One2One">
+            <p className="font-serif text-3xl tracking-wide text-[#dfbf7d]">Hospitality <span className="text-[#f7f2e8]">One2One</span></p>
+            <p className="mt-2 text-[11px] uppercase tracking-[0.28em] text-[#c9c6bf]">The hospitality briefing</p>
+          </div>
           {status === 'success' ? (
             <div className="text-center py-6">
               <div className="w-12 h-12 rounded-full bg-gold/10 flex items-center justify-center mx-auto mb-4">
@@ -137,18 +148,20 @@ export default function NewsletterPopup() {
                   <polyline points="20 6 9 17 4 12" />
                 </svg>
               </div>
-              <p className="font-serif text-2xl font-bold text-gray-900 mb-2">Request sent</p>
-              <p className="text-gray-500 text-sm">Check your inbox for confirmation. We cannot confirm your subscription from this page.</p>
+              <h2 id="newsletter-title" className="font-serif text-3xl text-[#f7f2e8] mb-3">Request sent</h2>
+              <p id="newsletter-description" role="status" className="text-[#c9c6bf] text-base">Check your inbox for confirmation. We cannot confirm your subscription from this page.</p>
             </div>
           ) : (
             <>
-              <div className="mb-6">
-                <span className="text-xs font-bold tracking-widest text-gold uppercase">Free Newsletter</span>
-                <h2 id="newsletter-title" className="font-serif text-2xl font-bold text-gray-900 mt-2 mb-2">
-                  The hospitality intelligence briefing.
+              <div className="mb-7 text-center">
+                <div className="flex items-center gap-4 text-xs uppercase tracking-[0.22em] text-[#dfbf7d]">
+                  <span className="h-px flex-1 bg-gold/40" />Stay in the know<span className="h-px flex-1 bg-gold/40" />
+                </div>
+                <h2 id="newsletter-title" className="font-serif text-5xl sm:text-6xl leading-[0.95] tracking-tight mt-5 mb-5 text-[#f7f2e8]">
+                  Hospitality.<br /><span className="text-[#dfbf7d]">One step ahead.</span>
                 </h2>
-                <p id="newsletter-description" className="text-gray-500 text-sm leading-relaxed">
-                  Get practical insights on hotel technology, sustainability, and leadership.
+                <p id="newsletter-description" className="text-[#c9c6bf] text-base leading-relaxed">
+                  Hotel technology, leadership, and ideas shaping the guest experience. Get the Hospitality121 briefing in your inbox.
                 </p>
               </div>
 
@@ -159,12 +172,12 @@ export default function NewsletterPopup() {
                   type="text"
                   name="name"
                   aria-label="First name"
-                  placeholder="First name"
+                  placeholder="First name (optional)"
                   maxLength={80}
                   autoComplete="given-name"
                   value={name}
                   onChange={e => setName(e.target.value)}
-                  className="border border-gray-200 rounded-lg px-4 py-3 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-gold/40 placeholder:text-gray-400 bg-white"
+                  className="border border-[#e5d7bc] rounded-lg px-4 py-3.5 text-base text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#dfbf7d] placeholder:text-gray-500 bg-[#f7f2e8]"
                 />
                 <input
                   type="email"
@@ -176,23 +189,23 @@ export default function NewsletterPopup() {
                   autoComplete="email"
                   value={email}
                   onChange={e => setEmail(e.target.value)}
-                  className="border border-gray-200 rounded-lg px-4 py-3 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-gold/40 placeholder:text-gray-400 bg-white"
+                  className="border border-[#e5d7bc] rounded-lg px-4 py-3.5 text-base text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#dfbf7d] placeholder:text-gray-500 bg-[#f7f2e8]"
                 />
                 <button
                   type="submit"
                   disabled={status === 'submitting'}
-                  className="bg-gold text-gray-900 font-bold py-3 rounded-lg hover:opacity-90 transition-opacity disabled:opacity-50 text-sm tracking-wider"
+                  className="bg-gradient-to-r from-[#b99554] via-[#e2c589] to-[#b99554] text-[#101c2d] font-bold py-4 rounded-lg hover:brightness-110 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold transition disabled:opacity-50 text-sm tracking-wider"
                 >
-                  {status === 'submitting' ? 'Subscribing...' : 'GET THE BRIEFING FREE'}
+                  {status === 'submitting' ? 'Subscribing...' : 'JOIN THE BRIEFING'}
                 </button>
                 {status === 'error' && (
-                  <p className="text-sm text-red-600" role="alert">
+                  <p className="text-sm text-red-200" role="alert">
                     We could not complete your subscription. Please try again.
                   </p>
                 )}
               </form>
 
-              <p className="text-gray-400 text-xs text-center mt-4 leading-relaxed">
+              <p className="text-[#b9b9b5] text-xs text-center mt-5 leading-relaxed">
                 By subscribing you agree to our{' '}
                 <a href="/privacy" className="underline hover:text-gold transition-colors">Privacy Policy</a>
                 . We use your data solely to send the newsletter. Unsubscribe anytime.
