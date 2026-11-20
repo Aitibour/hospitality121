@@ -1,0 +1,129 @@
+{
+  "checkedAt": "2026-11-20T20:16:49.993Z",
+  "status": "ready_to_deploy",
+  "candidates": [
+    {
+      "title": "8 DSPM Tools to Test Before Buying in Retail and Hospitality",
+      "url": "https://rhisac.org/general-blog/8-dspm-tools-to-test-before-buying-in-retail-and-hospitality",
+      "status": "skipped",
+      "reason": "Insufficient verified source facts"
+    },
+    {
+      "title": "Airport Shutdown Wiped 65% Off Riyadh Hotel RevPAR in October",
+      "url": "https://skift.com/2026/11/19/airport-shutdown-wiped-65-off-riyadh-hotel-revpar-in-october",
+      "status": "skipped",
+      "reason": "Fact lacks an exact primary-source anchor"
+    },
+    {
+      "title": "Park Hyatt Brisbane to Make Its Queensland Debut on the Riverfront",
+      "url": "https://newsroom.hyatt.com/Park_Hyatt_Brisbane_to_Make_Its_Queensland_Debut_on_the_Riverfront",
+      "status": "skipped",
+      "reason": "Fact lacks an exact primary-source anchor"
+    },
+    {
+      "title": "Travelers Want Less Screen Time and More Time on the Water",
+      "url": "https://skift.com/2026/11/19/outdoor-water-experiences-hospitality-opportunities-2027",
+      "status": "skipped",
+      "reason": "Invalid article metadata"
+    },
+    {
+      "title": "Unpatched Danfoss AK-SM800A Flaws Expose Refrigeration Controllers to Remote Takeover",
+      "url": "https://rhisac.org/general-blog/unpatched-danfoss-ak-sm800a-flaws-expose-refrigeration-controllers-to-remote-takeover",
+      "status": "skipped",
+      "reason": "Fact lacks an exact primary-source anchor"
+    },
+    {
+      "title": "Metafoodx Introduces Chef Echo AI Assistant to Help Hotel Kitchens Plan Production and Reduce Food Waste",
+      "url": "https://hoteltechnologynews.com/2026/11/metafoodx-introduces-chef-echo-ai-assistant-to-help-hotel-kitchens-plan-production-and-reduce-food-waste",
+      "status": "skipped",
+      "reason": "Invalid article metadata"
+    },
+    {
+      "title": "Turkey Earns More From Fewer Tourists, But Hotels Miss Out",
+      "url": "https://skift.com/2026/11/19/turkey-earns-more-from-fewer-tourists-but-hotels-miss-out",
+      "sourceComparison": {
+        "approved": false,
+        "unsupportedClaims": [
+          "Hotel room rates slipped slightly to $148 per night from $149 in the prior quarter (source says $149 was last year, not the prior quarter)"
+        ],
+        "sourceAccurate": false,
+        "analysisClearlyLabelled": true
+      },
+      "status": "skipped",
+      "reason": "Article depth outside supported scope"
+    },
+    {
+      "title": "FILA HOUSE Shanghai Opening On 13 November 2026\r\nAs The World's First FILA Sport-Fashion Hotel",
+      "url": "https://newsroom.hyatt.com/FilaHouseShanghaiOpening",
+      "status": "skipped",
+      "reason": "Primary event date is missing or not recent"
+    },
+    {
+      "title": "Java4Shell Base64 Decoder Flaw Creates Remote Code Execution Risk Across Java Applications",
+      "url": "https://rhisac.org/general-blog/java4shell-base64-decoder-flaw-creates-remote-code-execution-risk-across-java-applications",
+      "status": "skipped",
+      "reason": "Insufficient verified source facts"
+    },
+    {
+      "title": "Andaz Makes Its Australian Debut with the Opening of Andaz Gold Coast",
+      "url": "https://newsroom.hyatt.com/AndazMakesItsAustralianDebutWithTheOpeningOfAndazGoldCoast",
+      "sourceComparison": {
+        "approved": true,
+        "unsupportedClaims": [],
+        "sourceAccurate": true,
+        "analysisClearlyLabelled": true
+      },
+      "status": "published_locally",
+      "evidence": {
+        "publishable": true,
+        "eventDate": "2026-11-16",
+        "facts": [
+          {
+            "claim": "Hyatt announced the opening of Andaz Gold Coast.",
+            "sourceUrl": "https://newsroom.hyatt.com/AndazMakesItsAustralianDebutWithTheOpeningOfAndazGoldCoast",
+            "evidence": "opening of Andaz Gold Coast"
+          },
+          {
+            "claim": "It is the first Andaz hotel in Australia.",
+            "sourceUrl": "https://newsroom.hyatt.com/AndazMakesItsAustralianDebutWithTheOpeningOfAndazGoldCoast",
+            "evidence": "Australian debut of the Andaz brand"
+          },
+          {
+            "claim": "The hotel has 202 rooms and is located within The Star Gold Coast resort.",
+            "sourceUrl": "https://newsroom.hyatt.com/AndazMakesItsAustralianDebutWithTheOpeningOfAndazGoldCoast",
+            "evidence": "within The Star Gold Coast"
+          }
+        ],
+        "reason": "Primary press release dated November 16 2026 provides explicit announcement of a new hotel opening, satisfying recent‑development criteria with clear evidence anchors."
+      },
+      "sources": [
+        {
+          "url": "https://newsroom.hyatt.com/AndazMakesItsAustralianDebutWithTheOpeningOfAndazGoldCoast",
+          "sha256": "0a715bc1bf2591bed7a55fafbf7311e1ca5f3565fac51ba105aaa7433465f8ac"
+        }
+      ],
+      "photograph": {
+        "page": "https://www.pexels.com/photo/the-reception-area-of-a-hotel-14036253/",
+        "photographer": "Quang Nguyen Vinh",
+        "sha256": "c173fb6cf00234043ad727d9bc45359584dbd1fdc0ab31fa7609a4b9c2d820ff",
+        "inspection": {
+          "relevant": true,
+          "realPhotograph": true,
+          "alt": "A luxury hotel lobby featuring a central water feature with a large potted plant, a modern chandelier, a decorative wooden screen, and seating areas with patterned flooring.",
+          "reason": "The image is a real photograph of a luxury hotel lobby with modern design elements, including a chandelier, central plant arrangement, and local-style artwork, matching the requested setting."
+        },
+        "license": "https://www.pexels.com/license/"
+      }
+    }
+  ],
+  "editorialDay": "2026-11-20",
+  "publishedToday": 0,
+  "dailyTarget": 4,
+  "publicationSlot": 12,
+  "rssCount": 22,
+  "models": {
+    "text": "openai/gpt-oss-120b",
+    "vision": "qwen/qwen3.8-27b"
+  },
+  "slug": "andaz-gold-coast-opening"
+}
