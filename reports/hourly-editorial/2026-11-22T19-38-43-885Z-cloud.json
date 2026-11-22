@@ -1,0 +1,84 @@
+{
+  "checkedAt": "2026-11-22T19:38:43.885Z",
+  "status": "ready_to_deploy",
+  "candidates": [
+    {
+      "title": "Airport Shutdown Wiped 65% Off Riyadh Hotel RevPAR in October",
+      "url": "https://skift.com/2026/11/19/airport-shutdown-wiped-65-off-riyadh-hotel-revpar-in-october",
+      "status": "skipped",
+      "reason": "Fact lacks an exact primary-source anchor"
+    },
+    {
+      "title": "3 E Network Technology Group Limited Regains Compliance with Nasdaq Listing Requirements",
+      "url": "https://www.globenewswire.com/news-release/2026/11/18/3405561/0/en/3-e-network-technology-group-limited-regains-compliance-with-nasdaq-listing-requirements.html",
+      "status": "skipped",
+      "reason": "Insufficient verified source facts"
+    },
+    {
+      "title": "Park Hyatt Brisbane to Make Its Queensland Debut on the Riverfront",
+      "url": "https://newsroom.hyatt.com/Park_Hyatt_Brisbane_to_Make_Its_Queensland_Debut_on_the_Riverfront",
+      "sourceComparison": {
+        "approved": true,
+        "unsupportedClaims": [],
+        "sourceAccurate": true,
+        "analysisClearlyLabelled": true
+      },
+      "status": "published_locally",
+      "evidence": {
+        "publishable": true,
+        "eventDate": "2026-11-18",
+        "facts": [
+          {
+            "claim": "Hyatt announced the first Park Hyatt hotel in Queensland",
+            "sourceUrl": "https://newsroom.hyatt.com/Park_Hyatt_Brisbane_to_Make_Its_Queensland_Debut_on_the_Riverfront",
+            "evidence": "first hotel in Queensland"
+          },
+          {
+            "claim": "The property is projected to open in 2031",
+            "sourceUrl": "https://newsroom.hyatt.com/Park_Hyatt_Brisbane_to_Make_Its_Queensland_Debut_on_the_Riverfront",
+            "evidence": "Projected to open in 2031"
+          },
+          {
+            "claim": "It will include 201 guest rooms and suites",
+            "sourceUrl": "https://newsroom.hyatt.com/Park_Hyatt_Brisbane_to_Make_Its_Queensland_Debut_on_the_Riverfront",
+            "evidence": "will feature 201 guest rooms"
+          },
+          {
+            "claim": "Hyatt will develop the hotel with the Shayher Group",
+            "sourceUrl": "https://newsroom.hyatt.com/Park_Hyatt_Brisbane_to_Make_Its_Queensland_Debut_on_the_Riverfront",
+            "evidence": "collaboration with the Shayher Group"
+          }
+        ],
+        "reason": "Press release dated November 18 2026 provides a clear, recent announcement of a new Park Hyatt opening, satisfying the five‑day freshness rule and supporting the OPENINGS category."
+      },
+      "sources": [
+        {
+          "url": "https://newsroom.hyatt.com/Park_Hyatt_Brisbane_to_Make_Its_Queensland_Debut_on_the_Riverfront",
+          "sha256": "13f7164e943b657620f1310fb9f98db65d5c8c43434473cb78dc5ac8dc71017e"
+        }
+      ],
+      "photograph": {
+        "page": "https://www.pexels.com/photo/lotte-hotels-in-vibrant-night-cityscape-32755079/",
+        "photographer": "Thể Phạm",
+        "sha256": "5c21fb9b32ca953d997e870bd9ea04e81cfae9f335795c93a6f417979121f818",
+        "inspection": {
+          "relevant": true,
+          "realPhotograph": true,
+          "alt": "A nighttime long-exposure photograph showing a city skyline across a wide river, featuring illuminated high-rise buildings including one with a visible hotel logo, and light trails from traffic along the riverfront.",
+          "reason": "The image is a real photograph that matches the requested setting of a riverfront luxury hotel exterior with modern architecture. It depicts a cityscape at night with a prominent illuminated hotel building situated on a riverfront, which is visually consistent with the article's topic, even though it is not the specific hotel mentioned."
+        },
+        "license": "https://www.pexels.com/license/"
+      }
+    }
+  ],
+  "editorialDay": "2026-11-22",
+  "publishedToday": 0,
+  "dailyTarget": 4,
+  "publicationSlot": 12,
+  "rssCount": 24,
+  "models": {
+    "text": "openai/gpt-oss-120b",
+    "vision": "qwen/qwen3.8-27b"
+  },
+  "slug": "park-hyatt-brisbane-queensland-debut"
+}
