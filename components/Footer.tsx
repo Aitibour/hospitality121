@@ -53,6 +53,7 @@ const SECTIONS = [
 const LEGAL = [
   { label: 'About', href: '/about' },
   { label: 'Editorial Standards', href: '/editorial-standards' },
+  { label: 'Privacy Policy', href: '/privacy' },
   { label: 'Contact', href: '/contact' },
   { label: 'Resources', href: '/resources' },
   { label: 'Subscribe', href: '/subscribe' },
@@ -104,7 +105,7 @@ export default function Footer() {
           <p className="text-xs text-gray-400">
             © {new Date().getFullYear()} Hospitality One 2 One. Vancouver, Canada. All rights reserved.
           </p>
-          <div className="flex gap-5">
+          <div className="flex flex-wrap justify-center gap-x-5 gap-y-2">
             {LEGAL.map(l => (
               <Link key={l.href} href={l.href} className="text-xs text-gray-400 hover:text-gold transition-colors">
                 {l.label}
