@@ -3,10 +3,11 @@ import path from 'node:path'
 import { execFileSync } from 'node:child_process'
 import { createHash } from 'node:crypto'
 import { verifyPreview } from './lib/verify-preview.mjs'
+import { deploymentSiteId } from './lib/deployment-target.mjs'
 
 const config = process.env.NETLIFY_AUTH_TOKEN ? null : JSON.parse(await fs.readFile(path.join(process.env.APPDATA, 'netlify/Config/config.json'), 'utf8'))
 const token = process.env.NETLIFY_AUTH_TOKEN || config.users[config.userId].auth.token
-const siteId = 'bb6c21e7-de00-4c8e-b2ce-28a3ea1af4b7'
+const siteId = deploymentSiteId()
 async function api(route, method = 'GET', body) {
   const response = await fetch(`https://api.netlify.com/api/v1${route}`, { method, headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' }, ...(body ? { body: JSON.stringify(body) } : {}), signal: AbortSignal.timeout(30000) })
   if (!response.ok) throw new Error(`Netlify HTTP ${response.status}`)

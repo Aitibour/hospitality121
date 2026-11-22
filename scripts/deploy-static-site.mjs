@@ -2,12 +2,13 @@ import fs from 'node:fs/promises'
 import path from 'node:path'
 import { pathToFileURL } from 'node:url'
 import { createHash } from 'node:crypto'
+import { deploymentSiteId } from './lib/deployment-target.mjs'
 const cliRoot = process.env.NETLIFY_CLI_ROOT || path.join(process.env.APPDATA, 'npm/node_modules/netlify-cli')
 const { zipFunctions } = await import(pathToFileURL(path.join(cliRoot, 'node_modules/@netlify/zip-it-and-ship-it/dist/main.js')))
 const root = process.cwd()
 const config = process.env.NETLIFY_AUTH_TOKEN ? null : JSON.parse(await fs.readFile(path.join(process.env.APPDATA, 'netlify/Config/config.json'), 'utf8'))
 const token = process.env.NETLIFY_AUTH_TOKEN || config.users[config.userId].auth.token
-const siteId = 'bb6c21e7-de00-4c8e-b2ce-28a3ea1af4b7'
+const siteId = deploymentSiteId()
 let nextRequestAt = 0
 async function api(route, options = {}) {
  for (let attempt = 0; attempt < 7; attempt++) {

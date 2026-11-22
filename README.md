@@ -6,6 +6,8 @@ Hospitality media site — podcasts, insights, and interviews shaping the future
 
 Built with Next.js and Tailwind CSS, deployed on Netlify.
 
+For a new Netlify account, follow [the One Dream deployment guide](docs/deploy-one-dream.md). It covers repository import, build settings, functions, environment variables, the custom domain, and switching the cloud publisher to the new Project ID.
+
 The homepage hero loads recent RSS headlines from Hospitality Net, Hotel Technology News, and the Retail & Hospitality ISAC. A Netlify Function (`/.netlify/functions/daily-hero`) caches the selection until the next UTC midnight, so daily updates do not require a rebuild. The browser checks on load and hourly, including midnight for open tabs. Stories are limited to the past seven days, filtered for hospitality technology, operations, AI and cybersecurity, and deduplicated by canonical URL and similar headline. Available topic coverage is balanced; no stories are invented to fill gaps.
 
 RSS cards link to the original reporting, display the actual publication date and source summary, and use distinct publisher images or topical editorial illustrations with visible illustration labels. A dated local editorial selection remains available if upstream feeds fail. Complete headlines wrap on smaller screens. Article pages and the hero include follow links; LinkedIn was matched to the publication, while X ownership still requires confirmation.
